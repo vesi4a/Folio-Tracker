@@ -11,4 +11,4 @@ A decoupled application program for tracking the value of stock portfolios with 
 - Steven Dickson    ()
 
 
-This project can not be copied and/or distributed without the express permission of the authors.
+This project cannot be copied and/or distributed without the express permission of the authors.
