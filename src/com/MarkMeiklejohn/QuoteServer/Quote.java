@@ -73,7 +73,7 @@ public class Quote {
 	public void setValues(String tickerSymbol) throws IOException,
 			WebsiteDataException, NoSuchTickerException, MethodException {
 
-		String url = "http://finance.yahoo.com/d/quotes.csv?s=";
+		String url = "http://download.finance.yahoo.com/d/quotes.csv?s=";
 		String fileFormat = "&f=sl1d1t1c1ohgv&e=.csv";
 		
 		if (tickerSymbol == null || tickerSymbol == "") {
@@ -287,7 +287,7 @@ public class Quote {
 
 			// pass in ticker to get the new values works for worldwide markets
 			//note '.l' for UK shares
-			q.setValues("hbos.l");
+			q.setValues("rbs.l");
 
 		} catch (Exception e) {
 
