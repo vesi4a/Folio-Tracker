@@ -1,5 +1,6 @@
 package com.team11.Tracker;
 
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
@@ -14,18 +15,29 @@ public class Interface {
 		JFrame mainApp = new JFrame("Folio Tracker");
 		mainApp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mainApp.setSize(800, 600);
+		mainApp.setLocationRelativeTo(null);
 
 		// // Add the ubiquitous "Hello World" label.
 		// JLabel label = new JLabel("Hello World");
 		// frame.getContentPane().add(label);
 		JMenuBar mainMnu = menuSetup();
-//		mainApp.add(mainMnu);
-		
+		// mainApp.add(mainMnu);
+
 		mainApp.setJMenuBar(mainMnu);
-		
+
+		// =============================================
+		// Began working on tabs
+		JTabbedPane tabbedPane = new JTabbedPane();
+		JComponent pnl1 = makeTextPanel("Portfolio: ");
+		tabbedPane.addTab("Tab 1", pnl1);
+		tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
+		// =============================================
+
 		// Display the window.
 		// frame.pack();
 		mainApp.setVisible(true);
+
+		// mainApp.add(newTab());
 	}
 
 	private static JMenuBar menuSetup() {
@@ -41,74 +53,69 @@ public class Interface {
 		menuBar = new JMenuBar();
 
 		// Build the first menu.
-		menu = new JMenu("A Menu");
-		menu.setMnemonic(KeyEvent.VK_A);
+		menu = new JMenu("File");
+		menu.setMnemonic(KeyEvent.VK_F);
 		menu.getAccessibleContext().setAccessibleDescription(
-				"The only menu in this program that has menu items");
+				"File Menu for performing application specific tasks");
 		menuBar.add(menu);
 
 		// a group of JMenuItems
-		menuItem = new JMenuItem("A text-only menu item", KeyEvent.VK_T);
-		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_1,
+
+		menuItem = new JMenuItem("New Tab", KeyEvent.VK_N);
+		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N,
 				ActionEvent.ALT_MASK));
 		menuItem.getAccessibleContext().setAccessibleDescription(
-				"This doesn't really do anything");
+				"Open a new Tab");
 		menu.add(menuItem);
 
-		menuItem = new JMenuItem("Both text and icon", new ImageIcon(
-				"images/middle.gif"));
-		menuItem.setMnemonic(KeyEvent.VK_B);
-		menu.add(menuItem);
-
-		menuItem = new JMenuItem(new ImageIcon("images/middle.gif"));
-		menuItem.setMnemonic(KeyEvent.VK_D);
-		menu.add(menuItem);
-
-		// a group of radio button menu items
-		menu.addSeparator();
-		ButtonGroup group = new ButtonGroup();
-		rbMenuItem = new JRadioButtonMenuItem("A radio button menu item");
-		rbMenuItem.setSelected(true);
-		rbMenuItem.setMnemonic(KeyEvent.VK_R);
-		group.add(rbMenuItem);
-		menu.add(rbMenuItem);
-
-		rbMenuItem = new JRadioButtonMenuItem("Another one");
-		rbMenuItem.setMnemonic(KeyEvent.VK_O);
-		group.add(rbMenuItem);
-		menu.add(rbMenuItem);
-
-		// a group of check box menu items
-		menu.addSeparator();
-		cbMenuItem = new JCheckBoxMenuItem("A check box menu item");
-		cbMenuItem.setMnemonic(KeyEvent.VK_C);
-		menu.add(cbMenuItem);
-
-		cbMenuItem = new JCheckBoxMenuItem("Another one");
-		cbMenuItem.setMnemonic(KeyEvent.VK_H);
-		menu.add(cbMenuItem);
-
-		// a submenu
-		menu.addSeparator();
-		submenu = new JMenu("A submenu");
-		submenu.setMnemonic(KeyEvent.VK_S);
-
-		menuItem = new JMenuItem("An item in the submenu");
-		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_2,
+		menuItem = new JMenuItem("Delete", KeyEvent.VK_D);
+		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D,
 				ActionEvent.ALT_MASK));
-		submenu.add(menuItem);
+		menuItem.getAccessibleContext().setAccessibleDescription(
+				"Delete a Portfolio");
+		menu.add(menuItem);
 
-		menuItem = new JMenuItem("Another item");
-		submenu.add(menuItem);
-		menu.add(submenu);
+		menuItem = new JMenuItem("Close All ", KeyEvent.VK_C);
+		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C,
+				ActionEvent.ALT_MASK));
+		menuItem.getAccessibleContext().setAccessibleDescription(
+				"Close all portfolios");
+		menu.add(menuItem);
 
-		// Build second menu in the menu bar.
-		menu = new JMenu("Another Menu");
-		menu.setMnemonic(KeyEvent.VK_N);
-		menu.getAccessibleContext().setAccessibleDescription(
-				"This menu does nothing");
-		menuBar.add(menu);
-		
+		menu.addSeparator();
+
+		menuItem = new JMenuItem("Exit", KeyEvent.VK_X);
+		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X,
+				ActionEvent.ALT_MASK));
+		menuItem.getAccessibleContext().setAccessibleDescription(
+				"Terminate the Application");
+		menu.add(menuItem);
+
 		return menuBar;
 	}
+
+	// private static Component newTab(JTabbedPane tabbedPane){
+	//
+	// JComponent pnl1 = makeTextPanel("Portfolio: ");
+	// tabbedPane.addTab("Tab 1", pnl1);
+	// tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
+	//
+	// return tabbedPane;
+	//
+	// }
+	//
+
+	// =============================================
+	// Code for experimental tabs. Will almost certainly need substantial
+	// changes
+	protected static JComponent makeTextPanel(String text) {
+		JPanel panel = new JPanel(false);
+		JLabel filler = new JLabel(text);
+		filler.setHorizontalAlignment(JLabel.CENTER);
+		panel.setLayout(new GridLayout(1, 1));
+		panel.add(filler);
+		return panel;
+	}
+	// =============================================
+
 }
