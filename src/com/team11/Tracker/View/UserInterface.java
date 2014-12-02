@@ -1,4 +1,4 @@
-package com.team11.Tracker;
+package com.team11.Tracker.View;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -6,7 +6,7 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.*;
 
-public class Interface {
+public class UserInterface {
 
 	public static void show() {
 		// Main Swing Interface can go here
