@@ -1,6 +1,6 @@
 package com.team11.Tracker;
 
-import java.awt.GridLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
@@ -17,27 +17,26 @@ public class Interface {
 		mainApp.setSize(800, 600);
 		mainApp.setLocationRelativeTo(null);
 
-		// // Add the ubiquitous "Hello World" label.
-		// JLabel label = new JLabel("Hello World");
-		// frame.getContentPane().add(label);
 		JMenuBar mainMnu = menuSetup();
-		// mainApp.add(mainMnu);
 
 		mainApp.setJMenuBar(mainMnu);
 
 		// =============================================
 		// Began working on tabs
 		JTabbedPane tabbedPane = new JTabbedPane();
-		JComponent pnl1 = makeTextPanel("Portfolio: ");
+		mainApp.setContentPane(tabbedPane);
+		JComponent pnl1 = makeTextPanel("Portfolio: 1");
 		tabbedPane.addTab("Tab 1", pnl1);
 		tabbedPane.setMnemonicAt(0, KeyEvent.VK_1);
+
+		JComponent pnl2 = makeTextPanel("Portfolio: 2");
+		tabbedPane.addTab("Tab 2", pnl2);
+		tabbedPane.setMnemonicAt(0, KeyEvent.VK_2);
 		// =============================================
 
 		// Display the window.
 		// frame.pack();
 		mainApp.setVisible(true);
-
-		// mainApp.add(newTab());
 	}
 
 	private static JMenuBar menuSetup() {
@@ -93,6 +92,8 @@ public class Interface {
 
 		return menuBar;
 	}
+
+
 
 	// private static Component newTab(JTabbedPane tabbedPane){
 	//
