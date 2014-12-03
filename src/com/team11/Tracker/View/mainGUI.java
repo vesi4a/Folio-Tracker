@@ -6,7 +6,7 @@ import java.awt.event.KeyEvent;
 
 import javax.swing.*;
 
-public class UserInterface {
+public class mainGUI implements MainGUIInterface{
 
 	public static void show() {
 		// Main Swing Interface can go here
@@ -43,10 +43,8 @@ public class UserInterface {
 
 		// Where the GUI is created:
 		JMenuBar menuBar;
-		JMenu menu, submenu;
+		JMenu menu;
 		JMenuItem menuItem;
-		JRadioButtonMenuItem rbMenuItem;
-		JCheckBoxMenuItem cbMenuItem;
 
 		// Create the menu bar.
 		menuBar = new JMenuBar();
@@ -65,6 +63,7 @@ public class UserInterface {
 				ActionEvent.ALT_MASK));
 		menuItem.getAccessibleContext().setAccessibleDescription(
 				"Open a new Tab");
+		menuItem.addActionListener(new com.team11.Tracker.Controller.MenuBarController());
 		menu.add(menuItem);
 
 		menuItem = new JMenuItem("Delete", KeyEvent.VK_D);
@@ -72,13 +71,15 @@ public class UserInterface {
 				ActionEvent.ALT_MASK));
 		menuItem.getAccessibleContext().setAccessibleDescription(
 				"Delete a Portfolio");
+		menuItem.addActionListener(new com.team11.Tracker.Controller.MenuBarController());
 		menu.add(menuItem);
 
-		menuItem = new JMenuItem("Close All ", KeyEvent.VK_C);
+		menuItem = new JMenuItem("Close All", KeyEvent.VK_C);
 		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C,
 				ActionEvent.ALT_MASK));
 		menuItem.getAccessibleContext().setAccessibleDescription(
 				"Close all portfolios");
+		menuItem.addActionListener(new com.team11.Tracker.Controller.MenuBarController());
 		menu.add(menuItem);
 
 		menu.addSeparator();
@@ -88,12 +89,11 @@ public class UserInterface {
 				ActionEvent.ALT_MASK));
 		menuItem.getAccessibleContext().setAccessibleDescription(
 				"Terminate the Application");
+		menuItem.addActionListener(new com.team11.Tracker.Controller.MenuBarController());
 		menu.add(menuItem);
 
 		return menuBar;
 	}
-
-
 
 	// private static Component newTab(JTabbedPane tabbedPane){
 	//

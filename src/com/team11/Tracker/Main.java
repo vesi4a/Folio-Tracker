@@ -1,12 +1,19 @@
 package com.team11.Tracker;
 
-import com.team11.Tracker.Controller.InterfaceController;
-import com.team11.Tracker.View.UserInterface;
+import com.team11.Tracker.View.mainGUI;
 
 public class Main {
 
-	public static void main(String[] args) {
-        InterfaceController controller = new InterfaceController();
-	}
+	// bootstrap to create initial gui. Should create controller too
 
+	public static void main(String[] args) {
+		// Schedule a job for the event-dispatching thread:
+		// creating and showing this application's GUI.
+		javax.swing.SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				mainGUI.show();
+			}
+		});
+
+	}
 }
