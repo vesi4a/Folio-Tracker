@@ -12,15 +12,26 @@ public class TrackerAPI {
 	/*
 	 * 
 	 */
-	public String getStockPrice(String tickerSymbol) {
-		return tickerSymbol;
-	};
+	public Double getStockPrice(String tickerSymbol) {
+		Quote quote = new Quote(false);
+		try {
+			quote.setValues(tickerSymbol);
+			return quote.getLatest();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return null;
+
+	}
 
 	/*
 	 * 
 	 */
 	public int calculateValue(int numberOfShares, int price) {
-		return price;
+
+		return numberOfShares * price;
 	};
 
 	/*
