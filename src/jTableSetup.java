@@ -3,8 +3,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-class jTableSetup
-		extends 	JFrame
+class jTableSetup extends 	JFrame
  {
 	// Instance attributes used in this example
 	private static JPanel		topPanel;

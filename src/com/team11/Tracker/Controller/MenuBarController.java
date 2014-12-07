@@ -13,7 +13,7 @@ public class MenuBarController implements ActionListener {
 		} else if ("Delete".equals(e.getActionCommand())) {
 			// delete a tab/windowed portfolio
 			System.out.println("Delete clicked!");
-
+			
 		} else if ("Close All".equals(e.getActionCommand())) {
 			// Close all tabs/windows
 			System.out.println("Close All clicked!");
@@ -22,6 +22,10 @@ public class MenuBarController implements ActionListener {
 			// Close the application
 			System.out.println("Exit clicked!");
 			System.exit(0);
+		}
+		else if ("Open".equals(e.getActionCommand())) {
+			// delete a tab/windowed portfolio
+			System.out.println("Open clicked!");
 		}
 
 	}
