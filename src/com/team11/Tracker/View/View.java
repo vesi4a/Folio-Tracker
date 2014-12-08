@@ -1,7 +1,5 @@
 package com.team11.Tracker.View;
 
-import com.team11.Tracker.Controller.*;
-
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -24,8 +22,9 @@ import java.io.File;
 
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
+import javax.swing.table.DefaultTableModel;
 
-public class guigen {
+public class View {
 
 	private static JFrame frame;
 	private JTextField textField;
@@ -33,29 +32,44 @@ public class guigen {
 	private static JTabbedPane tabbedPane;
 	private JScrollPane scrollPane;
 
-	// private static JScrollPane scrollPane2;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			@SuppressWarnings("static-access")
-			public void run() {
-				try {
-					guigen window = new guigen();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+
+	private JTable table;
+	private JButton btnAdd;
+
+	public JTable getTable() {
+		return table;
 	}
+
+	public JButton getBtnAdd() {
+		return btnAdd;
+	}
+
+
+
+//	// private static JScrollPane scrollPane2;
+//
+//	/**
+//	 * Launch the application.
+//	 */
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			@SuppressWarnings("static-access")
+//			public void run() {
+//				try {
+//					View window = new View();
+//					window.frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	/**
 	 * Create the application.
 	 */
-	public guigen() {
+	public View() {
 		initialize();
 	}
 
@@ -64,6 +78,7 @@ public class guigen {
 	 */
 	private void initialize() {
 		frame = new JFrame("Folio Tracker");
+		frame.setVisible(true);
 //		frame.setBounds(100, 100, 800, 600);
 		frame.setSize(800, 600);
 		frame.setLocationRelativeTo(null);
@@ -103,19 +118,16 @@ public class guigen {
 		frame.getContentPane().add(textField_1);
 		textField_1.setColumns(10);
 
-		JButton btnAdd = new JButton("Add");
+		btnAdd = new JButton("Add");
 		btnAdd.setBounds(545, 480, 117, 29);
-		btnAdd.addActionListener(new addStockController());
 		frame.getContentPane().add(btnAdd);
 
 		JButton btnDel = new JButton("Delete");
 		btnDel.setBounds(545, 521, 117, 29);
-		btnDel.addActionListener(new deleteStockController());
 		frame.getContentPane().add(btnDel);
 
 		JButton btnHist = new JButton("History");
 		btnHist.setBounds(247, 529, 117, 29);
-		btnHist.addActionListener(new historyStockController());
 		frame.getContentPane().add(btnHist);
 
 		JLabel lblnull_1 = new JLabel("(null)");
@@ -132,7 +144,6 @@ public class guigen {
 
 		JButton btnClose = new JButton("Close");
 		btnClose.setBounds(662, 521, 117, 29);
-		btnClose.addActionListener(new closeStockController());
 		frame.getContentPane().add(btnClose);
 
 		// confirmDelete();
@@ -143,15 +154,14 @@ public class guigen {
 	}
 
 	private void createTab(String PortfolioName) {
-		// Create columns names
-		String columnNames[] = { "Ticker Symbol", "Name", "Number of Shares",
-				"Price", "Value" };
-
-		// Create some data
-		String dataValues[][] = { { "TST1", "Test1", "50", "1.50", "75.00" } };
+		DefaultTableModel model = new DefaultTableModel();
+		model.addColumn("Ticker Symbol");
+		model.addColumn("Number of Shares");
+		model.addColumn("Price");
+		model.addColumn("Value");
 
 		// Create a new table instance
-		JTable table = new JTable(dataValues, columnNames);
+		table = new JTable(model);
 		table.setFillsViewportHeight(true);
 
 		// Add the table to a scrolling pane
@@ -334,7 +344,7 @@ public class guigen {
 				ActionEvent.ALT_MASK));
 		menuItem.getAccessibleContext().setAccessibleDescription(
 				"Open a new Tab");
-		menuItem.addActionListener(new MenuBarController());
+		//menuItem.addActionListener(new MenuBarController());
 		menu.add(menuItem);
 
 		menuItem = new JMenuItem("Open", KeyEvent.VK_N);
@@ -342,7 +352,7 @@ public class guigen {
 				ActionEvent.ALT_MASK));
 		menuItem.getAccessibleContext().setAccessibleDescription(
 				"Open a portfolio file");
-		menuItem.addActionListener(new MenuBarController());
+		//menuItem.addActionListener(new MenuBarController());
 		menu.add(menuItem);
 
 		menuItem = new JMenuItem("Delete", KeyEvent.VK_D);
@@ -350,7 +360,7 @@ public class guigen {
 				ActionEvent.ALT_MASK));
 		menuItem.getAccessibleContext().setAccessibleDescription(
 				"Delete a Portfolio");
-		menuItem.addActionListener(new MenuBarController());
+		//menuItem.addActionListener(new MenuBarController());
 		menu.add(menuItem);
 
 		menuItem = new JMenuItem("Close All", KeyEvent.VK_C);
@@ -358,7 +368,7 @@ public class guigen {
 				ActionEvent.ALT_MASK));
 		menuItem.getAccessibleContext().setAccessibleDescription(
 				"Close all portfolios");
-		menuItem.addActionListener(new MenuBarController());
+		//menuItem.addActionListener(new MenuBarController());
 		menu.add(menuItem);
 
 		menu.addSeparator();
@@ -368,7 +378,7 @@ public class guigen {
 				ActionEvent.ALT_MASK));
 		menuItem.getAccessibleContext().setAccessibleDescription(
 				"Terminate the Application");
-		menuItem.addActionListener(new MenuBarController());
+		//menuItem.addActionListener(new MenuBarController());
 		menu.add(menuItem);
 
 		return menuBar;

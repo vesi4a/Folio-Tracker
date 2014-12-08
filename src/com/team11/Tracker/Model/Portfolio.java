@@ -9,17 +9,20 @@ public class Portfolio {
 
 
     // All the shares held within this portfolio
-    ArrayList<Share> shares;
+    private ArrayList<Share> shares;
 
 
 
 	public Portfolio() {
         // Creates an empty arraylist
-
 		shares = new ArrayList<Share>();
 	}
 
     public void loadFolio() {
+        // TODO: Implement
+    }
+
+    public void saveFolio() {
         // TODO: Implement
     }
 
@@ -52,6 +55,18 @@ public class Portfolio {
 
     public void sellShare() {
         // TODO: Implement
+    }
+
+    public Share getShare(String ticker) {
+        for (Share s : shares) {
+            if (s.getShareName().equals(ticker)) {
+                return s;
+            }
+        }
+
+        // Throw an exception
+        // ShareNotOwnedException?
+        return null;
     }
 
 	public ArrayList<Share> getShares() {
