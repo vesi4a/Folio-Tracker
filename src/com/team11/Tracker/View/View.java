@@ -14,6 +14,7 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.KeyStroke;
 
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.io.File;
@@ -30,8 +31,6 @@ public class View {
 	private static JTabbedPane tabbedPane;
 	private JScrollPane scrollPane;
 
-
-
 	private JTable table;
 
 	private JButton btnAdd;
@@ -45,7 +44,6 @@ public class View {
 		return txtFieldAmount;
 	}
 
-
 	public JLabel getLblFolioValue() {
 		return lblFolioValue;
 	}
@@ -58,26 +56,24 @@ public class View {
 		return btnAdd;
 	}
 
-
-
-//	// private static JScrollPane scrollPane2;
-//
-//	/**
-//	 * Launch the application.
-//	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			@SuppressWarnings("static-access")
-//			public void run() {
-//				try {
-//					View window = new View();
-//					window.frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
+	// // private static JScrollPane scrollPane2;
+	//
+	// /**
+	// * Launch the application.
+	// */
+	// public static void main(String[] args) {
+	// EventQueue.invokeLater(new Runnable() {
+	// @SuppressWarnings("static-access")
+	// public void run() {
+	// try {
+	// View window = new View();
+	// window.frame.setVisible(true);
+	// } catch (Exception e) {
+	// e.printStackTrace();
+	// }
+	// }
+	// });
+	// }
 
 	/**
 	 * Create the application.
@@ -92,7 +88,7 @@ public class View {
 	private void initialize() {
 		frame = new JFrame("Folio Tracker");
 		frame.setVisible(true);
-//		frame.setBounds(100, 100, 800, 600);
+		// frame.setBounds(100, 100, 800, 600);
 		frame.setSize(800, 600);
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -173,7 +169,8 @@ public class View {
 		model.addColumn("Price");
 		model.addColumn("Value");
 
-		// Create a new table instance that doesn't allow user editing of the cells
+		// Create a new table instance that doesn't allow user editing of the
+		// cells
 		table = new JTable(model) {
 			private static final long serialVersionUID = 1L;
 
@@ -313,7 +310,7 @@ public class View {
 			System.out.println("No Option");
 	}
 
-	public static void createNewPortfolio() {
+	public static void createNewPortfolioOld() {
 		JTextField folioName = new JTextField(20);
 
 		JFileChooser inputfile = new JFileChooser();
@@ -337,6 +334,25 @@ public class View {
 		int result = JOptionPane.showConfirmDialog(null, jpanel,
 				"Create new PortFolio", JOptionPane.OK_CANCEL_OPTION);
 		String projname = (folioName.getText());
+	}
+
+	/*
+	 * Creates a new dialogue box which has a text field to accept a stringThis
+	 * string, provided by the user, will be the name of the newly created
+	 * PortFolio
+	 */
+	private void createNewPortfolio() {
+		JTextField portFolioNameEntry = new JTextField(20);
+		JPanel newPortFolioPanel = new JPanel();
+		JLabel enterPortFolioNameLabel = new JLabel("Enter PortFolio Name:");
+		newPortFolioPanel.setLayout(new BoxLayout(newPortFolioPanel,
+				BoxLayout.Y_AXIS));
+		portFolioNameEntry.setMaximumSize(new Dimension(1500, 20));
+		newPortFolioPanel.add(enterPortFolioNameLabel);
+		newPortFolioPanel.add(portFolioNameEntry);
+		int result = JOptionPane.showConfirmDialog(null, newPortFolioPanel,
+				"Create New PortFolio", JOptionPane.OK_CANCEL_OPTION);
+		String projname = (portFolioNameEntry.getText());
 	}
 
 	private static JMenuBar menuSetup() {
@@ -363,7 +379,7 @@ public class View {
 				ActionEvent.ALT_MASK));
 		menuItem.getAccessibleContext().setAccessibleDescription(
 				"Open a new Tab");
-		//menuItem.addActionListener(new MenuBarController());
+		// menuItem.addActionListener(new MenuBarController());
 		menu.add(menuItem);
 
 		menuItem = new JMenuItem("Open", KeyEvent.VK_N);
@@ -371,7 +387,7 @@ public class View {
 				ActionEvent.ALT_MASK));
 		menuItem.getAccessibleContext().setAccessibleDescription(
 				"Open a portfolio file");
-		//menuItem.addActionListener(new MenuBarController());
+		// menuItem.addActionListener(new MenuBarController());
 		menu.add(menuItem);
 
 		menuItem = new JMenuItem("Delete", KeyEvent.VK_D);
@@ -379,7 +395,7 @@ public class View {
 				ActionEvent.ALT_MASK));
 		menuItem.getAccessibleContext().setAccessibleDescription(
 				"Delete a Portfolio");
-		//menuItem.addActionListener(new MenuBarController());
+		// menuItem.addActionListener(new MenuBarController());
 		menu.add(menuItem);
 
 		menuItem = new JMenuItem("Close All", KeyEvent.VK_C);
@@ -387,7 +403,7 @@ public class View {
 				ActionEvent.ALT_MASK));
 		menuItem.getAccessibleContext().setAccessibleDescription(
 				"Close all portfolios");
-		//menuItem.addActionListener(new MenuBarController());
+		// menuItem.addActionListener(new MenuBarController());
 		menu.add(menuItem);
 
 		menu.addSeparator();
@@ -397,7 +413,7 @@ public class View {
 				ActionEvent.ALT_MASK));
 		menuItem.getAccessibleContext().setAccessibleDescription(
 				"Terminate the Application");
-		//menuItem.addActionListener(new MenuBarController());
+		// menuItem.addActionListener(new MenuBarController());
 		menu.add(menuItem);
 
 		return menuBar;

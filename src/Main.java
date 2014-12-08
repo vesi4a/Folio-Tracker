@@ -1,4 +1,3 @@
-package com.team11.Tracker;
 
 import com.team11.Tracker.Controller.Controller;
 import com.team11.Tracker.Model.Portfolio;
@@ -12,8 +11,6 @@ public class Main {
         Portfolio model = new Portfolio();
 
         Controller controller = new Controller(view, model);
-
-
 
     }
 }
