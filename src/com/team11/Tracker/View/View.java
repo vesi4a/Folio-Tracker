@@ -1,7 +1,5 @@
 package com.team11.Tracker.View;
 
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
@@ -27,15 +25,30 @@ import javax.swing.table.DefaultTableModel;
 public class View {
 
 	private static JFrame frame;
-	private JTextField textField;
-	private JTextField textField_1;
+	private JTextField txtFieldTicker;
+	private JTextField txtFieldAmount;
 	private static JTabbedPane tabbedPane;
 	private JScrollPane scrollPane;
 
 
 
 	private JTable table;
+
 	private JButton btnAdd;
+	private JLabel lblFolioValue;
+
+	public JTextField getTxtFieldTicker() {
+		return txtFieldTicker;
+	}
+
+	public JTextField getTxtFieldAmount() {
+		return txtFieldAmount;
+	}
+
+
+	public JLabel getLblFolioValue() {
+		return lblFolioValue;
+	}
 
 	public JTable getTable() {
 		return table;
@@ -104,19 +117,19 @@ public class View {
 		lblTickerSymbol.setBounds(112, 485, 89, 16);
 		frame.getContentPane().add(lblTickerSymbol);
 
-		textField = new JTextField();
-		textField.setBounds(213, 479, 84, 28);
-		frame.getContentPane().add(textField);
-		textField.setColumns(10);
+		txtFieldTicker = new JTextField();
+		txtFieldTicker.setBounds(213, 479, 84, 28);
+		frame.getContentPane().add(txtFieldTicker);
+		txtFieldTicker.setColumns(10);
 
 		JLabel lblAmount = new JLabel("Amount");
 		lblAmount.setBounds(309, 485, 55, 16);
 		frame.getContentPane().add(lblAmount);
 
-		textField_1 = new JTextField();
-		textField_1.setBounds(363, 479, 72, 28);
-		frame.getContentPane().add(textField_1);
-		textField_1.setColumns(10);
+		txtFieldAmount = new JTextField();
+		txtFieldAmount.setBounds(363, 479, 72, 28);
+		frame.getContentPane().add(txtFieldAmount);
+		txtFieldAmount.setColumns(10);
 
 		btnAdd = new JButton("Add");
 		btnAdd.setBounds(545, 480, 117, 29);
@@ -138,9 +151,9 @@ public class View {
 		lblTotalValue.setBounds(16, 534, 159, 16);
 		frame.getContentPane().add(lblTotalValue);
 
-		JLabel lblnull = new JLabel("(null)"); // <<<<<<<WHAT IS THIS??????
-		lblnull.setBounds(177, 534, 61, 16);
-		frame.getContentPane().add(lblnull);
+		lblFolioValue = new JLabel("$0.00");
+		lblFolioValue.setBounds(177, 534, 61, 16);
+		frame.getContentPane().add(lblFolioValue);
 
 		JButton btnClose = new JButton("Close");
 		btnClose.setBounds(662, 521, 117, 29);
@@ -160,8 +173,14 @@ public class View {
 		model.addColumn("Price");
 		model.addColumn("Value");
 
-		// Create a new table instance
-		table = new JTable(model);
+		// Create a new table instance that doesn't allow user editing of the cells
+		table = new JTable(model) {
+			private static final long serialVersionUID = 1L;
+
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			};
+		};
 		table.setFillsViewportHeight(true);
 
 		// Add the table to a scrolling pane

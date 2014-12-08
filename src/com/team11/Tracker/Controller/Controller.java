@@ -23,6 +23,10 @@ public class Controller {
     }
 
 
+    private void updateFolioValue() {
+        view.getLblFolioValue().setText("$" + model.getFolioValue());
+    }
+
     private void setUpViewEvents() {
         // Action listener for add button
         view.getBtnAdd().addActionListener(new ActionListener() {
@@ -30,10 +34,10 @@ public class Controller {
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Add button pressed");
 
-                // Placeholder values
-                // These will come from the UI later
-                String ticker = "AAPL";
-                int amount = 10;
+
+                // TODO: Check that the fields have actual values within them
+                String ticker = view.getTxtFieldTicker().getText();
+                int amount = Integer.parseInt(view.getTxtFieldAmount().getText());
 
                 // Add a stock to the model
                 model.addShare(ticker, amount);
@@ -48,6 +52,8 @@ public class Controller {
                         // DecimalFormat helps make the value presentable and not have several decimal places
                         new DecimalFormat("0.00").format(model.getShare(ticker).getSharePrice() * amount)
                 });
+
+                updateFolioValue();
             }
         });
 
