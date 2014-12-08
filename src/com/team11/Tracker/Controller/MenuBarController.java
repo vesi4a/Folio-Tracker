@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 public class MenuBarController implements ActionListener {
 
+	@Override
 	public void actionPerformed(ActionEvent e) {
 		if ("New Portfolio".equals(e.getActionCommand())) {
 			// Add a new tab. Remove this if windows used
@@ -13,7 +14,7 @@ public class MenuBarController implements ActionListener {
 		} else if ("Delete".equals(e.getActionCommand())) {
 			// delete a tab/windowed portfolio
 			System.out.println("Delete clicked!");
-			
+
 		} else if ("Close All".equals(e.getActionCommand())) {
 			// Close all tabs/windows
 			System.out.println("Close All clicked!");
@@ -22,8 +23,7 @@ public class MenuBarController implements ActionListener {
 			// Close the application
 			System.out.println("Exit clicked!");
 			System.exit(0);
-		}
-		else if ("Open".equals(e.getActionCommand())) {
+		} else if ("Open".equals(e.getActionCommand())) {
 			// delete a tab/windowed portfolio
 			System.out.println("Open clicked!");
 		}
