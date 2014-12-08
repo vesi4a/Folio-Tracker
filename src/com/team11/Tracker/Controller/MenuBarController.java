@@ -10,10 +10,10 @@ public class MenuBarController implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if ("New Portfolio".equals(e.getActionCommand())) {
-			// Add a new tab. Remove this if windows used
+			// Add a new tab.
 			System.out.println("New Portfolio clicked!");
 			guigen.createNewPortfolio();
-
+			
 		} else if ("Delete".equals(e.getActionCommand())) {
 			// delete a tab/windowed portfolio
 			System.out.println("Delete clicked!");

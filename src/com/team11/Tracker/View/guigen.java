@@ -334,7 +334,7 @@ public class guigen {
 				ActionEvent.ALT_MASK));
 		menuItem.getAccessibleContext().setAccessibleDescription(
 				"Open a new Tab");
-		menuItem.addActionListener(new com.team11.Tracker.Controller.MenuBarController());
+		menuItem.addActionListener(new MenuBarController());
 		menu.add(menuItem);
 
 		menuItem = new JMenuItem("Open", KeyEvent.VK_N);
@@ -342,7 +342,7 @@ public class guigen {
 				ActionEvent.ALT_MASK));
 		menuItem.getAccessibleContext().setAccessibleDescription(
 				"Open a portfolio file");
-		menuItem.addActionListener(new com.team11.Tracker.Controller.MenuBarController());
+		menuItem.addActionListener(new MenuBarController());
 		menu.add(menuItem);
 
 		menuItem = new JMenuItem("Delete", KeyEvent.VK_D);
@@ -350,7 +350,7 @@ public class guigen {
 				ActionEvent.ALT_MASK));
 		menuItem.getAccessibleContext().setAccessibleDescription(
 				"Delete a Portfolio");
-		menuItem.addActionListener(new com.team11.Tracker.Controller.MenuBarController());
+		menuItem.addActionListener(new MenuBarController());
 		menu.add(menuItem);
 
 		menuItem = new JMenuItem("Close All", KeyEvent.VK_C);
@@ -358,7 +358,7 @@ public class guigen {
 				ActionEvent.ALT_MASK));
 		menuItem.getAccessibleContext().setAccessibleDescription(
 				"Close all portfolios");
-		menuItem.addActionListener(new com.team11.Tracker.Controller.MenuBarController());
+		menuItem.addActionListener(new MenuBarController());
 		menu.add(menuItem);
 
 		menu.addSeparator();
@@ -368,7 +368,7 @@ public class guigen {
 				ActionEvent.ALT_MASK));
 		menuItem.getAccessibleContext().setAccessibleDescription(
 				"Terminate the Application");
-		menuItem.addActionListener(new com.team11.Tracker.Controller.MenuBarController());
+		menuItem.addActionListener(new MenuBarController());
 		menu.add(menuItem);
 
 		return menuBar;
