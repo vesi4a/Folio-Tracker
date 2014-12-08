@@ -4,33 +4,38 @@ import java.util.ArrayList;
 
 public class Portfolio {
 
-    ArrayList<Quote> quotes;
+	ArrayList<Quote> quotes;
 
-    Portfolio() {
-        quotes = new ArrayList<Quote>();
-    }
+	Portfolio() {
+		quotes = new ArrayList<Quote>();
+	}
 
-    public void getFolioValue() {
-        double runningTotal = 0;
-        try {
-            for (Quote q : quotes) {
-                // TODO: Implement numberOfStocks
-                //runningTotal += (q.getLatest() * numberOfStocks);
-                runningTotal += (q.getLatest());
-            }
-        }
-        catch (Exception e) {
+	public void getFolioValue() {
+		double runningTotal = 0;
+		try {
+			for (Quote q : quotes) {
+				// TODO: Implement numberOfStocks  <<<What's this???
+				// runningTotal += (q.getLatest() * numberOfStocks);
+				runningTotal += (q.getLatest());
+			}
+		} catch (Exception e) {
 
-        }
-    }
+		}
+	}
 
-    public void addQuote(Quote quote) {
-        quotes.add(quote);
-    }
+	public int getStockCount() {
+		int count = 0;
+		for (int i = 0; i < quotes.size(); i++)
+			count++;
+		return count;
+	}
 
-    public ArrayList<Quote> getQuotes() {
-        return quotes;
-    }
+	public void addQuote(Quote quote) {
+		quotes.add(quote);
+	}
 
+	public ArrayList<Quote> getQuotes() {
+		return quotes;
+	}
 
 }
