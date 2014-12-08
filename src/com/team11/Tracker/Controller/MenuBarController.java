@@ -6,9 +6,9 @@ import java.awt.event.ActionListener;
 public class MenuBarController implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) {
-		if ("New Tab".equals(e.getActionCommand())) {
+		if ("New Portfolio".equals(e.getActionCommand())) {
 			// Add a new tab. Remove this if windows used
-			System.out.println("New Tab clicked!");
+			System.out.println("New Portfolio clicked!");
 
 		} else if ("Delete".equals(e.getActionCommand())) {
 			// delete a tab/windowed portfolio
