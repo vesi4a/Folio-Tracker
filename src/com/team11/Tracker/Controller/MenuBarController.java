@@ -3,6 +3,8 @@ package com.team11.Tracker.Controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import com.team11.Tracker.View.guigen;
+
 public class MenuBarController implements ActionListener {
 
 	@Override
@@ -10,6 +12,7 @@ public class MenuBarController implements ActionListener {
 		if ("New Portfolio".equals(e.getActionCommand())) {
 			// Add a new tab. Remove this if windows used
 			System.out.println("New Portfolio clicked!");
+			guigen.createNewPortfolio();
 
 		} else if ("Delete".equals(e.getActionCommand())) {
 			// delete a tab/windowed portfolio

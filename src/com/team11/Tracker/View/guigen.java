@@ -284,7 +284,7 @@ public class guigen {
 			System.out.println("No Option");
 	}
 
-	private static void createNewPortfolio() {
+	public static void createNewPortfolio() {
 		JTextField folioName = new JTextField(20);
 
 		JFileChooser inputfile = new JFileChooser();
