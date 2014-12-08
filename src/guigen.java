@@ -132,7 +132,7 @@ public class guigen {
 		//confirmDelete();
 		//createNewPortfolio();
 		//stockAddingError();
-		//editStock();
+		editStock();
 
 	}
 
