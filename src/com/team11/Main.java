@@ -10,7 +10,7 @@ public class Main {
     public static void main(String[] args) {
         View view = new View();
 
-        Portfolio model = new Portfolio();
+        Portfolio model = new Portfolio("Portfolio1");
 
         Controller controller = new Controller(view, model);
 
