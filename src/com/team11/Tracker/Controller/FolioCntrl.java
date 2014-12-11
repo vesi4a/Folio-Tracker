@@ -11,11 +11,11 @@ import java.text.DecimalFormat;
 /**
  * Created by cameron on 08/12/2014.
  */
-public class Controller {
+public class FolioCntrl {
     private View view;
     private Portfolio model;
 
-    public Controller(View view, Portfolio model) {
+    public FolioCntrl(View view, Portfolio model) {
         this.view = view;
         this.model = model;
 
