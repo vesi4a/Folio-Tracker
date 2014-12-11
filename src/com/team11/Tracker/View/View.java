@@ -93,67 +93,68 @@ public class View {
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		JMenuBar mainMnu = menuSetup();
+		JMenuBar mainMnu = menuSetup();  // **listeners required**
 		frame.setJMenuBar(mainMnu);
 
 		frame.getContentPane().setLayout(null);
 
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP); // Window for displaying portfolio
-		tabbedPane.setBounds(6, 6, 788, 484);
+		tabbedPane.setBounds(6, 30, 788, 400); // old values 6 6 788 484
 		frame.getContentPane().add(tabbedPane);
 
 		createTab("Portfolio1");
+		createTab("Portfolio2"); // second tab to test for layout
 
 		// Labels and text fields
 		JLabel lblAddStock = new JLabel("Add Stock:"); // add stock label
-		lblAddStock.setBounds(16, 485, 84, 16);
+		lblAddStock.setBounds(16, 6, 84, 16); // old values 16 485 84 16
 		frame.getContentPane().add(lblAddStock);
 
 		JLabel lblTickerSymbol = new JLabel("Ticker Symbol"); // ticker symbol label
-		lblTickerSymbol.setBounds(112, 485, 89, 16);
+		lblTickerSymbol.setBounds(112, 6, 89, 16); // 112 485 89 16
 		frame.getContentPane().add(lblTickerSymbol);
 
 		txtFieldTicker = new JTextField();
-		txtFieldTicker.setBounds(213, 479, 84, 28); // ticker symbol text box
-		frame.getContentPane().add(txtFieldTicker);
+		txtFieldTicker.setBounds(213, 0, 84, 28); // ticker symbol text box
+		frame.getContentPane().add(txtFieldTicker); // old values 213 479 84 28
 		txtFieldTicker.setColumns(10);
 
 		JLabel lblAmount = new JLabel("Amount");
-		lblAmount.setBounds(309, 485, 55, 16); // amount label
-		frame.getContentPane().add(lblAmount);
+		lblAmount.setBounds(309, 6, 55, 16); // amount label
+		frame.getContentPane().add(lblAmount); // old values 309 485 55 16
 
 		txtFieldAmount = new JTextField();
-		txtFieldAmount.setBounds(363, 479, 72, 28); // amount text box
-		frame.getContentPane().add(txtFieldAmount);
+		txtFieldAmount.setBounds(363, 0, 72, 28); // amount text box
+		frame.getContentPane().add(txtFieldAmount); // old values 363 479 72 28
 		txtFieldAmount.setColumns(10);
 
 		btnAdd = new JButton("Add"); // add button - **listener required**
-		btnAdd.setBounds(545, 480, 117, 29);
+		btnAdd.setBounds(450, 0, 117, 29); // old values 545 480 117 29
 		frame.getContentPane().add(btnAdd);
 
-		JButton btnDel = new JButton("Delete"); // delete button - **listener required**
-		btnDel.setBounds(545, 521, 117, 29);
-		frame.getContentPane().add(btnDel);
+//		JButton btnDel = new JButton("Delete"); // delete button - **listener required**
+//		btnDel.setBounds(545, 521, 117, 29);
+//		frame.getContentPane().add(btnDel);
 
-		JButton btnHist = new JButton("History"); // history button - **listener required**
-		btnHist.setBounds(247, 529, 117, 29);
-		frame.getContentPane().add(btnHist);
-
-		JLabel lblnull_1 = new JLabel("(null)"); // displays error message
-		lblnull_1.setBounds(694, 487, 61, 22);
+		JLabel lblnull_1 = new JLabel("(Error message placeholder)"); // displays error message
+		lblnull_1.setBounds(600, 6, 200, 16); // old values 694 487 61 22
 		frame.getContentPane().add(lblnull_1);
 
 		JLabel lblTotalValue = new JLabel("Total value of portfolio:"); // total value label
-		lblTotalValue.setBounds(16, 534, 159, 16);
+		lblTotalValue.setBounds(16, 450, 159, 16); // old values 16 534 159 16
 		frame.getContentPane().add(lblTotalValue);
 
 		lblFolioValue = new JLabel("$0.00"); // displays total portfolio value
-		lblFolioValue.setBounds(177, 534, 61, 16);
+		lblFolioValue.setBounds(177, 450, 61, 16); // old values 177 534 61 16
 		frame.getContentPane().add(lblFolioValue);
+		
+		JButton btnHist = new JButton("History"); // history button - **listener required**
+		btnHist.setBounds(600, 445, 117, 29); // old values 247 529 117 29
+		frame.getContentPane().add(btnHist);
 
-		JButton btnClose = new JButton("Close"); // history button - **listener required**
-		btnClose.setBounds(662, 521, 117, 29);
-		frame.getContentPane().add(btnClose);
+//		JButton btnClose = new JButton("Close"); // Close button - **listener required**
+//		btnClose.setBounds(662, 521, 117, 29);
+//		frame.getContentPane().add(btnClose);
 
 		// confirmDelete();
 		// createNewPortfolio();
@@ -178,7 +179,7 @@ public class View {
 				return false;
 			};
 		};
-		table.setFillsViewportHeight(true);
+		table.setFillsViewportHeight(false);
 
 		// Add the table to a scrolling pane
 		scrollPane = new JScrollPane(table);
