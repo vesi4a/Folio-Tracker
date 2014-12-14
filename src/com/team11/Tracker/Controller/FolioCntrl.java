@@ -1,5 +1,6 @@
 package com.team11.Tracker.Controller;
 
+import com.team11.Tracker.Model.IPortfolioHolder;
 import com.team11.Tracker.Model.Portfolio;
 import com.team11.Tracker.Model.PortfolioHolder;
 import com.team11.Tracker.View.View;
@@ -7,13 +8,13 @@ import com.team11.Tracker.View.View;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import java.util.Observable;
+
 
 public class FolioCntrl {
     private View view;
-    private PortfolioHolder portfolioHolder;
+    private IPortfolioHolder portfolioHolder;
 
-    public PortfolioHolder getPortfolioHolder() {
+    public IPortfolioHolder getPortfolioHolder() {
         return portfolioHolder;
     }
 

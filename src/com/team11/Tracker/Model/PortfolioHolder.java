@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class PortfolioHolder {
+public class PortfolioHolder implements IPortfolioHolder {
 
     ArrayList<Portfolio> portfolios;
 
