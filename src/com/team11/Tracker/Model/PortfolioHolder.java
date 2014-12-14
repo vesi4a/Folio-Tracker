@@ -10,20 +10,21 @@ import java.util.Scanner;
 
 public class PortfolioHolder implements IPortfolioHolder {
 
-    ArrayList<Portfolio> portfolios;
+    private ArrayList<Portfolio> portfolios;
 
-    public ArrayList<Portfolio> getPortfolios() {
-        return portfolios;
-    }
+
 
     public PortfolioHolder() {
         portfolios = new ArrayList<Portfolio>();
     }
 
+    public ArrayList<Portfolio> getPortfolios() {
+        return portfolios;
+    }
+
     public void addPortfolio(Portfolio folio) {
         portfolios.add(folio);
     }
-
 
 
     // Untested

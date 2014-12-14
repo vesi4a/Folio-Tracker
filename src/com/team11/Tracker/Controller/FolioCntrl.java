@@ -14,20 +14,6 @@ public class FolioCntrl {
     private View view;
     private IPortfolioHolder portfolioHolder;
 
-    public IPortfolioHolder getPortfolioHolder() {
-        return portfolioHolder;
-    }
-
-    public View getView() {
-        return view;
-    }
-
-
-    public Portfolio getCurrentFolio() {
-        return portfolioHolder.getPortfolios().get(view.getTabbedPane().getSelectedIndex());
-    }
-
-
     public FolioCntrl(View view, PortfolioHolder portfolioHolder) {
         this.view = view;
         this.portfolioHolder = portfolioHolder;
@@ -35,16 +21,21 @@ public class FolioCntrl {
         setUpViewEvents();
     }
 
-
-    public void updateFolioValue() {
-        view.getLblFolioValue().setText("$" + portfolioHolder.getPortfolios().get(view.getTabbedPane().getSelectedIndex()).getFolioValue());
+    public IPortfolioHolder getPortfolioHolder() {
+        return portfolioHolder;
     }
+    public View getView() {
+        return view;
+    }
+    public Portfolio getCurrentFolio() {
+        return portfolioHolder.getPortfolios().get(view.getTabbedPane().getSelectedIndex());
+    }
+
 
     private void setUpViewEvents() {
 
         StockAddListener stockAddListener = new StockAddListener(this);
         view.getBtnAdd().addActionListener(stockAddListener);
-
 
         for (Portfolio p : portfolioHolder.getPortfolios()) {
             p.addObserver(stockAddListener);
@@ -64,7 +55,7 @@ public class FolioCntrl {
             public void stateChanged(ChangeEvent e) {
                 if (e.getSource() instanceof JTabbedPane) {
                     JTabbedPane pane = (JTabbedPane) e.getSource();
-                    updateFolioValue();
+                    view.getLblFolioValue().setText("$" + portfolioHolder.getPortfolios().get(view.getTabbedPane().getSelectedIndex()).getFolioValue());
                     System.out.println("Selected paneNo : " + pane.getSelectedIndex());
                 }
             }

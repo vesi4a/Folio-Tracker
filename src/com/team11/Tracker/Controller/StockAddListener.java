@@ -19,12 +19,10 @@ import java.util.Observer;
 public class StockAddListener implements ActionListener, Observer {
 
     private View view;
-    private Portfolio portfolio;
     private FolioCntrl cntrl;
 
 
     StockAddListener(FolioCntrl cntrl) {
-        this.portfolio = cntrl.getCurrentFolio();
         this.view = cntrl.getView();
         this.cntrl = cntrl;
     }
@@ -33,7 +31,7 @@ public class StockAddListener implements ActionListener, Observer {
     @Override
     public void actionPerformed(ActionEvent e) {
         addStockErrorCheck();
-        portfolio = cntrl.getCurrentFolio();
+        Portfolio portfolio = cntrl.getCurrentFolio();
 
         String ticker = view.getTxtFieldTicker().getText();
         int amount = Integer.parseInt(view.getTxtFieldAmount().getText());
@@ -48,25 +46,26 @@ public class StockAddListener implements ActionListener, Observer {
     // Something on the backend has changed, Update the UI to reflect this change.
     @Override
     public void update(Observable o, Object arg) {
+		Portfolio test = (Portfolio)o;
+
         // Update the UI?
         DefaultTableModel tblModel = (DefaultTableModel) view.getTables().get(view.getTabbedPane().getSelectedIndex()).getModel();
         // Clear the table
         tblModel.setRowCount(0);
 
         // Add entries for all the shares in the portfolio
-        for (Share s: portfolio.getShares()) {
+        for (Share s: test.getShares()) {
             tblModel.addRow(new Object[]{
                     s.getTicker(),
                     s.getAmountOwned(),
                     new DecimalFormat("0.00").format(s.getCurrentSharePrice()),
                     // DecimalFormat helps make the value presentable and not have several decimal places
-                    new DecimalFormat("0.00").format(portfolio.getShare(s.getTicker()).getCurrentSharePrice() * s.getAmountOwned())
+                    new DecimalFormat("0.00").format(test.getShare(s.getTicker()).getCurrentSharePrice() * s.getAmountOwned())
             });
 
         }
 
-        // Update the folio value label
-        cntrl.updateFolioValue();
+		view.getLblFolioValue().setText("$" + test.getFolioValue());
     }
 
 

@@ -13,9 +13,9 @@ import java.awt.event.ActionListener;
 
 public class MenuBarListener implements ActionListener {
 
-    View view;
-    Portfolio portfolio;
-    FolioCntrl cntrl;
+    private View view;
+    private Portfolio portfolio;
+    private FolioCntrl cntrl;
 
     MenuBarListener(FolioCntrl cntrl) {
         this.portfolio = cntrl.getCurrentFolio();
@@ -48,12 +48,12 @@ public class MenuBarListener implements ActionListener {
                 int result = JOptionPane.showConfirmDialog(null, newPortFolioPanel,
                         "Create New PortFolio", JOptionPane.OK_CANCEL_OPTION);
 
-                String projname = (portFolioNameEntry.getText());
+                String folioName = (portFolioNameEntry.getText());
 
                 if (result == JOptionPane.CANCEL_OPTION){
                     break;
                 }
-                if (projname.equals("") || projname.equals(null)){
+                if (folioName.equals("") || folioName.equals(null)){
                     // TODO: Add check for a unique Portfolio name
                     JLabel enterFilenameLabel = new JLabel("File Name required.");
                     newPortFolioPanel.add(enterFilenameLabel);
@@ -61,8 +61,10 @@ public class MenuBarListener implements ActionListener {
                 }
                 else{
                     // Creates the tab and portfolio
-                    view.createTab(projname);
-                    cntrl.getPortfolioHolder().addPortfolio(new Portfolio(projname));
+                    view.createTab(folioName);
+                    Portfolio folio = new Portfolio(folioName);
+                    folio.addObserver(new StockAddListener(cntrl));
+                    cntrl.getPortfolioHolder().addPortfolio(folio);
                     break;
                 }
             }
