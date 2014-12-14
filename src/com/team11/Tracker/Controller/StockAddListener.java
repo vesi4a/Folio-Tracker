@@ -12,32 +12,31 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
+import java.util.Observable;
+import java.util.Observer;
 
 
-public class StockAddListener implements ActionListener {
+public class StockAddListener implements ActionListener, Observer {
 
-    View view;
-    Portfolio portfolio;
+    private View view;
+    private Portfolio portfolio;
 
-    FolioCntrl cntrl;
-    Border defaultBorder;
+    private FolioCntrl cntrl;
+
 
     StockAddListener(FolioCntrl cntrl) {
         this.portfolio = cntrl.getCurrentFolio();
         this.view = cntrl.getView();
         this.cntrl = cntrl;
-		defaultBorder = view.getTxtFieldTicker().getBorder();
+
 
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println("Add button pressed");
         addStockErrorCheck();
-
         portfolio = cntrl.getCurrentFolio();
-        
-        // TODO: Check that the fields have actual values within them
+
         String ticker = view.getTxtFieldTicker().getText();
         int amount = Integer.parseInt(view.getTxtFieldAmount().getText());
 
@@ -45,28 +44,39 @@ public class StockAddListener implements ActionListener {
 
             // Add a stock to the portfolio
             portfolio.addShare(ticker, amount);
-
-
-            DefaultTableModel tblModel = (DefaultTableModel) view.getTables().get(view.getTabbedPane().getSelectedIndex()).getModel();
-            tblModel.addRow(new Object[]{
-                    ticker,
-                    amount,
-                    new DecimalFormat("0.00").format(portfolio.getShare(ticker).getCurrentSharePrice()),
-                    // DecimalFormat helps make the value presentable and not have several decimal places
-                    new DecimalFormat("0.00").format(portfolio.getShare(ticker).getCurrentSharePrice() * amount)
-            });
-
-            cntrl.updateFolioValue();
-        }
-        else {
-
         }
     }
-    
+
+    @Override
+    public void update(Observable o, Object arg) {
+        // Update the UI?
+        DefaultTableModel tblModel = (DefaultTableModel) view.getTables().get(view.getTabbedPane().getSelectedIndex()).getModel();
+        // Clear the table
+        tblModel.setRowCount(0);
+
+        // Add entries for all the shares in the portfolio
+        for (Share s: portfolio.getShares()) {
+            tblModel.addRow(new Object[]{
+                    s.getTicker(),
+                    s.getAmountOwned(),
+                    new DecimalFormat("0.00").format(s.getCurrentSharePrice()),
+                    // DecimalFormat helps make the value presentable and not have several decimal places
+                    new DecimalFormat("0.00").format(portfolio.getShare(s.getTicker()).getCurrentSharePrice() * s.getAmountOwned())
+            });
+
+        }
+
+        // Update the folio value label
+        cntrl.updateFolioValue();
+    }
+
+
+
     private void addStockErrorCheck() {
-		 Border redBorder = BorderFactory.createLineBorder(Color.RED, 3);
-           
-           if ((view.getTxtFieldAmount().getText() == null || view.getTxtFieldAmount().getText().equals("")) && 
+		Border redBorder = BorderFactory.createLineBorder(Color.RED, 3);
+        Border defaultBorder = view.getTxtFieldTicker().getBorder();
+
+           if ((view.getTxtFieldAmount().getText() == null || view.getTxtFieldAmount().getText().equals("")) &&
            		(view.getTxtFieldTicker().getText() == null || view.getTxtFieldTicker().getText().equals(""))) {
 				System.out.println("Ticker and Amount required");
 				view.getErrorLabel().setText("Ticker and Amount required");
@@ -96,7 +106,7 @@ public class StockAddListener implements ActionListener {
 			else{
 				view.getTxtFieldAmount().setBorder(defaultBorder);
 			}
-			
+
 			if (!view.getTxtFieldAmount().getText().matches("[+-]?\\d*(\\.\\d+)?")){
 				System.out.println("Amount must be integer");
 				view.getErrorLabel().setText("Amount must be integer");
@@ -106,7 +116,7 @@ public class StockAddListener implements ActionListener {
 			else{
 				view.getTxtFieldAmount().setBorder(defaultBorder);
 			}
-			
+
 			/*
 			if (getTickerValidity(view.getTxtFieldTicker().getText())){
 				System.out.println("Invalid ticker symbol");
@@ -119,10 +129,10 @@ public class StockAddListener implements ActionListener {
     private boolean getTickerValidity(String tickerSymbol) {
 		try {
 			Share s = new Share(tickerSymbol, 0.0, 0);
-		} 
+		}
 		catch (Exception e) {
 			return false;
 		}
 		return true;
-	} 
+	}
 }

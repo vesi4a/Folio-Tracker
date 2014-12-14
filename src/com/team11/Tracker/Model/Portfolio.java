@@ -5,9 +5,10 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Observable;
 import java.util.Scanner;
 
-public class Portfolio {
+public class Portfolio extends Observable {
 
 
     // All the shares held within this portfolio
@@ -22,9 +23,9 @@ public class Portfolio {
         // Creates an empty arraylist
 		shares = new ArrayList<Share>();
 		portfolioName = name;
+		//setChanged();
+
 	}
-
-
 
 	public double getFolioValue() {
 		double runningTotal = 0;
@@ -53,6 +54,11 @@ public class Portfolio {
 			try {
 				q.setValues(tickerSymbol);  /*changed incorrect parameter to this method, which takes ticker symbol not the share name*/
 				shares.add(new Share(tickerSymbol, q.getLatest(), numberOfShares));
+
+				// Tell the listener to update the UI
+				setChanged();
+				notifyObservers();
+
 			}
 			catch (Exception e) {
 
@@ -67,7 +73,7 @@ public class Portfolio {
 		}
     }
 
-	// Returns true if the share is curently owned by this portfolio
+	// Returns true if the share is currently owned by this portfolio
 	public boolean ownShare(String ticker) {
 		boolean owned = false;
 		for (Share s : shares) {

@@ -7,10 +7,8 @@ import com.team11.Tracker.View.View;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import java.util.Observable;
 
-/**
- * Created by cameron on 08/12/2014.
- */
 public class FolioCntrl {
     private View view;
     private PortfolioHolder portfolioHolder;
@@ -42,8 +40,14 @@ public class FolioCntrl {
     }
 
     private void setUpViewEvents() {
-  
-        view.getBtnAdd().addActionListener(new StockAddListener(this));
+
+        StockAddListener stockAddListener = new StockAddListener(this);
+        view.getBtnAdd().addActionListener(stockAddListener);
+
+
+        for (Portfolio p : portfolioHolder.getPortfolios()) {
+            p.addObserver(stockAddListener);
+        }
 
         view.getNewFolioMenuItem().addActionListener(new MenuBarListener(this));
         view.getOpenFolioMenuItem().addActionListener(new MenuBarListener(this));
