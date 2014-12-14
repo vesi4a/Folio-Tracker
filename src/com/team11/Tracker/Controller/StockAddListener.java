@@ -38,7 +38,9 @@ public class StockAddListener implements ActionListener {
 
 
         // Updating the table
-        DefaultTableModel tblModel = (DefaultTableModel) view.getTable().getModel();
+        // .get(0) is for adding to the 1st tabs table
+        // .get(1) would add to the 2 tab and so on
+        DefaultTableModel tblModel = (DefaultTableModel) view.getTables().get(0).getModel();
         tblModel.addRow(new Object[]{
                 ticker,
                 amount,

@@ -18,6 +18,8 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
@@ -31,7 +33,7 @@ public class View {
 	private static JTabbedPane tabbedPane;
 	private JScrollPane scrollPane;
 
-	private JTable table;
+	private ArrayList<JTable> tables;
 
 	private JButton btnAdd;
 	private JLabel lblFolioValue;
@@ -48,8 +50,8 @@ public class View {
 		return lblFolioValue;
 	}
 
-	public JTable getTable() {
-		return table;
+	public ArrayList<JTable> getTables() {
+		return tables;
 	}
 
 	public JButton getBtnAdd() {
@@ -101,6 +103,9 @@ public class View {
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP); // Window for displaying portfolio
 		tabbedPane.setBounds(6, 30, 788, 400); // old values 6 6 788 484
 		frame.getContentPane().add(tabbedPane);
+
+
+		tables = new ArrayList<JTable>();
 
 		createTab("Portfolio1");
 		createTab("Portfolio2"); // second tab to test for layout
@@ -172,7 +177,7 @@ public class View {
 
 		// Create a new table instance that doesn't allow user editing of the
 		// cells
-		table = new JTable(model) {
+		JTable table = new JTable(model) {
 			private static final long serialVersionUID = 1L;
 
 			public boolean isCellEditable(int row, int column) {
@@ -180,6 +185,8 @@ public class View {
 			};
 		};
 		table.setFillsViewportHeight(false);
+
+		tables.add(table);
 
 		// Add the table to a scrolling pane
 		scrollPane = new JScrollPane(table);
