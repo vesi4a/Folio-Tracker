@@ -3,7 +3,6 @@ package com.team11.Tracker.Controller;
 import com.team11.Tracker.Model.Portfolio;
 import com.team11.Tracker.View.View;
 
-import javax.sound.sampled.Port;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -42,9 +41,9 @@ public class StockAddListener implements ActionListener {
         tblModel.addRow(new Object[]{
                 ticker,
                 amount,
-                new DecimalFormat("0.00").format(model.getShare(ticker).getSharePrice()),
+                new DecimalFormat("0.00").format(model.getShare(ticker).getCurrentSharePrice()),
                 // DecimalFormat helps make the value presentable and not have several decimal places
-                new DecimalFormat("0.00").format(model.getShare(ticker).getSharePrice() * amount)
+                new DecimalFormat("0.00").format(model.getShare(ticker).getCurrentSharePrice() * amount)
         });
 
         cntrl.updateFolioValue();

@@ -7,17 +7,18 @@ package com.team11.Tracker.Model;
     // Class to the hold a purchares of shares
     // holds the sharename, the price paid and the amount purchased
 public class Share {
-	private String ticker; /*Added ticker symbol to constructor and field*/
+	private String ticker;
     private String shareName;
-    private Double sharePrice;
+    private Double currentSharePrice;
+    private Double purchasePrice;
     private Integer amountOwned;
 
 
     /*Constructor should include ticker symbol*/
-    public Share(String ticker, Double sharePrice, Integer amountOwned) {
+    public Share(String ticker, Double currentSharePrice, Integer amountOwned) {
     	this.ticker = ticker;
     	shareName = " "; /* Placeholder, user can specify name later*/
-        this.sharePrice = sharePrice;
+        this.currentSharePrice = currentSharePrice;
         this.amountOwned = amountOwned;
     }
 
@@ -25,8 +26,12 @@ public class Share {
         return shareName;
     }
 
-    public Double getSharePrice() {
-        return sharePrice;
+    public Double getPurchasePrice() {
+        return purchasePrice;
+    }
+
+    public Double getCurrentSharePrice() {
+        return currentSharePrice;
     }
     
     public void setShareName(String shareName) {
@@ -43,6 +48,6 @@ public class Share {
 	
 	/*Added string representation for testing purposes and file reading/writing purposes*/
 	public String toString(){
-		return (ticker + " "  + amountOwned + " " + sharePrice + " " + shareName);
+		return (ticker + " "  + amountOwned + " " + purchasePrice + " " + currentSharePrice + " " + shareName);
 	}
 }
