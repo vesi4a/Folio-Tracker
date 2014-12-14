@@ -40,6 +40,9 @@ public class View {
 
 
 	private JMenuItem newFolioMenuItem;
+	private JMenuItem openFolioMenuItem;
+	private JMenuItem closeFolioMenuItem;
+	private JMenuItem closeAllFolioMenuItem;
 
 	public JTabbedPane getTabbedPane() {
 		return tabbedPane;
@@ -47,6 +50,18 @@ public class View {
 
 	public JMenuItem getNewFolioMenuItem() {
 		return newFolioMenuItem;
+	}
+
+	public JMenuItem getOpenFolioMenuItem() {
+		return openFolioMenuItem;
+	}
+
+	public JMenuItem getCloseFolioMenuItem() {
+		return closeFolioMenuItem;
+	}
+
+	public JMenuItem getCloseAllFolioMenuItem() {
+		return closeAllFolioMenuItem;
 	}
 
 	public JTextField getTxtFieldTicker() {
@@ -402,32 +417,36 @@ public class View {
 				ActionEvent.ALT_MASK));
 		newFolioMenuItem.getAccessibleContext().setAccessibleDescription(
 				"Open a new Tab");
+		newFolioMenuItem.setActionCommand("NewFolio");
 		// menuItem.addActionListener(new MenuBarController());
 		menu.add(newFolioMenuItem);
 
-		menuItem = new JMenuItem("Open", KeyEvent.VK_N);
-		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O,
+		openFolioMenuItem = new JMenuItem("Open Portfolio", KeyEvent.VK_N);
+		openFolioMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O,
 				ActionEvent.ALT_MASK));
-		menuItem.getAccessibleContext().setAccessibleDescription(
+		openFolioMenuItem.getAccessibleContext().setAccessibleDescription(
 				"Open a portfolio file");
+		openFolioMenuItem.setActionCommand("OpenFolio");
 		// menuItem.addActionListener(new MenuBarController());
-		menu.add(menuItem);
+		menu.add(openFolioMenuItem);
 
-		menuItem = new JMenuItem("Delete", KeyEvent.VK_D);
-		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D,
+		closeFolioMenuItem = new JMenuItem("Close Portfolio", KeyEvent.VK_D);
+		closeFolioMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D,
 				ActionEvent.ALT_MASK));
-		menuItem.getAccessibleContext().setAccessibleDescription(
+		closeFolioMenuItem.getAccessibleContext().setAccessibleDescription(
 				"Delete a Portfolio");
+		closeFolioMenuItem.setActionCommand("CloseFolio");
 		// menuItem.addActionListener(new MenuBarController());
-		menu.add(menuItem);
+		menu.add(closeFolioMenuItem);
 
-		menuItem = new JMenuItem("Close All", KeyEvent.VK_C);
-		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C,
+		closeAllFolioMenuItem = new JMenuItem("Close All", KeyEvent.VK_C);
+		closeAllFolioMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C,
 				ActionEvent.ALT_MASK));
-		menuItem.getAccessibleContext().setAccessibleDescription(
+		closeAllFolioMenuItem.getAccessibleContext().setAccessibleDescription(
 				"Close all portfolios");
+		closeAllFolioMenuItem.setActionCommand("CloseAllFolios");
 		// menuItem.addActionListener(new MenuBarController());
-		menu.add(menuItem);
+		menu.add(closeAllFolioMenuItem);
 
 		menu.addSeparator();
 
