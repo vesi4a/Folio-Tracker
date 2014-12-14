@@ -98,7 +98,7 @@ public class View {
 	 */
 	private void initialize() {
 		frame = new JFrame("Folio Tracker");
-		frame.setVisible(true);
+
 		// frame.setBounds(100, 100, 800, 600);
 		frame.setSize(800, 600); // Window boundary
 		frame.setLocationRelativeTo(null);
@@ -175,6 +175,7 @@ public class View {
 		// stockAddingError();
 		// editStock();
 
+		frame.setVisible(true);
 	}
 
 	private void createTab(String PortfolioName) {
