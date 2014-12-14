@@ -38,6 +38,13 @@ public class View {
 	private JButton btnAdd;
 	private JLabel lblFolioValue;
 
+
+	private JMenuItem newFolioMenuItem;
+
+	public JMenuItem getNewFolioMenuItem() {
+		return newFolioMenuItem;
+	}
+
 	public JTextField getTxtFieldTicker() {
 		return txtFieldTicker;
 	}
@@ -53,6 +60,8 @@ public class View {
 	public ArrayList<JTable> getTables() {
 		return tables;
 	}
+
+
 
 	public JButton getBtnAdd() {
 		return btnAdd;
@@ -363,7 +372,7 @@ public class View {
 		String projname = (portFolioNameEntry.getText());
 	}
 
-	private static JMenuBar menuSetup() {
+	private JMenuBar menuSetup() {
 
 		// Where the GUI is created:
 		JMenuBar menuBar;
@@ -382,13 +391,13 @@ public class View {
 
 		// a group of JMenuItems
 
-		menuItem = new JMenuItem("New Portfolio", KeyEvent.VK_N);
-		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N,
+		newFolioMenuItem = new JMenuItem("New Portfolio", KeyEvent.VK_N);
+		newFolioMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N,
 				ActionEvent.ALT_MASK));
-		menuItem.getAccessibleContext().setAccessibleDescription(
+		newFolioMenuItem.getAccessibleContext().setAccessibleDescription(
 				"Open a new Tab");
 		// menuItem.addActionListener(new MenuBarController());
-		menu.add(menuItem);
+		menu.add(newFolioMenuItem);
 
 		menuItem = new JMenuItem("Open", KeyEvent.VK_N);
 		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O,

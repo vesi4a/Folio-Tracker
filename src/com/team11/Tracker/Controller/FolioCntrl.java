@@ -32,7 +32,7 @@ public class FolioCntrl {
     }
 
 
-    private void updateFolioValue() {
+    public void updateFolioValue() {
         view.getLblFolioValue().setText("$" + model.getFolioValue());
     }
 
@@ -40,6 +40,7 @@ public class FolioCntrl {
 
         view.getBtnAdd().addActionListener(new StockAddListener(this));
 
+        view.getNewFolioMenuItem().addActionListener(new NewFolioListener(this));
 
         // Other buttons here
     }

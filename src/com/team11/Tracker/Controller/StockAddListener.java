@@ -17,11 +17,14 @@ public class StockAddListener implements ActionListener {
     View view;
     Portfolio model;
 
+    FolioCntrl cntrl;
+
     StockAddListener(FolioCntrl cntrl) {
         //this.model = model;
         //this.view = view;
         this.model = cntrl.getModel();
         this.view = cntrl.getView();
+        this.cntrl = cntrl;
     }
 
     @Override
@@ -49,6 +52,6 @@ public class StockAddListener implements ActionListener {
                 new DecimalFormat("0.00").format(model.getShare(ticker).getSharePrice() * amount)
         });
 
-        //updateFolioValue();
+        cntrl.updateFolioValue();
     }
 }
