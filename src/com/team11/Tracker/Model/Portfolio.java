@@ -14,7 +14,7 @@ public class Portfolio extends Observable {
     // All the shares held within this portfolio
     private ArrayList<Share> shares;
 
-    /*Portfolios should be identified by a name given by the user, also included in constructor*/
+	//
     private String portfolioName;
 
 
@@ -23,10 +23,10 @@ public class Portfolio extends Observable {
         // Creates an empty arraylist
 		shares = new ArrayList<Share>();
 		portfolioName = name;
-		//setChanged();
-
 	}
 
+
+	// Returns the total value of the portfolio
 	public double getFolioValue() {
 		double runningTotal = 0;
 		try {
@@ -43,7 +43,6 @@ public class Portfolio extends Observable {
 
 
     // Only adds shares at the current price, Could be modified to allow the price to be specified
-	/*Changed the addShare method parameters. This is to match the textboxes on the GUI that the user enters text into*/
 	public void addShare(String tickerSymbol, Integer numberOfShares) {
 		if (ownShare(tickerSymbol)) {
 			// We already own this shares, We need to add on the extra shares and average the purchase price
@@ -52,7 +51,7 @@ public class Portfolio extends Observable {
 			// Add a new share to the folio
 			Quote q = new Quote(false);
 			try {
-				q.setValues(tickerSymbol);  /*changed incorrect parameter to this method, which takes ticker symbol not the share name*/
+				q.setValues(tickerSymbol);
 				shares.add(new Share(tickerSymbol, q.getLatest(), numberOfShares));
 
 				// Tell the listener to update the UI
@@ -66,12 +65,14 @@ public class Portfolio extends Observable {
 		}
 	}
 
+
     public void sellShare(String ticker, int amount) {
         // TODO: Implement
 		if (!ownShare(ticker)) {
 			// Can't sell shares you don't own.
 		}
     }
+
 
 	// Returns true if the share is currently owned by this portfolio
 	public boolean ownShare(String ticker) {
@@ -84,9 +85,13 @@ public class Portfolio extends Observable {
 		return owned;
 	}
 
+	// Returns the share object whos sticker matches the paramater
     public Share getShare(String ticker) {
+		// Check that we own a share that matches the paramater
 		if (ownShare(ticker)) {
+			// Find the share withing the array
 			for (Share s : shares) {
+				// Return the share object
 				if (s.getTicker().equals(ticker)) {
 					return s;
 				}

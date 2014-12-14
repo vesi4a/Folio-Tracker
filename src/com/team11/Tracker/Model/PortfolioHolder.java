@@ -8,9 +8,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-/**
- * Created by cameron on 14/12/2014.
- */
 public class PortfolioHolder {
 
     ArrayList<Portfolio> portfolios;
@@ -26,6 +23,8 @@ public class PortfolioHolder {
     public void addPortfolio(Portfolio folio) {
         portfolios.add(folio);
     }
+
+
 
     // Untested
     public void loadFolio() throws FileNotFoundException {

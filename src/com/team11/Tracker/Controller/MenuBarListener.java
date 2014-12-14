@@ -15,7 +15,6 @@ public class MenuBarListener implements ActionListener {
 
     View view;
     Portfolio portfolio;
-
     FolioCntrl cntrl;
 
     MenuBarListener(FolioCntrl cntrl) {

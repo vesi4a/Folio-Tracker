@@ -20,7 +20,6 @@ public class StockAddListener implements ActionListener, Observer {
 
     private View view;
     private Portfolio portfolio;
-
     private FolioCntrl cntrl;
 
 
@@ -28,10 +27,9 @@ public class StockAddListener implements ActionListener, Observer {
         this.portfolio = cntrl.getCurrentFolio();
         this.view = cntrl.getView();
         this.cntrl = cntrl;
-
-
     }
 
+    // An action has been performed
     @Override
     public void actionPerformed(ActionEvent e) {
         addStockErrorCheck();
@@ -41,12 +39,13 @@ public class StockAddListener implements ActionListener, Observer {
         int amount = Integer.parseInt(view.getTxtFieldAmount().getText());
 
         if (!portfolio.ownShare(ticker)) {
-
             // Add a stock to the portfolio
             portfolio.addShare(ticker, amount);
         }
     }
 
+
+    // Something on the backend has changed, Update the UI to reflect this change.
     @Override
     public void update(Observable o, Object arg) {
         // Update the UI?
