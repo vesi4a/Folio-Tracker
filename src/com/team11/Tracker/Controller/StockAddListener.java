@@ -20,8 +20,6 @@ public class StockAddListener implements ActionListener {
     FolioCntrl cntrl;
 
     StockAddListener(FolioCntrl cntrl) {
-        //this.model = model;
-        //this.view = view;
         this.model = cntrl.getModel();
         this.view = cntrl.getView();
         this.cntrl = cntrl;
@@ -40,10 +38,7 @@ public class StockAddListener implements ActionListener {
         model.addShare(ticker, amount);
 
 
-        // Updating the table
-        // .get(0) is for adding to the 1st tabs table
-        // .get(1) would add to the 2 tab and so on
-        DefaultTableModel tblModel = (DefaultTableModel) view.getTables().get(0).getModel();
+        DefaultTableModel tblModel = (DefaultTableModel) view.getTables().get(view.getTabbedPane().getSelectedIndex()).getModel();
         tblModel.addRow(new Object[]{
                 ticker,
                 amount,
