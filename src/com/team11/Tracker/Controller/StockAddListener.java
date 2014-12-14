@@ -13,9 +13,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DecimalFormat;
 
-/**
- * Created by cameron on 14/12/2014.
- */
+
 public class StockAddListener implements ActionListener {
 
     View view;
