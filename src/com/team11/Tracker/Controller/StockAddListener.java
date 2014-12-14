@@ -1,6 +1,8 @@
 package com.team11.Tracker.Controller;
 
+import com.team11.Tracker.Model.IPortfolioHolder;
 import com.team11.Tracker.Model.Portfolio;
+import com.team11.Tracker.Model.PortfolioHolder;
 import com.team11.Tracker.Model.Share;
 import com.team11.Tracker.View.View;
 
@@ -11,27 +13,27 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.DecimalFormat;
-import java.util.Observable;
-import java.util.Observer;
 
 
-public class StockAddListener implements ActionListener, Observer {
 
-    private View view;
-    private FolioCntrl cntrl;
+public class StockAddListener implements ActionListener {
+
+   	private View view;
+	private IPortfolioHolder holder;
 
 
-    StockAddListener(FolioCntrl cntrl) {
-        this.view = cntrl.getView();
-        this.cntrl = cntrl;
-    }
+
+	public StockAddListener(View view, IPortfolioHolder holder) {
+		this.view = view;
+		this.holder = holder;
+	}
 
     // An action has been performed
     @Override
     public void actionPerformed(ActionEvent e) {
         addStockErrorCheck();
-        Portfolio portfolio = cntrl.getCurrentFolio();
+
+        Portfolio portfolio = holder.getPortfolios().get(view.getTabbedPane().getSelectedIndex());
 
         String ticker = view.getTxtFieldTicker().getText();
         int amount = Integer.parseInt(view.getTxtFieldAmount().getText());
@@ -41,34 +43,6 @@ public class StockAddListener implements ActionListener, Observer {
             portfolio.addShare(ticker, amount);
         }
     }
-
-
-    // Something on the backend has changed, Update the UI to reflect this change.
-    @Override
-    public void update(Observable o, Object arg) {
-		Portfolio test = (Portfolio)o;
-
-        // Update the UI?
-        DefaultTableModel tblModel = (DefaultTableModel) view.getTables().get(view.getTabbedPane().getSelectedIndex()).getModel();
-        // Clear the table
-        tblModel.setRowCount(0);
-
-        // Add entries for all the shares in the portfolio
-        for (Share s: test.getShares()) {
-            tblModel.addRow(new Object[]{
-                    s.getTicker(),
-                    s.getAmountOwned(),
-                    new DecimalFormat("0.00").format(s.getCurrentSharePrice()),
-                    // DecimalFormat helps make the value presentable and not have several decimal places
-                    new DecimalFormat("0.00").format(test.getShare(s.getTicker()).getCurrentSharePrice() * s.getAmountOwned())
-            });
-
-        }
-
-		view.getLblFolioValue().setText("$" + test.getFolioValue());
-    }
-
-
 
     private void addStockErrorCheck() {
 		Border redBorder = BorderFactory.createLineBorder(Color.RED, 3);

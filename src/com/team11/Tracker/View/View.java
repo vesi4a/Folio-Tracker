@@ -1,5 +1,12 @@
 package com.team11.Tracker.View;
 
+import com.team11.Tracker.Controller.MenuBarListener;
+import com.team11.Tracker.Controller.StockAddListener;
+import com.team11.Tracker.Controller.TabChangeListener;
+import com.team11.Tracker.Model.Portfolio;
+import com.team11.Tracker.Model.PortfolioHolder;
+import com.team11.Tracker.Model.Share;
+
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
@@ -19,13 +26,18 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 
-public class View {
+public class View implements Observer {
 
 	private static JFrame frame;
 	private JTextField txtFieldTicker;
@@ -48,22 +60,6 @@ public class View {
 
 	public JTabbedPane getTabbedPane() {
 		return tabbedPane;
-	}
-
-	public JMenuItem getNewFolioMenuItem() {
-		return newFolioMenuItem;
-	}
-
-	public JMenuItem getOpenFolioMenuItem() {
-		return openFolioMenuItem;
-	}
-
-	public JMenuItem getCloseFolioMenuItem() {
-		return closeFolioMenuItem;
-	}
-
-	public JMenuItem getCloseAllFolioMenuItem() {
-		return closeAllFolioMenuItem;
 	}
 
 	public JTextField getTxtFieldTicker() {
@@ -92,10 +88,15 @@ public class View {
 	}
 
 
+
+	PortfolioHolder portfolioHolder;
+
+
 	/**
 	 * Create the application.
 	 */
-	public View() {
+	public View(PortfolioHolder portfolioHolder) {
+		this.portfolioHolder = portfolioHolder;
 		initialize();
 	}
 
@@ -103,6 +104,7 @@ public class View {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+
 		frame = new JFrame("Folio Tracker");
 
 		// frame.setBounds(100, 100, 800, 600);
@@ -115,9 +117,16 @@ public class View {
 
 		frame.getContentPane().setLayout(null);
 
+
+		lblFolioValue = new JLabel("$0.00"); // displays total portfolio value
+		lblFolioValue.setBounds(177, 450, 61, 16); // old values 177 534 61 16
+		frame.getContentPane().add(lblFolioValue);
+
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP); // Window for displaying portfolio
 		tabbedPane.setBounds(6, 30, 788, 400); // old values 6 6 788 484
 		frame.getContentPane().add(tabbedPane);
+		tabbedPane.addChangeListener(new TabChangeListener(this,portfolioHolder));
+
 
 
 		tables = new ArrayList<JTable>();
@@ -151,10 +160,8 @@ public class View {
 		btnAdd = new JButton("Add"); // add button - **listener required**
 		btnAdd.setBounds(450, 0, 117, 29); // old values 545 480 117 29
 		frame.getContentPane().add(btnAdd);
+		btnAdd.addActionListener(new StockAddListener(this, portfolioHolder));
 
-//		JButton btnDel = new JButton("Delete"); // delete button - **listener required**
-//		btnDel.setBounds(545, 521, 117, 29);
-//		frame.getContentPane().add(btnDel);
 
 		errorLabel = new JLabel();
 		errorLabel.setBounds(600, 6, 200, 16);
@@ -165,10 +172,8 @@ public class View {
 		lblTotalValue.setBounds(16, 450, 159, 16); // old values 16 534 159 16
 		frame.getContentPane().add(lblTotalValue);
 
-		lblFolioValue = new JLabel("$0.00"); // displays total portfolio value
-		lblFolioValue.setBounds(177, 450, 61, 16); // old values 177 534 61 16
-		frame.getContentPane().add(lblFolioValue);
-		
+
+
 		JButton btnHist = new JButton("History"); // history button - **listener required**
 		btnHist.setBounds(600, 445, 117, 29); // old values 247 529 117 29
 		frame.getContentPane().add(btnHist);
@@ -183,6 +188,47 @@ public class View {
 		// editStock();
 
 		frame.setVisible(true);
+	}
+
+	public void showNewFolioAlert() {
+		while (true) {
+			JTextField portFolioNameEntry = new JTextField(20);
+
+			JPanel newPortFolioPanel = new JPanel();
+
+			JLabel enterPortFolioNameLabel = new JLabel("Enter PortFolio Name:");
+
+			newPortFolioPanel.setLayout(new BoxLayout(newPortFolioPanel,
+					BoxLayout.Y_AXIS));
+
+			portFolioNameEntry.setMaximumSize(new Dimension(1500, 20));
+
+			newPortFolioPanel.add(enterPortFolioNameLabel);
+			newPortFolioPanel.add(portFolioNameEntry);
+
+			int result = JOptionPane.showConfirmDialog(null, newPortFolioPanel,
+					"Create New PortFolio", JOptionPane.OK_CANCEL_OPTION);
+
+			String folioName = (portFolioNameEntry.getText());
+
+			if (result == JOptionPane.CANCEL_OPTION) {
+				break;
+			}
+			if (folioName.equals("") || folioName.equals(null)) {
+				// TODO: Add check for a unique Portfolio name
+				JLabel enterFilenameLabel = new JLabel("File Name required.");
+				newPortFolioPanel.add(enterFilenameLabel);
+
+			} else {
+				// Creates the tab and portfolio
+				createTab(folioName);
+				Portfolio folio = new Portfolio(folioName);
+				folio.addObserver(this);
+				portfolioHolder.addPortfolio(folio);
+				break;
+
+			}
+		}
 	}
 
 	public void createTab(String PortfolioName) {
@@ -411,6 +457,7 @@ public class View {
 				"Open a new Tab");
 		newFolioMenuItem.setActionCommand("NewFolio");
 		// menuItem.addActionListener(new MenuBarController());
+		newFolioMenuItem.addActionListener(new MenuBarListener(this, portfolioHolder));
 		menu.add(newFolioMenuItem);
 
 		openFolioMenuItem = new JMenuItem("Open Portfolio", KeyEvent.VK_N);
@@ -419,6 +466,7 @@ public class View {
 		openFolioMenuItem.getAccessibleContext().setAccessibleDescription(
 				"Open a portfolio file");
 		openFolioMenuItem.setActionCommand("OpenFolio");
+		openFolioMenuItem.addActionListener(new MenuBarListener(this, portfolioHolder));
 		// menuItem.addActionListener(new MenuBarController());
 		menu.add(openFolioMenuItem);
 
@@ -428,6 +476,7 @@ public class View {
 		closeFolioMenuItem.getAccessibleContext().setAccessibleDescription(
 				"Delete a Portfolio");
 		closeFolioMenuItem.setActionCommand("CloseFolio");
+		closeFolioMenuItem.addActionListener(new MenuBarListener(this, portfolioHolder));
 		// menuItem.addActionListener(new MenuBarController());
 		menu.add(closeFolioMenuItem);
 
@@ -437,6 +486,7 @@ public class View {
 		closeAllFolioMenuItem.getAccessibleContext().setAccessibleDescription(
 				"Close all portfolios");
 		closeAllFolioMenuItem.setActionCommand("CloseAllFolios");
+		closeAllFolioMenuItem.addActionListener(new MenuBarListener(this, portfolioHolder));
 		// menuItem.addActionListener(new MenuBarController());
 		menu.add(closeAllFolioMenuItem);
 
@@ -449,10 +499,35 @@ public class View {
 		exitMenuItem.getAccessibleContext().setAccessibleDescription(
 				"Terminate the Application");
 		exitMenuItem.setActionCommand("Exit");
+		exitMenuItem.addActionListener(new MenuBarListener(this, portfolioHolder));
 		// menuItem.addActionListener(new MenuBarController());
 		menu.add(exitMenuItem);
 
 		return menuBar;
 	}
 
+	// Updates the table
+	@Override
+	public void update(Observable o, Object arg) {
+		Portfolio test = (Portfolio)o;
+
+		// Update the UI?
+		DefaultTableModel tblModel = (DefaultTableModel) this.getTables().get(this.getTabbedPane().getSelectedIndex()).getModel();
+		// Clear the table
+		tblModel.setRowCount(0);
+
+		// Add entries for all the shares in the portfolio
+		for (Share s: test.getShares()) {
+			tblModel.addRow(new Object[]{
+					s.getTicker(),
+					s.getAmountOwned(),
+					new DecimalFormat("0.00").format(s.getCurrentSharePrice()),
+					// DecimalFormat helps make the value presentable and not have several decimal places
+					new DecimalFormat("0.00").format(test.getShare(s.getTicker()).getCurrentSharePrice() * s.getAmountOwned())
+			});
+
+		}
+
+		this.getLblFolioValue().setText("$" + test.getFolioValue());
+	}
 }
