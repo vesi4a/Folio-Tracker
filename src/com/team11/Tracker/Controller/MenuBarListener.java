@@ -26,6 +26,7 @@ public class MenuBarListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("NewFolio")) {
             System.out.println("Add folio menu item pressed");
+            cntrl.getPortfolioHolder().addPortfolio(new Portfolio("TEST NAME"));
             view.createTab("TEST NAME");
         }
         else if (e.getActionCommand().equals("OpenFolio")) {

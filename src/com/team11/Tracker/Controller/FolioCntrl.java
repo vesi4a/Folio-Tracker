@@ -15,6 +15,10 @@ public class FolioCntrl {
     private View view;
     private PortfolioHolder portfolioHolder;
 
+    public PortfolioHolder getPortfolioHolder() {
+        return portfolioHolder;
+    }
+
     public View getView() {
         return view;
     }
