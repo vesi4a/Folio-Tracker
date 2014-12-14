@@ -14,6 +14,7 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.KeyStroke;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -44,6 +45,7 @@ public class View {
 	private JMenuItem closeFolioMenuItem;
 	private JMenuItem closeAllFolioMenuItem;
 	private JMenuItem exitMenuItem;
+	private static JLabel errorLabel;
 
 	public JTabbedPane getTabbedPane() {
 		return tabbedPane;
@@ -81,30 +83,15 @@ public class View {
 		return tables;
 	}
 
+	public JLabel getErrorLabel(){
+		return errorLabel;
+	}
 
 
 	public JButton getBtnAdd() {
 		return btnAdd;
 	}
 
-	// // private static JScrollPane scrollPane2;
-	//
-	// /**
-	// * Launch the application.
-	// */
-	// public static void main(String[] args) {
-	// EventQueue.invokeLater(new Runnable() {
-	// @SuppressWarnings("static-access")
-	// public void run() {
-	// try {
-	// View window = new View();
-	// window.frame.setVisible(true);
-	// } catch (Exception e) {
-	// e.printStackTrace();
-	// }
-	// }
-	// });
-	// }
 
 	/**
 	 * Create the application.
@@ -170,9 +157,10 @@ public class View {
 //		btnDel.setBounds(545, 521, 117, 29);
 //		frame.getContentPane().add(btnDel);
 
-		JLabel lblnull_1 = new JLabel("(Error message placeholder)"); // displays error message
-		lblnull_1.setBounds(600, 6, 200, 16); // old values 694 487 61 22
-		frame.getContentPane().add(lblnull_1);
+		errorLabel = new JLabel();
+		errorLabel.setBounds(600, 6, 200, 16);
+		errorLabel.setForeground (Color.red);
+		frame.getContentPane().add(errorLabel);
 
 		JLabel lblTotalValue = new JLabel("Total value of portfolio:"); // total value label
 		lblTotalValue.setBounds(16, 450, 159, 16); // old values 16 534 159 16

@@ -32,7 +32,7 @@ public class FolioCntrl {
     }
 
     private void setUpViewEvents() {
-
+  
         view.getBtnAdd().addActionListener(new StockAddListener(this));
 
         view.getNewFolioMenuItem().addActionListener(new MenuBarListener(this));
