@@ -30,7 +30,7 @@ public class View {
 	private static JFrame frame;
 	private JTextField txtFieldTicker;
 	private JTextField txtFieldAmount;
-	private static JTabbedPane tabbedPane;
+	private JTabbedPane tabbedPane;
 	private JScrollPane scrollPane;
 
 	private ArrayList<JTable> tables;
@@ -40,6 +40,10 @@ public class View {
 
 
 	private JMenuItem newFolioMenuItem;
+
+	public JTabbedPane getTabbedPane() {
+		return tabbedPane;
+	}
 
 	public JMenuItem getNewFolioMenuItem() {
 		return newFolioMenuItem;
@@ -178,7 +182,7 @@ public class View {
 		frame.setVisible(true);
 	}
 
-	private void createTab(String PortfolioName) {
+	public void createTab(String PortfolioName) {
 		DefaultTableModel model = new DefaultTableModel();
 		model.addColumn("Ticker Symbol");
 		model.addColumn("Number of Shares");
@@ -200,6 +204,7 @@ public class View {
 
 		// Add the table to a scrolling pane
 		scrollPane = new JScrollPane(table);
+
 		tabbedPane.addTab(PortfolioName, null, scrollPane, null);
 
 	}

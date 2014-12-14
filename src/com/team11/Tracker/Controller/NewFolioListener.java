@@ -25,6 +25,7 @@ public class NewFolioListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         System.out.println("Add folio menu item pressed");
+        view.createTab("TEST NAME");
 
     }
 }
