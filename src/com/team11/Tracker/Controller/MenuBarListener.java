@@ -12,12 +12,12 @@ import java.awt.event.ActionListener;
 public class MenuBarListener implements ActionListener {
 
     View view;
-    Portfolio model;
+    Portfolio portfolio;
 
     FolioCntrl cntrl;
 
     MenuBarListener(FolioCntrl cntrl) {
-        this.model = cntrl.getModel();
+        this.portfolio = cntrl.getCurrentFolio();
         this.view = cntrl.getView();
         this.cntrl = cntrl;
     }

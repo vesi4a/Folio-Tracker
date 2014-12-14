@@ -19,13 +19,13 @@ import java.text.DecimalFormat;
 public class StockAddListener implements ActionListener {
 
     View view;
-    Portfolio model;
+    Portfolio portfolio;
 
     FolioCntrl cntrl;
     Border defaultBorder;
 
     StockAddListener(FolioCntrl cntrl) {
-        this.model = cntrl.getModel();
+        this.portfolio = cntrl.getCurrentFolio();
         this.view = cntrl.getView();
         this.cntrl = cntrl;
 		defaultBorder = view.getTxtFieldTicker().getBorder();
@@ -36,25 +36,33 @@ public class StockAddListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         System.out.println("Add button pressed");
         addStockErrorCheck();
+
+        portfolio = cntrl.getCurrentFolio();
         
         // TODO: Check that the fields have actual values within them
         String ticker = view.getTxtFieldTicker().getText();
         int amount = Integer.parseInt(view.getTxtFieldAmount().getText());
 
-        // Add a stock to the model
-        model.addShare(ticker, amount);
+        if (!portfolio.ownShare(ticker)) {
+
+            // Add a stock to the portfolio
+            portfolio.addShare(ticker, amount);
 
 
-        DefaultTableModel tblModel = (DefaultTableModel) view.getTables().get(view.getTabbedPane().getSelectedIndex()).getModel();
-        tblModel.addRow(new Object[]{
-                ticker,
-                amount,
-                new DecimalFormat("0.00").format(model.getShare(ticker).getCurrentSharePrice()),
-                // DecimalFormat helps make the value presentable and not have several decimal places
-                new DecimalFormat("0.00").format(model.getShare(ticker).getCurrentSharePrice() * amount)
-        });
+            DefaultTableModel tblModel = (DefaultTableModel) view.getTables().get(view.getTabbedPane().getSelectedIndex()).getModel();
+            tblModel.addRow(new Object[]{
+                    ticker,
+                    amount,
+                    new DecimalFormat("0.00").format(portfolio.getShare(ticker).getCurrentSharePrice()),
+                    // DecimalFormat helps make the value presentable and not have several decimal places
+                    new DecimalFormat("0.00").format(portfolio.getShare(ticker).getCurrentSharePrice() * amount)
+            });
 
-        cntrl.updateFolioValue();
+            cntrl.updateFolioValue();
+        }
+        else {
+
+        }
     }
     
     private void addStockErrorCheck() {
