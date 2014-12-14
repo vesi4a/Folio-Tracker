@@ -39,6 +39,7 @@ public class FolioCntrl {
         view.getOpenFolioMenuItem().addActionListener(new MenuBarListener(this));
         view.getCloseFolioMenuItem().addActionListener(new MenuBarListener(this));
         view.getCloseAllFolioMenuItem().addActionListener(new MenuBarListener(this));
+        view.getExitMenuItem().addActionListener(new MenuBarListener(this));
 
 
 

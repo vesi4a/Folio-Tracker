@@ -39,6 +39,8 @@ public class MenuBarListener implements ActionListener {
         }
         else if (e.getActionCommand().equals("Exit")) {
             System.out.println("Exit menu item pressed");
+            // Add a popup to confirm?
+            System.exit(0);
         }
 
 

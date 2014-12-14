@@ -394,6 +394,10 @@ public class View {
 		String projname = (portFolioNameEntry.getText());
 	}
 
+	public JMenuItem getExitMenuItem() {
+		return exitMenuItem;
+	}
+
 	private JMenuBar menuSetup() {
 
 		// Where the GUI is created:
@@ -450,6 +454,7 @@ public class View {
 		menu.add(closeAllFolioMenuItem);
 
 		menu.addSeparator();
+
 
 		exitMenuItem = new JMenuItem("Exit", KeyEvent.VK_X);
 		exitMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X,
