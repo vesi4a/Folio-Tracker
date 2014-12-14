@@ -37,6 +37,9 @@ public class MenuBarListener implements ActionListener {
         else if (e.getActionCommand().equals("CloseAllFolios")) {
             System.out.println("Close all folios menu item pressed");
         }
+        else if (e.getActionCommand().equals("Exit")) {
+            System.out.println("Exit menu item pressed");
+        }
 
 
 

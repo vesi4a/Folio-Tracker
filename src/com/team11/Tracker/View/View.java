@@ -43,6 +43,7 @@ public class View {
 	private JMenuItem openFolioMenuItem;
 	private JMenuItem closeFolioMenuItem;
 	private JMenuItem closeAllFolioMenuItem;
+	private JMenuItem exitMenuItem;
 
 	public JTabbedPane getTabbedPane() {
 		return tabbedPane;
@@ -450,13 +451,14 @@ public class View {
 
 		menu.addSeparator();
 
-		menuItem = new JMenuItem("Exit", KeyEvent.VK_X);
-		menuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X,
+		exitMenuItem = new JMenuItem("Exit", KeyEvent.VK_X);
+		exitMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X,
 				ActionEvent.ALT_MASK));
-		menuItem.getAccessibleContext().setAccessibleDescription(
+		exitMenuItem.getAccessibleContext().setAccessibleDescription(
 				"Terminate the Application");
+		exitMenuItem.setActionCommand("Exit");
 		// menuItem.addActionListener(new MenuBarController());
-		menu.add(menuItem);
+		menu.add(exitMenuItem);
 
 		return menuBar;
 	}
