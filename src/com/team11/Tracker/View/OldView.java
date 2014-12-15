@@ -33,11 +33,9 @@ import java.util.Observer;
 
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 
-public class View implements Observer {
+public class OldView implements Observer {
 
 	private static JFrame frame;
 	private JTextField txtFieldTicker;
@@ -95,7 +93,7 @@ public class View implements Observer {
 	/**
 	 * Create the application.
 	 */
-	public View(PortfolioHolder portfolioHolder) {
+	public OldView(PortfolioHolder portfolioHolder) {
 		this.portfolioHolder = portfolioHolder;
 		initialize();
 	}
@@ -125,7 +123,7 @@ public class View implements Observer {
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP); // Window for displaying portfolio
 		tabbedPane.setBounds(6, 30, 788, 400); // old values 6 6 788 484
 		frame.getContentPane().add(tabbedPane);
-		tabbedPane.addChangeListener(new TabChangeListener(this,portfolioHolder));
+		//tabbedPane.addChangeListener(new TabChangeListener(this,portfolioHolder));
 
 
 
@@ -160,7 +158,7 @@ public class View implements Observer {
 		btnAdd = new JButton("Add"); // add button - **listener required**
 		btnAdd.setBounds(450, 0, 117, 29); // old values 545 480 117 29
 		frame.getContentPane().add(btnAdd);
-		btnAdd.addActionListener(new StockAddListener(this, portfolioHolder));
+		//btnAdd.addActionListener(new StockAddListener(this, portfolioHolder));
 
 
 		errorLabel = new JLabel();
@@ -457,7 +455,7 @@ public class View implements Observer {
 				"Open a new Tab");
 		newFolioMenuItem.setActionCommand("NewFolio");
 		// menuItem.addActionListener(new MenuBarController());
-		newFolioMenuItem.addActionListener(new MenuBarListener(this, portfolioHolder));
+		//newFolioMenuItem.addActionListener(new MenuBarListener(this, portfolioHolder));
 		menu.add(newFolioMenuItem);
 
 		openFolioMenuItem = new JMenuItem("Open Portfolio", KeyEvent.VK_N);
@@ -466,7 +464,7 @@ public class View implements Observer {
 		openFolioMenuItem.getAccessibleContext().setAccessibleDescription(
 				"Open a portfolio file");
 		openFolioMenuItem.setActionCommand("OpenFolio");
-		openFolioMenuItem.addActionListener(new MenuBarListener(this, portfolioHolder));
+		//openFolioMenuItem.addActionListener(new MenuBarListener(this, portfolioHolder));
 		// menuItem.addActionListener(new MenuBarController());
 		menu.add(openFolioMenuItem);
 
@@ -476,7 +474,7 @@ public class View implements Observer {
 		closeFolioMenuItem.getAccessibleContext().setAccessibleDescription(
 				"Delete a Portfolio");
 		closeFolioMenuItem.setActionCommand("CloseFolio");
-		closeFolioMenuItem.addActionListener(new MenuBarListener(this, portfolioHolder));
+		//closeFolioMenuItem.addActionListener(new MenuBarListener(this, portfolioHolder));
 		// menuItem.addActionListener(new MenuBarController());
 		menu.add(closeFolioMenuItem);
 
@@ -486,7 +484,7 @@ public class View implements Observer {
 		closeAllFolioMenuItem.getAccessibleContext().setAccessibleDescription(
 				"Close all portfolios");
 		closeAllFolioMenuItem.setActionCommand("CloseAllFolios");
-		closeAllFolioMenuItem.addActionListener(new MenuBarListener(this, portfolioHolder));
+		//closeAllFolioMenuItem.addActionListener(new MenuBarListener(this, portfolioHolder));
 		// menuItem.addActionListener(new MenuBarController());
 		menu.add(closeAllFolioMenuItem);
 
@@ -499,7 +497,7 @@ public class View implements Observer {
 		exitMenuItem.getAccessibleContext().setAccessibleDescription(
 				"Terminate the Application");
 		exitMenuItem.setActionCommand("Exit");
-		exitMenuItem.addActionListener(new MenuBarListener(this, portfolioHolder));
+		//exitMenuItem.addActionListener(new MenuBarListener(this, portfolioHolder));
 		// menuItem.addActionListener(new MenuBarController());
 		menu.add(exitMenuItem);
 

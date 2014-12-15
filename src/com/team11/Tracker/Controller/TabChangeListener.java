@@ -1,22 +1,21 @@
 package com.team11.Tracker.Controller;
 
 import com.team11.Tracker.Model.IPortfolioHolder;
-import com.team11.Tracker.View.View;
+import com.team11.Tracker.View.MainGUI;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import java.awt.event.ActionListener;
 
 /**
  * Created by cameron on 14/12/2014.
  */
 public class TabChangeListener implements ChangeListener {
 
-    private View view;
+    private MainGUI view;
     private IPortfolioHolder holder;
 
-    public TabChangeListener(View view, IPortfolioHolder holder) {
+    public TabChangeListener(MainGUI view, IPortfolioHolder holder) {
         this.view = view;
         this.holder = holder;
     }
@@ -25,7 +24,7 @@ public class TabChangeListener implements ChangeListener {
     public void stateChanged(ChangeEvent e) {
         if (e.getSource() instanceof JTabbedPane) {
             JTabbedPane pane = (JTabbedPane) e.getSource();
-            view.getLblFolioValue().setText("$" + holder.getPortfolios().get(view.getTabbedPane().getSelectedIndex()).getFolioValue());
+            view.getLblPortfolioValue().setText("$" + holder.getPortfolios().get(view.getTpPortfolioView().getSelectedIndex()).getFolioValue());
             System.out.println("Selected paneNo : " + pane.getSelectedIndex());
         }
     }

@@ -1,23 +1,17 @@
 package com.team11.Tracker.Controller;
 
 import com.team11.Tracker.Model.IPortfolioHolder;
-import com.team11.Tracker.Model.Portfolio;
-import com.team11.Tracker.View.View;
-
-
-import javax.swing.*;
-import java.awt.*;
+import com.team11.Tracker.View.MainGUI;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
-
 public class MenuBarListener implements ActionListener {
 
-    private View view;
+    private MainGUI view;
     private IPortfolioHolder holder;
 
-    public MenuBarListener(View view, IPortfolioHolder holder) {
+    public MenuBarListener(MainGUI view, IPortfolioHolder holder) {
         this.view = view;
         this.holder = holder;
     }

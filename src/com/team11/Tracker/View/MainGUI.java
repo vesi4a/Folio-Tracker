@@ -1,32 +1,25 @@
 package com.team11.Tracker.View;
 
+import com.team11.Tracker.Controller.MenuBarListener;
+import com.team11.Tracker.Controller.StockAddListener;
+import com.team11.Tracker.Controller.TabChangeListener;
+import com.team11.Tracker.Model.Portfolio;
+import com.team11.Tracker.Model.PortfolioHolder;
+import com.team11.Tracker.Model.Share;
+
 import java.awt.EventQueue;
 
-import javax.swing.JFrame;
-import javax.swing.JTable;
-import javax.swing.SpringLayout;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import javax.swing.JFormattedTextField;
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
+import javax.swing.*;
 
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.RowSpec;
-import com.jgoodies.forms.factories.FormFactory;
-
-import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
 import javax.swing.table.DefaultTableModel;
 
 import java.awt.Dimension;
-import java.awt.ScrollPane;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
-public class TestInterfaceMainGUI {
+public class MainGUI implements Observer {
 
 	private JFrame frmFolioTracker;
 	private JTextField textField;
@@ -34,7 +27,30 @@ public class TestInterfaceMainGUI {
 	private ArrayList<JTable> tables;
 	private JTabbedPane tpPortfolioView;
 	private JScrollPane scrollPane;
+	private JFormattedTextField ftxtTickerSymbol;
+	private JFormattedTextField ftxtQuantity;
 
+
+	public JFormattedTextField getFtxtTickerSymbol() {
+		return ftxtTickerSymbol;
+	}
+
+	public JFormattedTextField getFtxtQuantity() {
+		return ftxtQuantity;
+	}
+
+
+	public JTabbedPane getTpPortfolioView() {
+		return tpPortfolioView;
+	}
+
+	private JLabel lblPortfolioValue;
+
+	public JLabel getLblPortfolioValue() {
+		return lblPortfolioValue;
+	}
+
+	private PortfolioHolder portfolioHolder;
 
 	/**
 	 * Launch the application.
@@ -43,8 +59,8 @@ public class TestInterfaceMainGUI {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TestInterfaceMainGUI window = new TestInterfaceMainGUI();
-					window.frmFolioTracker.setVisible(true);
+				//	TestInterfaceMainGUI window = new TestInterfaceMainGUI();
+					//window.frmFolioTracker.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -55,7 +71,8 @@ public class TestInterfaceMainGUI {
 	/**
 	 * Create the application.
 	 */
-	public TestInterfaceMainGUI() {
+	public MainGUI(PortfolioHolder portfolioHolder) {
+		this.portfolioHolder = portfolioHolder;
 		initialize();
 	}
 
@@ -79,24 +96,34 @@ public class TestInterfaceMainGUI {
 		menuBar.add(mnFile);
 
 		JMenuItem mntmNewPortfolio = new JMenuItem("New Portfolio");
+		mntmNewPortfolio.setActionCommand("NewFolio");
+		mntmNewPortfolio.addActionListener(new MenuBarListener(this, portfolioHolder));
 		mnFile.add(mntmNewPortfolio);
 
 		JMenuItem mntmOpenExistingPortfolio = new JMenuItem(
 				"Open Existing Portfolio");
+		mntmOpenExistingPortfolio.setActionCommand("OpenFolio");
+		mntmOpenExistingPortfolio.addActionListener(new MenuBarListener(this, portfolioHolder));
 		mnFile.add(mntmOpenExistingPortfolio);
 
 		mnFile.addSeparator();
 
 		JMenuItem mntmSeeHistory = new JMenuItem("See History");
+		mntmSeeHistory.setActionCommand("SeeHistory");
+		mntmSeeHistory.addActionListener(new MenuBarListener(this, portfolioHolder));
 		mnFile.add(mntmSeeHistory);
 
 		JMenuItem mntmCloseCurrentPortfolio = new JMenuItem(
 				"Close Current Portfolio");
+		mntmCloseCurrentPortfolio.setActionCommand("CloseFolio");
+		mntmCloseCurrentPortfolio.addActionListener(new MenuBarListener(this, portfolioHolder));
 		mnFile.add(mntmCloseCurrentPortfolio);
 
 		mnFile.addSeparator();
 
 		JMenuItem menuItem = new JMenuItem("Exit");
+		menuItem.setActionCommand("Exit");
+		menuItem.addActionListener(new MenuBarListener(this, portfolioHolder));
 		mnFile.add(menuItem);
 		SpringLayout springLayout = new SpringLayout();
 		frmFolioTracker.getContentPane().setLayout(springLayout);
@@ -123,11 +150,15 @@ public class TestInterfaceMainGUI {
 		springLayout.putConstraint(SpringLayout.EAST, tpPortfolioView, -10,
 				SpringLayout.EAST, frmFolioTracker.getContentPane());
 		frmFolioTracker.getContentPane().add(tpPortfolioView);
+		tpPortfolioView.addChangeListener(new TabChangeListener(this,portfolioHolder));
+
+
 
 		JButton btnAddStock = new JButton("Add Stock");
 		springLayout.putConstraint(SpringLayout.NORTH, btnAddStock, -5,
 				SpringLayout.NORTH, lblTickerSymbol);
 		frmFolioTracker.getContentPane().add(btnAddStock);
+		btnAddStock.addActionListener(new StockAddListener(this, portfolioHolder));
 
 		JLabel lblAddStock = new JLabel("Add Stock:");
 		springLayout.putConstraint(SpringLayout.WEST, lblTickerSymbol, 20,
@@ -138,7 +169,7 @@ public class TestInterfaceMainGUI {
 				SpringLayout.NORTH, frmFolioTracker.getContentPane());
 		frmFolioTracker.getContentPane().add(lblAddStock);
 
-		JFormattedTextField ftxtTickerSymbol = new JFormattedTextField();
+		ftxtTickerSymbol = new JFormattedTextField();
 		springLayout.putConstraint(SpringLayout.WEST, ftxtTickerSymbol, 10,
 				SpringLayout.EAST, lblTickerSymbol);
 		ftxtTickerSymbol.setPreferredSize(new Dimension(120, 28));
@@ -148,7 +179,7 @@ public class TestInterfaceMainGUI {
 				SpringLayout.EAST, lblTickerSymbol);
 		frmFolioTracker.getContentPane().add(ftxtTickerSymbol);
 
-		JFormattedTextField ftxtQuantity = new JFormattedTextField();
+		ftxtQuantity = new JFormattedTextField();
 		springLayout.putConstraint(SpringLayout.WEST, btnAddStock, 30,
 				SpringLayout.EAST, ftxtQuantity);
 		springLayout.putConstraint(SpringLayout.WEST, ftxtQuantity, 10,
@@ -160,18 +191,18 @@ public class TestInterfaceMainGUI {
 		ftxtQuantity.setPreferredSize(new Dimension(120, 28));
 		frmFolioTracker.getContentPane().add(ftxtQuantity);
 
-		JLabel lblPortfolioValLabel = new JLabel("Portfolio Value:");
-		springLayout.putConstraint(SpringLayout.NORTH, lblPortfolioValLabel, 6,
+		JLabel lblPortfolioValTitle = new JLabel("Portfolio Value:");
+		springLayout.putConstraint(SpringLayout.NORTH, lblPortfolioValTitle, 6,
 				SpringLayout.SOUTH, tpPortfolioView);
-		springLayout.putConstraint(SpringLayout.WEST, lblPortfolioValLabel, 10,
+		springLayout.putConstraint(SpringLayout.WEST, lblPortfolioValTitle, 10,
 				SpringLayout.WEST, tpPortfolioView);
-		frmFolioTracker.getContentPane().add(lblPortfolioValLabel);
+		frmFolioTracker.getContentPane().add(lblPortfolioValTitle);
 
-		JLabel lblPortfolioValue = new JLabel("$0.00");
+		lblPortfolioValue = new JLabel("$0.00");
 		springLayout.putConstraint(SpringLayout.WEST, lblPortfolioValue, 6,
-				SpringLayout.EAST, lblPortfolioValLabel);
+				SpringLayout.EAST, lblPortfolioValTitle);
 		springLayout.putConstraint(SpringLayout.SOUTH, lblPortfolioValue, 0,
-				SpringLayout.SOUTH, lblPortfolioValLabel);
+				SpringLayout.SOUTH, lblPortfolioValTitle);
 		frmFolioTracker.getContentPane().add(lblPortfolioValue);
 
 		
@@ -180,6 +211,48 @@ public class TestInterfaceMainGUI {
 		
 		frmFolioTracker.setVisible(true);
 
+	}
+
+	// TODO: Move to a separate file
+	public void showNewFolioAlert() {
+		while (true) {
+			JTextField portFolioNameEntry = new JTextField(20);
+
+			JPanel newPortFolioPanel = new JPanel();
+
+			JLabel enterPortFolioNameLabel = new JLabel("Enter PortFolio Name:");
+
+			newPortFolioPanel.setLayout(new BoxLayout(newPortFolioPanel,
+					BoxLayout.Y_AXIS));
+
+			portFolioNameEntry.setMaximumSize(new Dimension(1500, 20));
+
+			newPortFolioPanel.add(enterPortFolioNameLabel);
+			newPortFolioPanel.add(portFolioNameEntry);
+
+			int result = JOptionPane.showConfirmDialog(null, newPortFolioPanel,
+					"Create New PortFolio", JOptionPane.OK_CANCEL_OPTION);
+
+			String folioName = (portFolioNameEntry.getText());
+
+			if (result == JOptionPane.CANCEL_OPTION) {
+				break;
+			}
+			if (folioName.equals("") || folioName.equals(null)) {
+				// TODO: Add check for a unique Portfolio name
+				JLabel enterFilenameLabel = new JLabel("File Name required.");
+				newPortFolioPanel.add(enterFilenameLabel);
+
+			} else {
+				// Creates the tab and portfolio
+				createTab(folioName);
+				Portfolio folio = new Portfolio(folioName);
+				folio.addObserver(this);
+				portfolioHolder.addPortfolio(folio);
+				break;
+
+			}
+		}
 	}
 
 	public void createTab(String PortfolioName) {
@@ -207,5 +280,30 @@ public class TestInterfaceMainGUI {
 
 		tpPortfolioView.addTab(PortfolioName, null, scrollPane, null);
 
+	}
+
+	// Updates the table
+	@Override
+	public void update(Observable o, Object arg) {
+		Portfolio test = (Portfolio)o;
+
+		// Update the UI?
+		DefaultTableModel tblModel = (DefaultTableModel) this.tables.get(this.getTpPortfolioView().getSelectedIndex()).getModel();
+		// Clear the table
+		tblModel.setRowCount(0);
+
+		// Add entries for all the shares in the portfolio
+		for (Share s: test.getShares()) {
+			tblModel.addRow(new Object[]{
+					s.getTicker(),
+					s.getAmountOwned(),
+					new DecimalFormat("0.00").format(s.getCurrentSharePrice()),
+					// DecimalFormat helps make the value presentable and not have several decimal places
+					new DecimalFormat("0.00").format(test.getShare(s.getTicker()).getCurrentSharePrice() * s.getAmountOwned())
+			});
+
+		}
+
+		this.getLblPortfolioValue().setText("$" + test.getFolioValue());
 	}
 }

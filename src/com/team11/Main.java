@@ -3,7 +3,7 @@ package com.team11;
 
 import com.team11.Tracker.Model.Portfolio;
 import com.team11.Tracker.Model.PortfolioHolder;
-import com.team11.Tracker.View.View;
+import com.team11.Tracker.View.MainGUI;
 
 public class Main {
     public static void main(String[] args) {
@@ -21,7 +21,8 @@ public class Main {
         model.addPortfolio(folio);
         model.addPortfolio(folio2);
 
-        View view = new View(model);
+        //View view = new View(model);
+        MainGUI view = new MainGUI(model);
 
 
         folio.addObserver(view);
