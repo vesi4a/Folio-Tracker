@@ -33,12 +33,13 @@ public class MenuBarListener implements ActionListener {
             File f = view.showLoadFolioAlert();
             try {
 				Portfolio pf = holder.loadFolio(f);		
-				holder.addPortfolio(pf);
-				pf.addShare("msft", 23);
-				view.createTab(pf.getPortfolioName());
-				for (Share s : pf.getShares()){
-					System.out.println(s.toString());
-				}				
+				pf.addObserver(view);
+                holder.addPortfolio(pf);
+                view.createTab(pf.getPortfolioName());
+                view.getTpPortfolioView().setSelectedIndex(view.getTpPortfolioView().getSelectedIndex() + 1);
+
+                pf.addShare("msft", 23);
+                
 				
 			} catch (FileNotFoundException e1) {
 				// TODO Auto-generated catch block
