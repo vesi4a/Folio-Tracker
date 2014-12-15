@@ -4,7 +4,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 
-public class EditStockWindow {
+public class SellStockGUI {
 
 	private JFrame frame;
 
@@ -15,7 +15,7 @@ public class EditStockWindow {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					EditStockWindow window = new EditStockWindow();
+					SellStockGUI window = new SellStockGUI();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -27,7 +27,7 @@ public class EditStockWindow {
 	/**
 	 * Create the application.
 	 */
-	public EditStockWindow() {
+	public SellStockGUI() {
 		initialize();
 	}
 
