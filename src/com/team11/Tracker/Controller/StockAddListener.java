@@ -25,59 +25,7 @@ public class StockAddListener implements ActionListener {
     // An action has been performed
     @Override
     public void actionPerformed(ActionEvent e) {
-//		Border redBorder = BorderFactory.createLineBorder(Color.RED, 3);
-//      Border defaultBorder = view.getTxtFieldTicker().getBorder();
-//
-//         if ((view.getTxtFieldAmount().getText() == null || view.getTxtFieldAmount().getText().equals("")) &&
-//         		(view.getTxtFieldTicker().getText() == null || view.getTxtFieldTicker().getText().equals(""))) {
-//				System.out.println("Ticker and Amount required");
-//				view.getErrorLabel().setText("Ticker and Amount required");
-//				view.getTxtFieldTicker().setBorder(redBorder);
-//				view.getTxtFieldAmount().setBorder(redBorder);
-//				return;
-//			}
-//         else{
-//         	view.getTxtFieldTicker().setBorder(defaultBorder);
-//				view.getTxtFieldAmount().setBorder(defaultBorder);
-//         }
-//			if (view.getTxtFieldTicker().getText() == null || view.getTxtFieldTicker().getText().equals("")) {
-//				System.out.println("Ticker required");
-//				view.getErrorLabel().setText("Ticker required");
-//				view.getTxtFieldTicker().setBorder(redBorder);
-//				return;
-//			}
-//			else{
-//				view.getTxtFieldTicker().setBorder(defaultBorder);
-//			}
-//			if (view.getTxtFieldAmount().getText() == null || view.getTxtFieldAmount().getText().equals("")) {
-//				System.out.println("Amount required");
-//				view.getErrorLabel().setText("Amount required");
-//				view.getTxtFieldAmount().setBorder(redBorder);
-//				return;
-//			}
-//			else{
-//				view.getTxtFieldAmount().setBorder(defaultBorder);
-//			}
-//
-//			if (!view.getTxtFieldAmount().getText().matches("[+-]?\\d*(\\.\\d+)?")){
-//				System.out.println("Amount must be integer");
-//				view.getErrorLabel().setText("Amount must be integer");
-//				view.getTxtFieldAmount().setBorder(redBorder);
-//				return;
-//			}
-//			else{
-//				view.getTxtFieldAmount().setBorder(defaultBorder);
-//			}
-//
-//			/*
-//			if (getTickerValidity(view.getTxtFieldTicker().getText())){
-//				System.out.println("Invalid ticker symbol");
-//				view.getErrorLabel().setText("Invalid ticker symbol");
-//				return;
-//			}
-//			*/
-//			view.getErrorLabel().setText("");
-    	
+
         Portfolio portfolio = holder.getPortfolios().get(view.getTpPortfolioView().getSelectedIndex());
 
         String ticker = view.getFtxtTickerSymbol().getText();

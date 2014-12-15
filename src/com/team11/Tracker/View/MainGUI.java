@@ -309,7 +309,6 @@ public class MainGUI implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		Portfolio test = (Portfolio)o;
-
 		// Update the UI?
 		DefaultTableModel tblModel = (DefaultTableModel) this.tables.get(this.getTpPortfolioView().getSelectedIndex()).getModel();
 		// Clear the table
