@@ -10,18 +10,14 @@ import com.team11.Tracker.Model.Share;
 import java.awt.EventQueue;
 
 import javax.swing.*;
-
 import javax.swing.table.DefaultTableModel;
 
 import java.awt.Dimension;
+import java.io.File;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 public class MainGUI implements Observer {
 
@@ -34,6 +30,7 @@ public class MainGUI implements Observer {
 	private JFormattedTextField ftxtTickerSymbol;
 	private JFormattedTextField ftxtQuantity;
 
+
 	public JFormattedTextField getFtxtTickerSymbol() {
 		return ftxtTickerSymbol;
 	}
@@ -41,6 +38,7 @@ public class MainGUI implements Observer {
 	public JFormattedTextField getFtxtQuantity() {
 		return ftxtQuantity;
 	}
+
 
 	public JTabbedPane getTpPortfolioView() {
 		return tpPortfolioView;
@@ -61,8 +59,8 @@ public class MainGUI implements Observer {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					// TestInterfaceMainGUI window = new TestInterfaceMainGUI();
-					// window.frmFolioTracker.setVisible(true);
+				//	TestInterfaceMainGUI window = new TestInterfaceMainGUI();
+					//window.frmFolioTracker.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -80,9 +78,6 @@ public class MainGUI implements Observer {
 
 	/**
 	 * Initialize the contents of the frame.
-	 */
-	/**
-	 * @wbp.parser.entryPoint
 	 */
 	private void initialize() {
 		tables = new ArrayList<JTable>();
@@ -102,30 +97,26 @@ public class MainGUI implements Observer {
 
 		JMenuItem mntmNewPortfolio = new JMenuItem("New Portfolio");
 		mntmNewPortfolio.setActionCommand("NewFolio");
-		mntmNewPortfolio.addActionListener(new MenuBarListener(this,
-				portfolioHolder));
+		mntmNewPortfolio.addActionListener(new MenuBarListener(this, portfolioHolder));
 		mnFile.add(mntmNewPortfolio);
 
 		JMenuItem mntmOpenExistingPortfolio = new JMenuItem(
 				"Open Existing Portfolio");
 		mntmOpenExistingPortfolio.setActionCommand("OpenFolio");
-		mntmOpenExistingPortfolio.addActionListener(new MenuBarListener(this,
-				portfolioHolder));
+		mntmOpenExistingPortfolio.addActionListener(new MenuBarListener(this, portfolioHolder));
 		mnFile.add(mntmOpenExistingPortfolio);
 
 		mnFile.addSeparator();
 
 		JMenuItem mntmSeeHistory = new JMenuItem("See History");
 		mntmSeeHistory.setActionCommand("SeeHistory");
-		mntmSeeHistory.addActionListener(new MenuBarListener(this,
-				portfolioHolder));
+		mntmSeeHistory.addActionListener(new MenuBarListener(this, portfolioHolder));
 		mnFile.add(mntmSeeHistory);
 
 		JMenuItem mntmCloseCurrentPortfolio = new JMenuItem(
 				"Close Current Portfolio");
 		mntmCloseCurrentPortfolio.setActionCommand("CloseFolio");
-		mntmCloseCurrentPortfolio.addActionListener(new MenuBarListener(this,
-				portfolioHolder));
+		mntmCloseCurrentPortfolio.addActionListener(new MenuBarListener(this, portfolioHolder));
 		mnFile.add(mntmCloseCurrentPortfolio);
 
 		mnFile.addSeparator();
@@ -159,15 +150,15 @@ public class MainGUI implements Observer {
 		springLayout.putConstraint(SpringLayout.EAST, tpPortfolioView, -10,
 				SpringLayout.EAST, frmFolioTracker.getContentPane());
 		frmFolioTracker.getContentPane().add(tpPortfolioView);
-		tpPortfolioView.addChangeListener(new TabChangeListener(this,
-				portfolioHolder));
+		tpPortfolioView.addChangeListener(new TabChangeListener(this,portfolioHolder));
+
+
 
 		JButton btnAddStock = new JButton("Add Stock");
 		springLayout.putConstraint(SpringLayout.NORTH, btnAddStock, -5,
 				SpringLayout.NORTH, lblTickerSymbol);
 		frmFolioTracker.getContentPane().add(btnAddStock);
-		btnAddStock.addActionListener(new StockAddListener(this,
-				portfolioHolder));
+		btnAddStock.addActionListener(new StockAddListener(this, portfolioHolder));
 
 		JLabel lblAddStock = new JLabel("Add Stock:");
 		springLayout.putConstraint(SpringLayout.WEST, lblTickerSymbol, 20,
@@ -214,28 +205,40 @@ public class MainGUI implements Observer {
 				SpringLayout.SOUTH, lblPortfolioValTitle);
 		frmFolioTracker.getContentPane().add(lblPortfolioValue);
 
-		// // Currently as menubar item
-		// // Steven's history button listener. Not sure if this belongs in
-		// // StockAddListener or if it should have its own listener class.
-		// JButton btnHistory = new JButton("History");
-		//
-		// btnHistory
-		// .addActionListener(new StockAddListener(this, <something>));
-		// springLayout.putConstraint(SpringLayout.NORTH, btnHistory, 6,
-		// SpringLayout.SOUTH, tpPortfolioView);
-		// springLayout.putConstraint(SpringLayout.WEST, btnHistory, 0,
-		// SpringLayout.WEST, ftxtTickerSymbol);
-		// frmFolioTracker.getContentPane().add(btnHistory);
-
+		
+		
 		createTab("Portfolio1");
-
+		
 		frmFolioTracker.setVisible(true);
 
 	}
+	public File showLoadFolioAlert(){
+		JFileChooser fileChooser = new JFileChooser();
+		JPanel jp = new JPanel();
+		if (fileChooser.showOpenDialog(jp) == JFileChooser.APPROVE_OPTION) {
+		  File file = fileChooser.getSelectedFile();
+		  return file;
+		}
+		return null;
+		
+	}
+	
 
+	public void showCloseAlert(){
+		JPanel jp = new JPanel();
+		jp.add(new JLabel("Are you sure you want to exit?"));
+		int result = JOptionPane.showConfirmDialog(null, jp,
+				"Exit", JOptionPane.OK_CANCEL_OPTION);
+		if (result == JOptionPane.CANCEL_OPTION) {
+			return;
+		}
+		if (result == JOptionPane.OK_OPTION) {
+			System.exit(0);
+		}
+	}
 	// TODO: Move to a separate file
 	public void showNewFolioAlert() {
-		while (true) {
+
 			JTextField portFolioNameEntry = new JTextField(20);
 
 			JPanel newPortFolioPanel = new JPanel();
@@ -256,24 +259,24 @@ public class MainGUI implements Observer {
 			String folioName = (portFolioNameEntry.getText());
 
 			if (result == JOptionPane.CANCEL_OPTION) {
-				break;
+				return;
 			}
-			if (folioName.equals("") || folioName.equals(null)) {
+			if (folioName.equals("")) {
 				// TODO: Add check for a unique Portfolio name
 				JLabel enterFilenameLabel = new JLabel("File Name required.");
 				newPortFolioPanel.add(enterFilenameLabel);
-
+				JOptionPane.showMessageDialog(null, "Error: File Name Required");
+				showNewFolioAlert();
+				
 			} else {
 				// Creates the tab and portfolio
 				createTab(folioName);
 				Portfolio folio = new Portfolio(folioName);
 				folio.addObserver(this);
 				portfolioHolder.addPortfolio(folio);
-				break;
 
 			}
 		}
-	}
 
 	public void createTab(String PortfolioName) {
 		DefaultTableModel model = new DefaultTableModel();
@@ -297,15 +300,6 @@ public class MainGUI implements Observer {
 
 		// Add the table to a scrolling pane
 		scrollPane = new JScrollPane(table);
-		scrollPane.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if (e.getClickCount() == 2) {
-					System.out.println("double clicked");
-					//Call edit window
-				}
-			}
-		});
 
 		tpPortfolioView.addTab(PortfolioName, null, scrollPane, null);
 
@@ -314,25 +308,22 @@ public class MainGUI implements Observer {
 	// Updates the table
 	@Override
 	public void update(Observable o, Object arg) {
-		Portfolio test = (Portfolio) o;
+		Portfolio test = (Portfolio)o;
 
 		// Update the UI?
-		DefaultTableModel tblModel = (DefaultTableModel) this.tables.get(
-				this.getTpPortfolioView().getSelectedIndex()).getModel();
+		DefaultTableModel tblModel = (DefaultTableModel) this.tables.get(this.getTpPortfolioView().getSelectedIndex()).getModel();
 		// Clear the table
 		tblModel.setRowCount(0);
 
 		// Add entries for all the shares in the portfolio
-		for (Share s : test.getShares()) {
-			tblModel.addRow(new Object[] {
+		for (Share s: test.getShares()) {
+			tblModel.addRow(new Object[]{
 					s.getTicker(),
 					s.getAmountOwned(),
 					new DecimalFormat("0.00").format(s.getCurrentSharePrice()),
-					// DecimalFormat helps make the value presentable and not
-					// have several decimal places
-					new DecimalFormat("0.00").format(test.getShare(
-							s.getTicker()).getCurrentSharePrice()
-							* s.getAmountOwned()) });
+					// DecimalFormat helps make the value presentable and not have several decimal places
+					new DecimalFormat("0.00").format(test.getShare(s.getTicker()).getCurrentSharePrice() * s.getAmountOwned())
+			});
 
 		}
 

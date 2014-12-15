@@ -25,35 +25,21 @@ public class StockAddListener implements ActionListener {
     // An action has been performed
     @Override
     public void actionPerformed(ActionEvent e) {
-        //addStockErrorCheck();
-
-        Portfolio portfolio = holder.getPortfolios().get(view.getTpPortfolioView().getSelectedIndex());
-
-        String ticker = view.getFtxtTickerSymbol().getText();
-        int amount = Integer.parseInt(view.getFtxtQuantity().getText());
-
-        if (!portfolio.ownShare(ticker)) {
-            // Add a stock to the portfolio
-            portfolio.addShare(ticker, amount);
-        }
-    }
-
-//    private void addStockErrorCheck() {
 //		Border redBorder = BorderFactory.createLineBorder(Color.RED, 3);
-//        Border defaultBorder = view.getTxtFieldTicker().getBorder();
+//      Border defaultBorder = view.getTxtFieldTicker().getBorder();
 //
-//           if ((view.getTxtFieldAmount().getText() == null || view.getTxtFieldAmount().getText().equals("")) &&
-//           		(view.getTxtFieldTicker().getText() == null || view.getTxtFieldTicker().getText().equals(""))) {
+//         if ((view.getTxtFieldAmount().getText() == null || view.getTxtFieldAmount().getText().equals("")) &&
+//         		(view.getTxtFieldTicker().getText() == null || view.getTxtFieldTicker().getText().equals(""))) {
 //				System.out.println("Ticker and Amount required");
 //				view.getErrorLabel().setText("Ticker and Amount required");
 //				view.getTxtFieldTicker().setBorder(redBorder);
 //				view.getTxtFieldAmount().setBorder(redBorder);
 //				return;
 //			}
-//           else{
-//           	view.getTxtFieldTicker().setBorder(defaultBorder);
+//         else{
+//         	view.getTxtFieldTicker().setBorder(defaultBorder);
 //				view.getTxtFieldAmount().setBorder(defaultBorder);
-//           }
+//         }
 //			if (view.getTxtFieldTicker().getText() == null || view.getTxtFieldTicker().getText().equals("")) {
 //				System.out.println("Ticker required");
 //				view.getErrorLabel().setText("Ticker required");
@@ -91,7 +77,17 @@ public class StockAddListener implements ActionListener {
 //			}
 //			*/
 //			view.getErrorLabel().setText("");
-//	}
+    	
+        Portfolio portfolio = holder.getPortfolios().get(view.getTpPortfolioView().getSelectedIndex());
+
+        String ticker = view.getFtxtTickerSymbol().getText();
+        int amount = Integer.parseInt(view.getFtxtQuantity().getText());
+
+        if (!portfolio.ownShare(ticker)) {
+            // Add a stock to the portfolio
+            portfolio.addShare(ticker, amount);
+        }
+    }
     private boolean getTickerValidity(String tickerSymbol) {
 		try {
 			Share s = new Share(tickerSymbol, 0.0, 0);

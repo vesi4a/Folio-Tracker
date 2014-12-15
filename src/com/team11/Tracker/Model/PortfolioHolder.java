@@ -27,12 +27,12 @@ public class PortfolioHolder implements IPortfolioHolder {
 
 
     // Untested
-    public void loadFolio() throws FileNotFoundException {
-        File file = new File("portfolios.txt");
+    public Portfolio loadFolio(File file) throws FileNotFoundException {
         Scanner scanner = new Scanner(file);
+        Portfolio pf = null;
         if (scanner.hasNextLine()){
             String portfolioName = scanner.nextLine();
-            Portfolio pf = new Portfolio(portfolioName);
+            pf = new Portfolio(portfolioName);
             while(scanner.hasNextLine()){
                 String line = scanner.nextLine();
                 String[] stringSplit = line.split("\\s+");
@@ -50,7 +50,9 @@ public class PortfolioHolder implements IPortfolioHolder {
                 sh.setShareName(shareName);
                 pf.getShares().add(sh);
             }
+            
         }
+        return pf;
     }
 
     // Untested

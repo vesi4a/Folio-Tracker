@@ -15,18 +15,16 @@ public class Main {
 
 
         Portfolio folio = new Portfolio("Portfolio1");
-        Portfolio folio2 = new Portfolio("Portfolio2");
 
 
         model.addPortfolio(folio);
-        model.addPortfolio(folio2);
 
         //View view = new View(model);
         MainGUI view = new MainGUI(model);
 
 
         folio.addObserver(view);
-        folio2.addObserver(view);
+
 
 
 

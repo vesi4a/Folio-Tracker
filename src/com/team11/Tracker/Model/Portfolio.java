@@ -41,6 +41,10 @@ public class Portfolio extends Observable {
         return runningTotal;
 	}
 
+	public void setChanges(){
+		setChanged();
+		notifyObservers();
+	}
 
     // Only adds shares at the current price, Could be modified to allow the price to be specified
 	public void addShare(String tickerSymbol, Integer numberOfShares) {
