@@ -32,19 +32,30 @@ public class MenuBarListener implements ActionListener {
             System.out.println("Open folio menu item pressed");
             File f = view.showLoadFolioAlert();
             try {
-				Portfolio pf = holder.loadFolio(f);		
+                // Create the new portfolio
+				Portfolio pf = holder.loadFolio(f);
+                // Add the view as an observer of the new portfolio
 				pf.addObserver(view);
+                // Add the portfoli to the holder
                 holder.addPortfolio(pf);
+                // Create a new tab for the portfolio
                 view.createTab(pf.getPortfolioName());
-                view.getTpPortfolioView().setSelectedIndex(view.getTpPortfolioView().getSelectedIndex() + 1);
+                // Set the new tab as the active tab so that we can add share to its table
+                //view.getTpPortfolioView().setSelectedIndex(view.getTpPortfolioView().getSelectedIndex() + 1);
+                view.getTpPortfolioView().setSelectedIndex(view.getTpPortfolioView().getTabCount() - 1);
 
+                // Add a share to the portfolio
                 pf.addShare("msft", 23);
-                
+
 				
 			} catch (FileNotFoundException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
+        }
+        else if (e.getActionCommand().equals("RefreshFolio")) {
+            System.out.println("Refresh item pressed");
+            holder.getPortfolios().get(view.getTpPortfolioView().getSelectedIndex()).updateAllShares();
         }
         else if (e.getActionCommand().equals("CloseFolio")) {
             System.out.println("Close folio menu item pressed");

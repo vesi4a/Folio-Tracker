@@ -102,6 +102,12 @@ public class MainGUI implements Observer {
 				portfolioHolder));
 		mnFile.add(mntmSeeHistory);
 
+		JMenuItem mntmRefresh = new JMenuItem("Refresh Portfolio");
+		mntmRefresh.setActionCommand("RefreshFolio");
+		mntmRefresh.addActionListener(new MenuBarListener(this,
+				portfolioHolder));
+		mnFile.add(mntmRefresh);
+
 		JMenuItem mntmCloseCurrentPortfolio = new JMenuItem(
 				"Close Current Portfolio");
 		mntmCloseCurrentPortfolio.setActionCommand("CloseFolio");

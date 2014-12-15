@@ -22,6 +22,10 @@ public class Share {
         this.amountOwned = amountOwned;
     }
 
+    public void setCurrentSharePrice(Double currentSharePrice) {
+        this.currentSharePrice = currentSharePrice;
+    }
+
     public String getShareName() {
         return shareName;
     }

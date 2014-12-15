@@ -25,6 +25,25 @@ public class Portfolio extends Observable {
 		portfolioName = name;
 	}
 
+	public void updateAllShares() {
+		for (Share s: shares) {
+			String tickerName = s.getTicker();
+			Quote q = new Quote(false);
+
+			try {
+				q.setValues(tickerName);
+				s.setCurrentSharePrice(q.getLatest());
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+
+		}
+
+		setChanged();
+		notifyObservers();
+	}
+
 
 	// Returns the total value of the portfolio
 	public double getFolioValue() {
