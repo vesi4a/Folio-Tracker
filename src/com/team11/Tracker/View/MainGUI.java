@@ -18,6 +18,8 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class MainGUI implements Observer {
 
@@ -27,15 +29,15 @@ public class MainGUI implements Observer {
 	private ArrayList<JTable> tables;
 	private JTabbedPane tpPortfolioView;
 	private JScrollPane scrollPane;
-	private JFormattedTextField ftxtTickerSymbol;
-	private JFormattedTextField ftxtQuantity;
+	private JTextField txtTickerSymbol;
+	private JTextField txtQuantity;
 
-	public JFormattedTextField getFtxtTickerSymbol() {
-		return ftxtTickerSymbol;
+	public JTextField getFtxtTickerSymbol() {
+		return txtTickerSymbol;
 	}
 
-	public JFormattedTextField getFtxtQuantity() {
-		return ftxtQuantity;
+	public JTextField getFtxtQuantity() {
+		return txtQuantity;
 	}
 
 	public JTabbedPane getTpPortfolioView() {
@@ -67,6 +69,11 @@ public class MainGUI implements Observer {
 	 * @wbp.parser.entryPoint
 	 */
 	private void initialize() {
+		//===========================
+		// Initialise the 
+		// Folio Tracker Form
+		//===========================
+
 		tables = new ArrayList<JTable>();
 		frmFolioTracker = new JFrame();
 		frmFolioTracker.setTitle("Folio Tracker");
@@ -74,6 +81,10 @@ public class MainGUI implements Observer {
 		frmFolioTracker.setLocationRelativeTo(null);
 
 		frmFolioTracker.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+		//===========================
+		// Create the Menu Bar
+		//===========================
 
 		JMenuBar menuBar = new JMenuBar();
 		frmFolioTracker.setJMenuBar(menuBar);
@@ -100,6 +111,11 @@ public class MainGUI implements Observer {
 		mntmSeeHistory.setActionCommand("SeeHistory");
 		mntmSeeHistory.addActionListener(new MenuBarListener(this,
 				portfolioHolder));
+		
+		JMenuItem mntmSellFromSelected = new JMenuItem("Sell From Selected Shares");
+		mntmSellFromSelected.setActionCommand("SellSelected");
+		mntmSellFromSelected.addActionListener(new MenuBarListener(this,portfolioHolder));
+		mnFile.add(mntmSellFromSelected);
 		mnFile.add(mntmSeeHistory);
 
 		JMenuItem mntmRefresh = new JMenuItem("Refresh Portfolio");
@@ -124,11 +140,17 @@ public class MainGUI implements Observer {
 		SpringLayout springLayout = new SpringLayout();
 		frmFolioTracker.getContentPane().setLayout(springLayout);
 
+		//===========================
+		// Main Interface Content
+		//===========================
+		
+		//Buy Share Ticker Label
 		JLabel lblTickerSymbol = new JLabel("Ticker Symbol:");
 		springLayout.putConstraint(SpringLayout.NORTH, lblTickerSymbol, 10,
 				SpringLayout.NORTH, frmFolioTracker.getContentPane());
 		frmFolioTracker.getContentPane().add(lblTickerSymbol);
 
+		//Buy Share Quantity label
 		JLabel lblQuantity = new JLabel("Quantity:");
 		springLayout.putConstraint(SpringLayout.NORTH, lblQuantity, 0,
 				SpringLayout.NORTH, lblTickerSymbol);
@@ -136,19 +158,14 @@ public class MainGUI implements Observer {
 				SpringLayout.EAST, lblTickerSymbol);
 		frmFolioTracker.getContentPane().add(lblQuantity);
 
+		//Portfolio View Section
 		tpPortfolioView = new JTabbedPane(JTabbedPane.TOP);
-		springLayout.putConstraint(SpringLayout.NORTH, tpPortfolioView, 43,
-				SpringLayout.NORTH, frmFolioTracker.getContentPane());
-		springLayout.putConstraint(SpringLayout.WEST, tpPortfolioView, 0,
-				SpringLayout.WEST, frmFolioTracker.getContentPane());
-		springLayout.putConstraint(SpringLayout.SOUTH, tpPortfolioView, -96,
-				SpringLayout.SOUTH, frmFolioTracker.getContentPane());
-		springLayout.putConstraint(SpringLayout.EAST, tpPortfolioView, -10,
-				SpringLayout.EAST, frmFolioTracker.getContentPane());
+		springLayout.putConstraint(SpringLayout.EAST, tpPortfolioView, 0, SpringLayout.EAST, frmFolioTracker.getContentPane());
 		frmFolioTracker.getContentPane().add(tpPortfolioView);
 		tpPortfolioView.addChangeListener(new TabChangeListener(this,
 				portfolioHolder));
 
+		//Buy Share Confirmation button
 		JButton btnAddStock = new JButton("Add Stock");
 		springLayout.putConstraint(SpringLayout.NORTH, btnAddStock, -5,
 				SpringLayout.NORTH, lblTickerSymbol);
@@ -156,7 +173,9 @@ public class MainGUI implements Observer {
 		btnAddStock.addActionListener(new StockAddListener(this,
 				portfolioHolder));
 
-		JLabel lblAddStock = new JLabel("Add Stock:");
+		//Buy Share indicator label
+		JLabel lblAddStock = new JLabel("Buy Stock:");
+		springLayout.putConstraint(SpringLayout.WEST, tpPortfolioView, 0, SpringLayout.WEST, lblAddStock);
 		springLayout.putConstraint(SpringLayout.WEST, lblTickerSymbol, 20,
 				SpringLayout.EAST, lblAddStock);
 		springLayout.putConstraint(SpringLayout.WEST, lblAddStock, 10,
@@ -165,44 +184,60 @@ public class MainGUI implements Observer {
 				SpringLayout.NORTH, frmFolioTracker.getContentPane());
 		frmFolioTracker.getContentPane().add(lblAddStock);
 
-		ftxtTickerSymbol = new JFormattedTextField();
-		springLayout.putConstraint(SpringLayout.WEST, ftxtTickerSymbol, 10,
+		//Buy Share Ticker text field
+		txtTickerSymbol = new JTextField();
+		springLayout.putConstraint(SpringLayout.WEST, txtTickerSymbol, 10,
 				SpringLayout.EAST, lblTickerSymbol);
-		ftxtTickerSymbol.setPreferredSize(new Dimension(120, 28));
-		springLayout.putConstraint(SpringLayout.NORTH, ftxtTickerSymbol, -6,
+		txtTickerSymbol.setPreferredSize(new Dimension(120, 28));
+		springLayout.putConstraint(SpringLayout.NORTH, txtTickerSymbol, -6,
 				SpringLayout.NORTH, lblTickerSymbol);
-		springLayout.putConstraint(SpringLayout.EAST, ftxtTickerSymbol, 126,
+		springLayout.putConstraint(SpringLayout.EAST, txtTickerSymbol, 126,
 				SpringLayout.EAST, lblTickerSymbol);
-		frmFolioTracker.getContentPane().add(ftxtTickerSymbol);
+		frmFolioTracker.getContentPane().add(txtTickerSymbol);
 
-		ftxtQuantity = new JFormattedTextField();
+		//Buy Share Quantity text field
+		txtQuantity = new JTextField();
 		springLayout.putConstraint(SpringLayout.WEST, btnAddStock, 30,
-				SpringLayout.EAST, ftxtQuantity);
-		springLayout.putConstraint(SpringLayout.WEST, ftxtQuantity, 10,
+				SpringLayout.EAST, txtQuantity);
+		springLayout.putConstraint(SpringLayout.WEST, txtQuantity, 10,
 				SpringLayout.EAST, lblQuantity);
-		springLayout.putConstraint(SpringLayout.NORTH, ftxtQuantity, -6,
+		springLayout.putConstraint(SpringLayout.NORTH, txtQuantity, -6,
 				SpringLayout.NORTH, lblTickerSymbol);
-		springLayout.putConstraint(SpringLayout.EAST, ftxtQuantity, 126,
+		springLayout.putConstraint(SpringLayout.EAST, txtQuantity, 126,
 				SpringLayout.EAST, lblQuantity);
-		ftxtQuantity.setPreferredSize(new Dimension(120, 28));
-		frmFolioTracker.getContentPane().add(ftxtQuantity);
+		txtQuantity.setPreferredSize(new Dimension(120, 28));
+		frmFolioTracker.getContentPane().add(txtQuantity);
 
+		//Portfolio Value Label
 		JLabel lblPortfolioValTitle = new JLabel("Portfolio Value:");
-		springLayout.putConstraint(SpringLayout.NORTH, lblPortfolioValTitle, 6,
-				SpringLayout.SOUTH, tpPortfolioView);
-		springLayout.putConstraint(SpringLayout.WEST, lblPortfolioValTitle, 10,
-				SpringLayout.WEST, tpPortfolioView);
+		springLayout.putConstraint(SpringLayout.SOUTH, tpPortfolioView, -47, SpringLayout.NORTH, lblPortfolioValTitle);
+		springLayout.putConstraint(SpringLayout.WEST, lblPortfolioValTitle, 10, SpringLayout.WEST, frmFolioTracker.getContentPane());
+		springLayout.putConstraint(SpringLayout.SOUTH, lblPortfolioValTitle, -10, SpringLayout.SOUTH, frmFolioTracker.getContentPane());
 		frmFolioTracker.getContentPane().add(lblPortfolioValTitle);
 
+		//Portfolio Value Content
 		lblPortfolioValue = new JLabel("$0.00");
-		springLayout.putConstraint(SpringLayout.WEST, lblPortfolioValue, 6,
-				SpringLayout.EAST, lblPortfolioValTitle);
-		springLayout.putConstraint(SpringLayout.SOUTH, lblPortfolioValue, 0,
-				SpringLayout.SOUTH, lblPortfolioValTitle);
+		springLayout.putConstraint(SpringLayout.NORTH, lblPortfolioValue, 0, SpringLayout.NORTH, lblPortfolioValTitle);
+		springLayout.putConstraint(SpringLayout.WEST, lblPortfolioValue, 6, SpringLayout.EAST, lblPortfolioValTitle);
 		frmFolioTracker.getContentPane().add(lblPortfolioValue);
+		
+		//Quantity Validation Label
+		JLabel lblQtyValidation = new JLabel("Please Enter a Valid Quantity");
+		springLayout.putConstraint(SpringLayout.NORTH, tpPortfolioView, 18, SpringLayout.SOUTH, lblQtyValidation);
+		springLayout.putConstraint(SpringLayout.NORTH, lblQtyValidation, 6, SpringLayout.SOUTH, lblQuantity);
+		springLayout.putConstraint(SpringLayout.WEST, lblQtyValidation, 10, SpringLayout.WEST, lblQuantity);
+		frmFolioTracker.getContentPane().add(lblQtyValidation);
+		
+		//Ticker Validation Label
+		/*JLabel lblTickerValidation = new JLabel("Please enter a valid Ticker Symbol");
+		springLayout.putConstraint(SpringLayout.NORTH, lblTickerValidation, 6, SpringLayout.SOUTH, lblTickerSymbol);
+		springLayout.putConstraint(SpringLayout.EAST, lblTickerValidation, 0, SpringLayout.EAST, ftxtTickerSymbol);
+		frmFolioTracker.getContentPane().add(lblTickerValidation);*/
 
+		//Create an initial Tab
 		createTab("Portfolio1");
 
+		//Make the whole thing Visible!
 		frmFolioTracker.setVisible(true);
 
 	}
