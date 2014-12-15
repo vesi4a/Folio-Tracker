@@ -30,7 +30,6 @@ public class MainGUI implements Observer {
 	private JFormattedTextField ftxtTickerSymbol;
 	private JFormattedTextField ftxtQuantity;
 
-
 	public JFormattedTextField getFtxtTickerSymbol() {
 		return ftxtTickerSymbol;
 	}
@@ -38,7 +37,6 @@ public class MainGUI implements Observer {
 	public JFormattedTextField getFtxtQuantity() {
 		return ftxtQuantity;
 	}
-
 
 	public JTabbedPane getTpPortfolioView() {
 		return tpPortfolioView;
@@ -53,22 +51,6 @@ public class MainGUI implements Observer {
 	private PortfolioHolder portfolioHolder;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-				//	TestInterfaceMainGUI window = new TestInterfaceMainGUI();
-					//window.frmFolioTracker.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Create the application.
 	 */
 	public MainGUI(PortfolioHolder portfolioHolder) {
@@ -76,14 +58,18 @@ public class MainGUI implements Observer {
 		initialize();
 	}
 
+	// the wbp comment allows WindowBuilder to parse the UI and display what's
+	// been made without needing to run the main code
 	/**
-	 * Initialize the contents of the frame.
+	 * Initialise the contents of the frame.
+	 */
+	/**
+	 * @wbp.parser.entryPoint
 	 */
 	private void initialize() {
 		tables = new ArrayList<JTable>();
 		frmFolioTracker = new JFrame();
 		frmFolioTracker.setTitle("Folio Tracker");
-		// frmFolioTracker.setBounds(100, 100, 800, 600);
 		frmFolioTracker.setSize(800, 600);
 		frmFolioTracker.setLocationRelativeTo(null);
 
@@ -97,26 +83,30 @@ public class MainGUI implements Observer {
 
 		JMenuItem mntmNewPortfolio = new JMenuItem("New Portfolio");
 		mntmNewPortfolio.setActionCommand("NewFolio");
-		mntmNewPortfolio.addActionListener(new MenuBarListener(this, portfolioHolder));
+		mntmNewPortfolio.addActionListener(new MenuBarListener(this,
+				portfolioHolder));
 		mnFile.add(mntmNewPortfolio);
 
 		JMenuItem mntmOpenExistingPortfolio = new JMenuItem(
 				"Open Existing Portfolio");
 		mntmOpenExistingPortfolio.setActionCommand("OpenFolio");
-		mntmOpenExistingPortfolio.addActionListener(new MenuBarListener(this, portfolioHolder));
+		mntmOpenExistingPortfolio.addActionListener(new MenuBarListener(this,
+				portfolioHolder));
 		mnFile.add(mntmOpenExistingPortfolio);
 
 		mnFile.addSeparator();
 
 		JMenuItem mntmSeeHistory = new JMenuItem("See History");
 		mntmSeeHistory.setActionCommand("SeeHistory");
-		mntmSeeHistory.addActionListener(new MenuBarListener(this, portfolioHolder));
+		mntmSeeHistory.addActionListener(new MenuBarListener(this,
+				portfolioHolder));
 		mnFile.add(mntmSeeHistory);
 
 		JMenuItem mntmCloseCurrentPortfolio = new JMenuItem(
 				"Close Current Portfolio");
 		mntmCloseCurrentPortfolio.setActionCommand("CloseFolio");
-		mntmCloseCurrentPortfolio.addActionListener(new MenuBarListener(this, portfolioHolder));
+		mntmCloseCurrentPortfolio.addActionListener(new MenuBarListener(this,
+				portfolioHolder));
 		mnFile.add(mntmCloseCurrentPortfolio);
 
 		mnFile.addSeparator();
@@ -150,15 +140,15 @@ public class MainGUI implements Observer {
 		springLayout.putConstraint(SpringLayout.EAST, tpPortfolioView, -10,
 				SpringLayout.EAST, frmFolioTracker.getContentPane());
 		frmFolioTracker.getContentPane().add(tpPortfolioView);
-		tpPortfolioView.addChangeListener(new TabChangeListener(this,portfolioHolder));
-
-
+		tpPortfolioView.addChangeListener(new TabChangeListener(this,
+				portfolioHolder));
 
 		JButton btnAddStock = new JButton("Add Stock");
 		springLayout.putConstraint(SpringLayout.NORTH, btnAddStock, -5,
 				SpringLayout.NORTH, lblTickerSymbol);
 		frmFolioTracker.getContentPane().add(btnAddStock);
-		btnAddStock.addActionListener(new StockAddListener(this, portfolioHolder));
+		btnAddStock.addActionListener(new StockAddListener(this,
+				portfolioHolder));
 
 		JLabel lblAddStock = new JLabel("Add Stock:");
 		springLayout.putConstraint(SpringLayout.WEST, lblTickerSymbol, 20,
@@ -205,30 +195,28 @@ public class MainGUI implements Observer {
 				SpringLayout.SOUTH, lblPortfolioValTitle);
 		frmFolioTracker.getContentPane().add(lblPortfolioValue);
 
-		
-		
 		createTab("Portfolio1");
-		
+
 		frmFolioTracker.setVisible(true);
 
 	}
-	public File showLoadFolioAlert(){
+
+	public File showLoadFolioAlert() {
 		JFileChooser fileChooser = new JFileChooser();
 		JPanel jp = new JPanel();
 		if (fileChooser.showOpenDialog(jp) == JFileChooser.APPROVE_OPTION) {
-		  File file = fileChooser.getSelectedFile();
-		  return file;
+			File file = fileChooser.getSelectedFile();
+			return file;
 		}
 		return null;
-		
-	}
-	
 
-	public void showCloseAlert(){
+	}
+
+	public void showCloseAlert() {
 		JPanel jp = new JPanel();
 		jp.add(new JLabel("Are you sure you want to exit?"));
-		int result = JOptionPane.showConfirmDialog(null, jp,
-				"Exit", JOptionPane.OK_CANCEL_OPTION);
+		int result = JOptionPane.showConfirmDialog(null, jp, "Exit",
+				JOptionPane.OK_CANCEL_OPTION);
 		if (result == JOptionPane.CANCEL_OPTION) {
 			return;
 		}
@@ -236,47 +224,48 @@ public class MainGUI implements Observer {
 			System.exit(0);
 		}
 	}
+
 	// TODO: Move to a separate file
 	public void showNewFolioAlert() {
 
-			JTextField portFolioNameEntry = new JTextField(20);
+		JTextField portFolioNameEntry = new JTextField(20);
 
-			JPanel newPortFolioPanel = new JPanel();
+		JPanel newPortFolioPanel = new JPanel();
 
-			JLabel enterPortFolioNameLabel = new JLabel("Enter PortFolio Name:");
+		JLabel enterPortFolioNameLabel = new JLabel("Enter PortFolio Name:");
 
-			newPortFolioPanel.setLayout(new BoxLayout(newPortFolioPanel,
-					BoxLayout.Y_AXIS));
+		newPortFolioPanel.setLayout(new BoxLayout(newPortFolioPanel,
+				BoxLayout.Y_AXIS));
 
-			portFolioNameEntry.setMaximumSize(new Dimension(1500, 20));
+		portFolioNameEntry.setMaximumSize(new Dimension(1500, 20));
 
-			newPortFolioPanel.add(enterPortFolioNameLabel);
-			newPortFolioPanel.add(portFolioNameEntry);
+		newPortFolioPanel.add(enterPortFolioNameLabel);
+		newPortFolioPanel.add(portFolioNameEntry);
 
-			int result = JOptionPane.showConfirmDialog(null, newPortFolioPanel,
-					"Create New PortFolio", JOptionPane.OK_CANCEL_OPTION);
+		int result = JOptionPane.showConfirmDialog(null, newPortFolioPanel,
+				"Create New PortFolio", JOptionPane.OK_CANCEL_OPTION);
 
-			String folioName = (portFolioNameEntry.getText());
+		String folioName = (portFolioNameEntry.getText());
 
-			if (result == JOptionPane.CANCEL_OPTION) {
-				return;
-			}
-			if (folioName.equals("")) {
-				// TODO: Add check for a unique Portfolio name
-				JLabel enterFilenameLabel = new JLabel("File Name required.");
-				newPortFolioPanel.add(enterFilenameLabel);
-				JOptionPane.showMessageDialog(null, "Error: File Name Required");
-				showNewFolioAlert();
-				
-			} else {
-				// Creates the tab and portfolio
-				createTab(folioName);
-				Portfolio folio = new Portfolio(folioName);
-				folio.addObserver(this);
-				portfolioHolder.addPortfolio(folio);
-
-			}
+		if (result == JOptionPane.CANCEL_OPTION) {
+			return;
 		}
+		if (folioName.equals("")) {
+			// TODO: Add check for a unique Portfolio name
+			JLabel enterFilenameLabel = new JLabel("File Name required.");
+			newPortFolioPanel.add(enterFilenameLabel);
+			JOptionPane.showMessageDialog(null, "Error: File Name Required");
+			showNewFolioAlert();
+
+		} else {
+			// Creates the tab and portfolio
+			createTab(folioName);
+			Portfolio folio = new Portfolio(folioName);
+			folio.addObserver(this);
+			portfolioHolder.addPortfolio(folio);
+
+		}
+	}
 
 	public void createTab(String PortfolioName) {
 		DefaultTableModel model = new DefaultTableModel();
@@ -308,22 +297,24 @@ public class MainGUI implements Observer {
 	// Updates the table
 	@Override
 	public void update(Observable o, Object arg) {
-		Portfolio test = (Portfolio)o;
+		Portfolio test = (Portfolio) o;
 
 		// Update the UI?
-		DefaultTableModel tblModel = (DefaultTableModel) this.tables.get(this.getTpPortfolioView().getSelectedIndex()).getModel();
+		DefaultTableModel tblModel = (DefaultTableModel) this.tables.get(
+				this.getTpPortfolioView().getSelectedIndex()).getModel();
 		// Clear the table
 		tblModel.setRowCount(0);
 
 		// Add entries for all the shares in the portfolio
-		for (Share s: test.getShares()) {
-			tblModel.addRow(new Object[]{
-					s.getTicker(),
+		for (Share s : test.getShares()) {
+			tblModel.addRow(new Object[] { s.getTicker(),
 					s.getAmountOwned(),
 					new DecimalFormat("0.00").format(s.getCurrentSharePrice()),
-					// DecimalFormat helps make the value presentable and not have several decimal places
-					new DecimalFormat("0.00").format(test.getShare(s.getTicker()).getCurrentSharePrice() * s.getAmountOwned())
-			});
+					// DecimalFormat helps make the value presentable and not
+					// have several decimal places
+					new DecimalFormat("0.00").format(test.getShare(
+							s.getTicker()).getCurrentSharePrice()
+							* s.getAmountOwned()) });
 
 		}
 

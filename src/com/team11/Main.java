@@ -11,9 +11,6 @@ public class Main {
 
         PortfolioHolder model = new PortfolioHolder();
 
-
-
-
         Portfolio folio = new Portfolio("Portfolio1");
 
 

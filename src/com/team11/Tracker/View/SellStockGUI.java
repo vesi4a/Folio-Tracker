@@ -4,25 +4,13 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 
-public class SellStockGUI {
+import java.awt.Window.Type;
+import java.util.Observable;
+import java.util.Observer;
 
-	private JFrame frame;
+public class SellStockGUI implements Observer{
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					SellStockGUI window = new SellStockGUI();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private JFrame frmSellStock;
 
 	/**
 	 * Create the application.
@@ -32,12 +20,24 @@ public class SellStockGUI {
 	}
 
 	/**
-	 * Initialize the contents of the frame.
+	 * Initialise the contents of the frame.
+	 */
+	/**
+	 * @wbp.parser.entryPoint
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmSellStock = new JFrame();
+		frmSellStock.setType(Type.UTILITY);
+		frmSellStock.setTitle("Sell Stock");
+		frmSellStock.setSize(800, 600);
+		frmSellStock.setLocationRelativeTo(frmSellStock);
+		frmSellStock.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
