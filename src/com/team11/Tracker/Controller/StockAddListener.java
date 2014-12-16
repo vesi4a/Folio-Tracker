@@ -31,6 +31,7 @@ public class StockAddListener implements ActionListener {
 				if (ticker.length() == 0) {
 					throw new Exception("Ticker has no data");
 				}
+				ticker = ticker.toUpperCase();
 				int amount = Integer.parseInt(view.getFtxtQuantity().getText());
 				if (amount < 1) {
 					throw new Exception("Can't buy less than one");
