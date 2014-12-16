@@ -229,9 +229,17 @@ public class MainGUI implements Observer {
 				SpringLayout.EAST, lblPortfolioValTitle);
 		frmFolioTracker.getContentPane().add(lblPortfolioValue);
 
+		// Sell Share Confirmation button
 		JButton btnSellStock = new JButton("Sell Stock");
 		springLayout.putConstraint(SpringLayout.NORTH, tpPortfolioView, 0,
 				SpringLayout.SOUTH, btnSellStock);
+		// btnSellStock.addActionListener(new StockAddListener(this,
+		// portfolioHolder));
+
+		JLabel lblSelectExisting = new JLabel(
+				"Select an existing portfolio or create new porfolio from file menu");
+		lblSelectExisting.setHorizontalAlignment(SwingConstants.CENTER);
+		tpPortfolioView.addTab("Welcome", null, lblSelectExisting, null);
 		springLayout.putConstraint(SpringLayout.NORTH, btnSellStock, 34,
 				SpringLayout.NORTH, frmFolioTracker.getContentPane());
 		springLayout.putConstraint(SpringLayout.SOUTH, btnAddStock, 0,
@@ -242,7 +250,7 @@ public class MainGUI implements Observer {
 		frmFolioTracker.getContentPane().add(btnSellStock);
 
 		// Create an initial Tab
-//		createTab("Portfolio1");
+		// createTab("Portfolio1");
 
 		// Make the whole thing Visible!
 		frmFolioTracker.setVisible(true);
@@ -333,12 +341,15 @@ public class MainGUI implements Observer {
 		};
 		table.setFillsViewportHeight(false);
 
-		tables.add(table);
-
 		// Add the table to a scrolling pane
 		scrollPane = new JScrollPane(table);
 
 		tpPortfolioView.addTab(PortfolioName, null, scrollPane, null);
+
+		if (tpPortfolioView.getTabCount() > 0 && tables.isEmpty()) {
+			tpPortfolioView.removeTabAt(0);
+		}
+		tables.add(table);
 
 	}
 
@@ -373,7 +384,8 @@ public class MainGUI implements Observer {
 
 		// Add entries for all the shares in the portfolio
 		for (Share s : test.getShares()) {
-			tblModel.addRow(new Object[] { s.getTicker(),
+			tblModel.addRow(new Object[] {
+					s.getTicker(),
 					s.getAmountOwned(),
 					new DecimalFormat("0.00").format(s.getCurrentSharePrice()),
 					// DecimalFormat helps make the value presentable and not

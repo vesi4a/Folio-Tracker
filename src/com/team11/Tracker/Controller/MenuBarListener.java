@@ -5,7 +5,7 @@ import com.team11.Tracker.Model.Portfolio;
 import com.team11.Tracker.Model.PortfolioHolder;
 import com.team11.Tracker.Model.Share;
 import com.team11.Tracker.View.MainGUI;
-import com.team11.Tracker.View.SellStockGUI;
+//import com.team11.Tracker.View.SellStockGUI;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -29,6 +29,7 @@ public class MenuBarListener implements ActionListener {
 		if (e.getActionCommand().equals("NewFolio")) {
 			System.out.println("Add folio menu item pressed");
 			view.showNewFolioAlert();
+			
 			view.getTpPortfolioView().setSelectedIndex(
 					view.getTpPortfolioView().getTabCount() - 1);
 		}
@@ -70,16 +71,16 @@ public class MenuBarListener implements ActionListener {
 		System.out.println("View History menu item pressed");
 		} else if (e.getActionCommand().equals("SellSelected")) {
 			System.out.println("Sell Selected menu item pressed");
-			EventQueue.invokeLater(new Runnable() {
-				public void run() {
-					try {
-						SellStockGUI sellShare = new SellStockGUI();
-
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
-			});
+//			EventQueue.invokeLater(new Runnable() {
+//				public void run() {
+//					try {
+//						SellStockGUI sellShare = new SellStockGUI();
+//
+//					} catch (Exception e) {
+//						e.printStackTrace();
+//					}
+//				}
+//			});
 	}		else if (e.getActionCommand().equals("CloseFolio")) {
 			System.out.println("Close folio menu item pressed");
 			int currentPaneNumber = TabChangeListener.paneNo;
