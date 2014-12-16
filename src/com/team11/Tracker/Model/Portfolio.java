@@ -49,14 +49,11 @@ public class Portfolio extends Observable {
 	// Returns the total value of the portfolio
 	public double getFolioValue() {
 		double runningTotal = 0;
-		try {
-            for (Share s : shares) {
+		for (Share s : shares) {
 
                 runningTotal += (s.getCurrentSharePrice() * s.getAmountOwned());
             }
-		} catch (Exception e) {
 
-		}
 
         return runningTotal;
 	}
@@ -121,14 +118,9 @@ public class Portfolio extends Observable {
 			if (amount < shareObject.getAmountOwned()) {
 				shareObject.setAmountOwned(currentlyOwned - amount);
 			}
-			else if (amount == shareObject.getAmountOwned()) {
+			else {
 				// Delete the share
 				System.out.println("amount = amount owned");
-				shares.remove(shareObject);
-			}
-			else {
-				// Can't sell that many. Sell what we own
-				System.out.println("Selling what we have");
 				shares.remove(shareObject);
 			}
 
@@ -156,7 +148,7 @@ public class Portfolio extends Observable {
     public Share getShare(String ticker) {
 		// Check that we own a share that matches the paramater
 		if (ownShare(ticker)) {
-			// Find the share withing the array
+			// Find the share within the array
 			for (Share s : shares) {
 				// Return the share object
 				if (s.getTicker().equals(ticker)) {
@@ -167,6 +159,7 @@ public class Portfolio extends Observable {
 		else {
 			// Throw an exception
 			// ShareNotOwnedException?
+			
 
 		}
         return null;

@@ -42,7 +42,8 @@ public class PortfolioTest {
 
     @Test
     public void testUpdateAllShares() throws Exception {
-
+    	folio.updateAllShares();
+    	assertNotEquals(s1.getCurrentSharePrice(), 10.0, 0.0001);
     }
 
     @Test
@@ -55,17 +56,33 @@ public class PortfolioTest {
 
     @Test
     public void testAddShare() throws Exception {
-
+    	Share testShare = new Share("VZ", 10.0, 10);
+    	folio.addShare(testShare);
+    	
+    	// Test for adding the same share twice
+    	folio.addShare(testShare);
+    	
+    	assertNotEquals(folio.getShares().size(), 2);
     }
 
     @Test
     public void testAddShare1() throws Exception {
-
+    		folio.addShare("VZ", 10);
+    		// Adding a duplicate
+    		folio.addShare("VZ", 10);
+    		
+    		folio.addShare("QWE", 10);
+    		
     }
 
     @Test
     public void testSellShare() throws Exception {
-
+    	folio.sellShare("AAPL", 1);
+    	int newAmountOwned = folio.getShare("AAPL").getAmountOwned();
+    	assertEquals(newAmountOwned, 9);
+    	
+    	folio.sellShare("AAPL", newAmountOwned);
+    	assertFalse(folio.ownShare("AAPL"));
     }
 
     @Test
@@ -77,5 +94,7 @@ public class PortfolioTest {
     @Test
     public void testGetShare() throws Exception {
         assertEquals(folio.getShare("AAPL"), s1);
+        
+        assertNull(folio.getShare("DontHave"));
     }
 }
