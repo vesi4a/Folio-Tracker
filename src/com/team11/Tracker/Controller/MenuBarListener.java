@@ -27,6 +27,8 @@ public class MenuBarListener implements ActionListener {
 		if (e.getActionCommand().equals("NewFolio")) {
 			System.out.println("Add folio menu item pressed");
 			view.showNewFolioAlert();
+			view.getTpPortfolioView().setSelectedIndex(
+					view.getTpPortfolioView().getTabCount() - 1);
 		}
 		else if (e.getActionCommand().equals("OpenFolio")) {
 			System.out.println("Open folio menu item pressed");
@@ -59,9 +61,24 @@ public class MenuBarListener implements ActionListener {
 		else if (e.getActionCommand().equals("CloseFolio")) {
 			System.out.println("Close folio menu item pressed");
 			int currentPaneNumber = TabChangeListener.paneNo;
-			if (view.getTpPortfolioView().getTabCount() > 1){
-				view.getTpPortfolioView().remove(currentPaneNumber);
+			if (view.getTpPortfolioView().getTabCount() > 1) {
+
+				int result = view.showSaveBeforeCloseAlert();
+				if (result == 1) { // yes
+					System.out.println("Saving Folio...");
+					Portfolio currentPortfolio = holder.getPortfolios().get(
+							view.getTpPortfolioView().getSelectedIndex());
+					holder.saveFolio(currentPortfolio,
+							currentPortfolio.getPortfolioName());
+					System.out.println("Folio saved.");
+					view.getTpPortfolioView().remove(currentPaneNumber);
+					return;
+				} else if (result == 2) { // no
+					view.getTpPortfolioView().remove(currentPaneNumber);
+					return;
+				}
 			}
+
 		}
 		else if (e.getActionCommand().equals("Exit")) {
 			System.out.println("Exit menu item pressed");

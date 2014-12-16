@@ -61,12 +61,22 @@ public class Portfolio extends Observable {
 	}
 
 
-    // Only adds shares at the current price, Could be modified to allow the price to be specified
+	// Only adds shares at the current price, Could be modified to allow the
+	// price to be specified
 	public void addShare(String tickerSymbol, Integer numberOfShares) {
+		// We already own this shares, We need to add on the extra shares and
+		// average the purchase price
+
 		if (ownShare(tickerSymbol)) {
-			// We already own this shares, We need to add on the extra shares and average the purchase price
+			System.out.println("cuntos");
+			int currentNumberOfShares = getShare(tickerSymbol).getAmountOwned();
+			int newNumberOfShares = currentNumberOfShares + numberOfShares;
+			getShare(tickerSymbol).setAmountOwned(newNumberOfShares);
+			setChanged();
+			notifyObservers();
 		}
-		else {
+		else{
+
 			// Add a new share to the folio
 			Quote q = new Quote(false);
 			try {
@@ -77,13 +87,11 @@ public class Portfolio extends Observable {
 				setChanged();
 				notifyObservers();
 
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
 	}
-
 
     public void sellShare(String ticker, int amount) {
         // TODO: Implement

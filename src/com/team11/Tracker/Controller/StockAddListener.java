@@ -15,8 +15,6 @@ public class StockAddListener implements ActionListener {
    	private MainGUI view;
 	private IPortfolioHolder holder;
 
-
-
 	public StockAddListener(MainGUI view, IPortfolioHolder holder) {
 		this.view = view;
 		this.holder = holder;
@@ -31,10 +29,9 @@ public class StockAddListener implements ActionListener {
         String ticker = view.getFtxtTickerSymbol().getText();
         int amount = Integer.parseInt(view.getFtxtQuantity().getText());
 
-        if (!portfolio.ownShare(ticker)) {
-            // Add a stock to the portfolio
-            portfolio.addShare(ticker, amount);
-        }
+		// Add a stock to the portfolio
+		portfolio.addShare(ticker, amount);
+
     }
     private boolean getTickerValidity(String tickerSymbol) {
 		try {

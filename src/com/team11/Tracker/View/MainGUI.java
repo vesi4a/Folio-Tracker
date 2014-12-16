@@ -311,6 +311,24 @@ public class MainGUI implements Observer {
 
 	}
 
+	public int showSaveBeforeCloseAlert(){
+		JPanel jp = new JPanel();
+		jp.add(new JLabel("Do you want to save the folio before closing?"));
+		int result = JOptionPane.showConfirmDialog(null, jp,
+				"Save Before Close", JOptionPane.YES_NO_CANCEL_OPTION);
+		if (result == JOptionPane.YES_OPTION) {
+			return 1;
+		}
+		if (result == JOptionPane.NO_OPTION) {
+			return 2;
+		}
+		if (result == JOptionPane.CANCEL_OPTION){
+			return 3;
+		}
+		return -1;
+
+	}
+
 	// Updates the table
 	@Override
 	public void update(Observable o, Object arg) {
