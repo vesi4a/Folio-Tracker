@@ -10,7 +10,7 @@ public class Share implements IShare {
 	private String ticker;
     private String shareName;
     private Double currentSharePrice;
-    private Double purchasePrice;
+    private Double previousPrice;
     private Integer amountOwned;
 
 
@@ -22,8 +22,34 @@ public class Share implements IShare {
         this.amountOwned = amountOwned;
     }
 
+    public Share(String ticker, Double currentSharePrice, Double previousSharePrice,  Integer amountOwned) {
+        this.ticker = ticker;
+        shareName = " "; /* Placeholder, user can specify name later*/
+        this.currentSharePrice = currentSharePrice;
+        this.amountOwned = amountOwned;
+        this.previousPrice = previousSharePrice;
+    }
+
     public void setAmountOwned(Integer amountOwned) {
         this.amountOwned = amountOwned;
+    }
+
+    public void updateShare() {
+        Quote q = new Quote(false);
+        double currentValue = currentSharePrice;
+        try {
+            q.setValues(ticker);
+            setCurrentSharePrice(q.getLatest());
+
+            previousPrice = currentValue;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        System.out.print("Previous: " + previousPrice);
+        System.out.print("Current: " + currentSharePrice);
+
     }
 
     public void setCurrentSharePrice(Double currentSharePrice) {
@@ -34,8 +60,8 @@ public class Share implements IShare {
         return shareName;
     }
 
-    public Double getPurchasePrice() {
-        return purchasePrice;
+    public Double getPreviousPrice() {
+        return previousPrice;
     }
 
     public Double getCurrentSharePrice() {
@@ -56,6 +82,6 @@ public class Share implements IShare {
 	
 	/*Added string representation for testing purposes and file reading/writing purposes*/
 	public String toString(){
-		return (ticker + " "  + amountOwned + " " + purchasePrice + " " + currentSharePrice + " " + shareName);
+		return (ticker + " "  + amountOwned + " " + previousPrice + " " + currentSharePrice + " " + shareName);
 	}
 }

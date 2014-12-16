@@ -346,17 +346,27 @@ public class MainGUI implements Observer {
 	// Updates the table
 	@Override
 	public void update(Observable o, Object arg) {
-
+		System.out.println("UPDATE CALLED");
 		Portfolio test = (Portfolio)o;
 		// Update the UI?
 		DefaultTableModel tblModel = (DefaultTableModel) this.tables.get(this.getTpPortfolioView().getSelectedIndex()).getModel();
 		// Clear the table
 		tblModel.setRowCount(0);
 
+
+		String tickerTest;
 		// Add entries for all the shares in the portfolio
 		for (Share s: test.getShares()) {
+			tickerTest = s.getTicker();
+			if (s.getPreviousPrice() < s.getCurrentSharePrice()) {
+				tickerTest = s.getTicker() + " > ";
+			}
+			else if (s.getPreviousPrice() > s.getCurrentSharePrice()) {
+				tickerTest = s.getTicker() + " < ";
+			}
+
 			tblModel.addRow(new Object[]{
-					s.getTicker(),
+					tickerTest,
 					s.getAmountOwned(),
 					new DecimalFormat("0.00").format(s.getCurrentSharePrice()),
 					// DecimalFormat helps make the value presentable and not have several decimal places

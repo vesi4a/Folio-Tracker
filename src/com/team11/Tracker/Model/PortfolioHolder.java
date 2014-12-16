@@ -36,13 +36,15 @@ public class PortfolioHolder implements IPortfolioHolder {
             String portfolioName = scanner.nextLine();
             pf = new Portfolio(portfolioName);
             pf.addObserver(view);
+
             while(scanner.hasNextLine()){
                 String line = scanner.nextLine();
                 String[] stringSplit = line.split("\\s+");
                 String ticker = stringSplit[0];
                 Integer amountOwned = Integer.parseInt(stringSplit[1]);
                 Double sharePrice = Double.parseDouble(stringSplit[2]);
-                Share sh = new Share(ticker, sharePrice, amountOwned);
+                //Share sh = new Share(ticker, sharePrice, amountOwned);
+                Share sh = new Share(ticker, sharePrice, sharePrice, amountOwned);
                 String shareName = "";
                 for(int i =3; i < stringSplit.length; i++){
                     shareName+=stringSplit[i];
@@ -51,7 +53,8 @@ public class PortfolioHolder implements IPortfolioHolder {
                     }
                 }
                 sh.setShareName(shareName);
-                pf.getShares().add(sh);
+                //pf.getShares().add(sh);
+                pf.addShare(sh);
             }
 
         }

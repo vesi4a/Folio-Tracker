@@ -49,6 +49,7 @@ public class MenuBarListener implements ActionListener {
 						view.getTpPortfolioView().getTabCount() - 1);
 
 
+				pf.updateAllShares();
 
 			} catch (FileNotFoundException e1) {
 				// TODO Auto-generated catch block

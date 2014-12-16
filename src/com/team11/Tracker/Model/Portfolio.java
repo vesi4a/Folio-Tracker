@@ -27,17 +27,7 @@ public class Portfolio extends Observable {
 
 	public void updateAllShares() {
 		for (Share s: shares) {
-			String tickerName = s.getTicker();
-			Quote q = new Quote(false);
-
-			try {
-				q.setValues(tickerName);
-				s.setCurrentSharePrice(q.getLatest());
-			}
-			catch (Exception e) {
-				e.printStackTrace();
-			}
-
+			s.updateShare();
 		}
 
 		setChanged();
@@ -58,6 +48,16 @@ public class Portfolio extends Observable {
 		}
 
         return runningTotal;
+	}
+
+	public void addShare(Share shareObject) {
+		if (!ownShare(shareObject.getTicker())) {
+			shares.add(shareObject);
+
+			// Tell the listener to update the UI
+			setChanged();
+			notifyObservers();
+		}
 	}
 
 
