@@ -15,7 +15,9 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.Dimension;
 import java.io.File;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -378,12 +380,11 @@ public class MainGUI implements Observer {
 
 		String tickerTest;
 		// Add entries for all the shares in the portfolio
-		for (Share s: test.getShares()) {
+		for (Share s : test.getShares()) {
 			tickerTest = s.getTicker();
 			if (s.getPreviousPrice() < s.getCurrentSharePrice()) {
 				tickerTest = s.getTicker() + " > ";
-			}
-			else if (s.getPreviousPrice() > s.getCurrentSharePrice()) {
+			} else if (s.getPreviousPrice() > s.getCurrentSharePrice()) {
 				tickerTest = s.getTicker() + " < ";
 			}
 			tblModel.addRow(new Object[] {
@@ -397,7 +398,8 @@ public class MainGUI implements Observer {
 							* s.getAmountOwned()) });
 
 		}
-
-		this.getLblPortfolioValue().setText("$" + new DecimalFormat("0.00").format(test.getFolioValue()));
+		NumberFormat formatter = NumberFormat.getCurrencyInstance(Locale.US);
+		this.getLblPortfolioValue().setText(
+				formatter.format(test.getFolioValue()));
 	}
 }
