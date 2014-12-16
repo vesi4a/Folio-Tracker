@@ -33,7 +33,6 @@ public class PortfolioHolder implements IPortfolioHolder {
     }
 
 
-    // Untested
     public Portfolio loadFolio(File file, MainGUI view) throws FileNotFoundException {
         Scanner scanner = new Scanner(file);
         Portfolio pf = null;
@@ -66,7 +65,6 @@ public class PortfolioHolder implements IPortfolioHolder {
         return pf;
     }
 
-    // Untested
     public void saveFolio(Portfolio portfolio, String folioName) {
         try
         {
