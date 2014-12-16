@@ -247,8 +247,6 @@ public class MainGUI implements Observer {
 		btnSellStock.setPreferredSize(new Dimension(108, 29));
 		frmFolioTracker.getContentPane().add(btnSellStock);
 
-		// Create an initial Tab
-		// createTab("Portfolio1");
 
 		// Make the whole thing Visible!
 		frmFolioTracker.setVisible(true);
@@ -305,7 +303,6 @@ public class MainGUI implements Observer {
 			return;
 		}
 		if (folioName.equals("")) {
-			// TODO: Add check for a unique Portfolio name
 			JLabel enterFilenameLabel = new JLabel("File Name required.");
 			newPortFolioPanel.add(enterFilenameLabel);
 			JOptionPane.showMessageDialog(null, "Error: File Name Required");
@@ -325,6 +322,7 @@ public class MainGUI implements Observer {
 		System.out.println("OPEN A FOLIO FIRST!");
 	}
 
+	// Creates
 	public void createTab(String PortfolioName) {
 		DefaultTableModel model = new DefaultTableModel();
 		model.addColumn("Ticker Symbol");
@@ -336,7 +334,7 @@ public class MainGUI implements Observer {
 		// cells
 		JTable table = new JTable(model) {
 			private static final long serialVersionUID = 1L;
-
+			// Stops the cells from being edited individually
 			public boolean isCellEditable(int row, int column) {
 				return false;
 			};
@@ -348,6 +346,9 @@ public class MainGUI implements Observer {
 
 		tpPortfolioView.addTab(PortfolioName, null, scrollPane, null);
 
+		// If this is true then it its the first tab to be added
+		// This meanss the inital 'tab' still exsists
+		// Remove this beffore adding the new 'real tab'
 		if (tpPortfolioView.getTabCount() > 0 && tables.isEmpty()) {
 			tpPortfolioView.removeTabAt(0);
 		}
@@ -377,37 +378,41 @@ public class MainGUI implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 
-		Portfolio test = (Portfolio) o;
-		// Update the UI?
+		Portfolio folio = (Portfolio) o;
+		// Ensures there is a table to modify
 		if (this.tables.size() > 0) {
 			DefaultTableModel tblModel = (DefaultTableModel) this.tables.get(
 					this.getTpPortfolioView().getSelectedIndex()).getModel();
+
 			// Clear the table
 			tblModel.setRowCount(0);
 
 			String tickerTest;
 			// Add entries for all the shares in the portfolio
-			for (Share s : test.getShares()) {
+			for (Share s : folio.getShares()) {
+				// Test of functionality of showing if a shares price has increased/decreased/stayed the same
 				tickerTest = s.getTicker();
 				if (s.getPreviousPrice() < s.getCurrentSharePrice()) {
 					tickerTest = s.getTicker() + " > ";
 				} else if (s.getPreviousPrice() > s.getCurrentSharePrice()) {
 					tickerTest = s.getTicker() + " < ";
 				}
+				// Add a row to the table
 				tblModel.addRow(new Object[]{
 						tickerTest,
 						s.getAmountOwned(),
 						new DecimalFormat("0.00").format(s.getCurrentSharePrice()),
 						// DecimalFormat helps make the value presentable and not
 						// have several decimal places
-						new DecimalFormat("0.00").format(test.getShare(
+						new DecimalFormat("0.00").format(folio.getShare(
 								s.getTicker()).getCurrentSharePrice()
 								* s.getAmountOwned())});
 
 			}
+			// Update the total value of the folio
 			NumberFormat formatter = NumberFormat.getCurrencyInstance(Locale.US);
 			this.getLblPortfolioValue().setText(
-					formatter.format(test.getFolioValue()));
+					formatter.format(folio.getFolioValue()));
 		}
 	}
 }

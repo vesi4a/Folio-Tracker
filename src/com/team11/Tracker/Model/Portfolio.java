@@ -25,11 +25,22 @@ public class Portfolio extends Observable {
 		portfolioName = name;
 	}
 
+
+	public ArrayList<Share> getShares() {
+		return shares;
+	}
+
+	public String getPortfolioName() {
+		return portfolioName;
+	}
+
+	// Refreshes the data on all the shares within the portfolio
 	public void updateAllShares() {
 		for (Share s: shares) {
 			s.updateShare();
 		}
 
+		// Update the UI
 		setChanged();
 		notifyObservers();
 	}
@@ -50,6 +61,8 @@ public class Portfolio extends Observable {
         return runningTotal;
 	}
 
+	// Adds shareObject to the shares array assuming the portfolio doesn't already own the share
+	// This version of addShare takes a preexisting Share object as its parameter
 	public void addShare(Share shareObject) {
 		if (!ownShare(shareObject.getTicker())) {
 			shares.add(shareObject);
@@ -58,24 +71,28 @@ public class Portfolio extends Observable {
 			setChanged();
 			notifyObservers();
 		}
+		else {
+			System.out.println("Share already owned");
+		}
 	}
 
 
-	// Only adds shares at the current price, Could be modified to allow the
-	// price to be specified
+
+	// Adds shareObject to the shares array assuming we don't already own the share
+	// If the portfolio aldreay owns it, It will update the amount owned
 	public void addShare(String tickerSymbol, Integer numberOfShares) {
-		// We already own this shares, We need to add on the extra shares and
-		// average the purchase price
 
 		if (ownShare(tickerSymbol)) {
 			int currentNumberOfShares = getShare(tickerSymbol).getAmountOwned();
 			int newNumberOfShares = currentNumberOfShares + numberOfShares;
 			getShare(tickerSymbol).setAmountOwned(newNumberOfShares);
+
+
 			setChanged();
 			notifyObservers();
 		}
 		else{
-
+			// We don't own any of this share so the share object needs to be created
 			// Add a new share to the folio
 			Quote q = new Quote(false);
 			try {
@@ -96,6 +113,7 @@ public class Portfolio extends Observable {
 		}
 	}
 
+	// Sells a share
     public void sellShare(String ticker, int amount) {
         if (ownShare(ticker)) {
 			Share shareObject = getShare(ticker);
@@ -154,12 +172,5 @@ public class Portfolio extends Observable {
         return null;
     }
 
-	public ArrayList<Share> getShares() {
-		return shares;
-	}
-
-	public String getPortfolioName() {
-		return portfolioName;
-	}
 
 }
