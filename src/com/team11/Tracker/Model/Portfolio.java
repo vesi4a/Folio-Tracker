@@ -68,7 +68,6 @@ public class Portfolio extends Observable {
 		// average the purchase price
 
 		if (ownShare(tickerSymbol)) {
-			System.out.println("cuntos");
 			int currentNumberOfShares = getShare(tickerSymbol).getAmountOwned();
 			int newNumberOfShares = currentNumberOfShares + numberOfShares;
 			getShare(tickerSymbol).setAmountOwned(newNumberOfShares);
