@@ -115,12 +115,6 @@ public class MainGUI implements Observer {
 		mntmViewHistory.addActionListener(new MenuBarListener(this,
 				portfolioHolder));
 
-		// JMenuItem mntmSellFromSelected = new JMenuItem(
-		// "Sell From Selected Shares");
-		// mntmSellFromSelected.setActionCommand("SellSelected");
-		// mntmSellFromSelected.addActionListener(new MenuBarListener(this,
-		// portfolioHolder));
-
 		JMenuItem mntmRefresh = new JMenuItem("Refresh Portfolio");
 		mntmRefresh.setActionCommand("RefreshFolio");
 		mntmRefresh
