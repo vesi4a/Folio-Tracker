@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Scanner;
 
+import javax.swing.JOptionPane;
+
 public class Portfolio extends Observable {
 
 
@@ -103,7 +105,8 @@ public class Portfolio extends Observable {
 
 			}
 			catch (NoSuchTickerException nste) {
-				System.out.println("No such ticker");
+				JOptionPane.showMessageDialog(null,"Please enter a valid Ticker ID!",
+						"No Such Ticker!", JOptionPane.WARNING_MESSAGE);
 			}
 			catch (Exception e) {
 				e.printStackTrace();
