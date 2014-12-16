@@ -111,7 +111,7 @@ public class MainGUI implements Observer {
 		mntmSavePortfolio.addActionListener(new MenuBarListener(this,
 				portfolioHolder));
 		mnFile.add(mntmSavePortfolio);
-		
+
 
 		JMenuItem mntmRefresh = new JMenuItem("Refresh Portfolio");
 		mntmRefresh.setActionCommand("RefreshFolio");
@@ -229,6 +229,8 @@ public class MainGUI implements Observer {
 
 		JLabel lblSelectExisting = new JLabel(
 				"Select an existing portfolio or create new porfolio from file menu");
+
+
 		lblSelectExisting.setHorizontalAlignment(SwingConstants.CENTER);
 		tpPortfolioView.addTab("Welcome", null, lblSelectExisting, null);
 		springLayout.putConstraint(SpringLayout.NORTH, btnSellStock, 34,
@@ -237,7 +239,9 @@ public class MainGUI implements Observer {
 				SpringLayout.NORTH, btnSellStock);
 		springLayout.putConstraint(SpringLayout.EAST, btnSellStock, 0,
 				SpringLayout.EAST, btnAddStock);
-		btnSellStock.setPreferredSize(new Dimension(108, 29));
+
+		btnSellStock.setPreferredSize(new Dimension(100, 30));
+		btnAddStock.setPreferredSize(new Dimension(100, 30));
 		frmFolioTracker.getContentPane().add(btnSellStock);
 
 		// Make the whole thing Visible!
