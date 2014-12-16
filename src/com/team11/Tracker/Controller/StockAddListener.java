@@ -29,14 +29,19 @@ public class StockAddListener implements ActionListener {
 			try {
 				String ticker = view.getFtxtTickerSymbol().getText();
 				if (ticker.length() == 0) {
-					throw new Exception();
+					throw new Exception("Ticker has no data");
 				}
 				int amount = Integer.parseInt(view.getFtxtQuantity().getText());
+				if (amount < 1) {
+					throw new Exception("Can't buy less than one");
+				}
+
 				// Add a stock to the portfolio
 				portfolio.addShare(ticker, amount);
 
 			}
 			catch (Exception exc) {
+				view.showErrorAlert(exc.getMessage());
 				System.out.println("Invalid entry");
 			}
 		}

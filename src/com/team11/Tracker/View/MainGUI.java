@@ -324,6 +324,14 @@ public class MainGUI implements Observer {
 						"Cannot close All tabs", JOptionPane.ERROR_MESSAGE);
 	}
 
+	public void showErrorAlert(String errorString) {
+		JOptionPane
+				.showMessageDialog(
+						frmFolioTracker,
+						errorString,
+						"Error", JOptionPane.ERROR_MESSAGE);
+	}
+
 	public void showNoOpenFolioAlert() {
 		JOptionPane.showMessageDialog(frmFolioTracker,
 				"Please Open or Create a Portfolio first!",

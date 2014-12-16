@@ -28,13 +28,17 @@ public class StockSellListener implements ActionListener {
             try {
                 String ticker = view.getFtxtTickerSymbol().getText();
                 if (ticker.length() == 0) {
-                    throw new Exception();
+                    throw new Exception("Ticker Symbol field is incomplete");
                 }
                 int amount = Integer.parseInt(view.getFtxtQuantity().getText());
-                // Add a stock to the portfolio
+                if (amount < 1) {
+                    throw new Exception("Can't sell less than one");
+                }
+
                 portfolio.sellShare(ticker, amount);
 
             } catch (Exception exc) {
+                view.showErrorAlert(exc.getMessage());
                 System.out.println("Invalid entry");
             }
         }
