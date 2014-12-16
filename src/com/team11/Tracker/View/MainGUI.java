@@ -33,6 +33,10 @@ public class MainGUI implements Observer {
 	private JTextField txtTickerSymbol;
 	private JTextField txtQuantity;
 
+	public ArrayList<JTable> getTables() {
+		return tables;
+	}
+
 	public JTextField getFtxtTickerSymbol() {
 		return txtTickerSymbol;
 	}

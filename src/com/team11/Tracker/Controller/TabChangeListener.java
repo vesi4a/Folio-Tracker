@@ -30,6 +30,7 @@ public class TabChangeListener implements ChangeListener {
                 view.getLblPortfolioValue().setText("$" + holder.getPortfolios().get(view.getTpPortfolioView().getSelectedIndex()).getFolioValue());
                 System.out.println("Selected paneNo : " + pane.getSelectedIndex());
                 paneNo = pane.getSelectedIndex();
+                //holder.getPortfolios().get(view.getTpPortfolioView().getSelectedIndex()).setChangedAndNotify();
             }
             else {
                 // We have no tabs

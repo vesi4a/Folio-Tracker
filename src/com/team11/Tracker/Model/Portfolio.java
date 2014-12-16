@@ -41,6 +41,10 @@ public class Portfolio extends Observable {
 		}
 
 		// Update the UI
+		setChangedAndNotify();
+	}
+
+	public void setChangedAndNotify() {
 		setChanged();
 		notifyObservers();
 	}
@@ -65,8 +69,7 @@ public class Portfolio extends Observable {
 			shares.add(shareObject);
 
 			// Tell the listener to update the UI
-			setChanged();
-			notifyObservers();
+			setChangedAndNotify();
 		}
 		else {
 			System.out.println("Share already owned");
@@ -85,8 +88,7 @@ public class Portfolio extends Observable {
 			getShare(tickerSymbol).setAmountOwned(newNumberOfShares);
 
 
-			setChanged();
-			notifyObservers();
+			setChangedAndNotify();
 		}
 		else{
 			// We don't own any of this share so the share object needs to be created
@@ -97,8 +99,7 @@ public class Portfolio extends Observable {
 				shares.add(new Share(tickerSymbol, q.getLatest(), numberOfShares));
 
 				// Tell the listener to update the UI
-				setChanged();
-				notifyObservers();
+				setChangedAndNotify();
 
 			}
 			catch (NoSuchTickerException nste) {
@@ -124,8 +125,7 @@ public class Portfolio extends Observable {
 				shares.remove(shareObject);
 			}
 
-			setChanged();
-			notifyObservers();
+			setChangedAndNotify();
 		}
 		else {
 			// Can't sell share that you don't own

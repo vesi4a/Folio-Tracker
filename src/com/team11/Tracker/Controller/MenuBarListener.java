@@ -79,20 +79,22 @@ public class MenuBarListener implements ActionListener {
 				System.out.println("Close folio menu item pressed");
 				int currentPaneNumber = TabChangeListener.paneNo;
 				if (view.getTpPortfolioView().getTabCount() > 1) {
-
+					Portfolio currentPortfolio = holder.getPortfolios()
+							.get(view.getTpPortfolioView()
+									.getSelectedIndex());
 					int result = view.showSaveBeforeCloseAlert();
 					if (result == 1) { // yes
 						System.out.println("Saving Folio...");
-						Portfolio currentPortfolio = holder.getPortfolios()
-								.get(view.getTpPortfolioView()
-										.getSelectedIndex());
 						holder.saveFolio(currentPortfolio,
 								currentPortfolio.getPortfolioName());
 						System.out.println("Folio saved.");
 						holder.removeFolio(currentPortfolio);
+						view.getTables().remove(currentPaneNumber);
 						view.getTpPortfolioView().remove(currentPaneNumber);
 						return;
 					} else if (result == 2) { // no
+						view.getTables().remove(currentPaneNumber);
+						holder.removeFolio(currentPortfolio);
 						view.getTpPortfolioView().remove(currentPaneNumber);
 						return;
 					}
