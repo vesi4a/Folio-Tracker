@@ -222,7 +222,7 @@ public class MainGUI implements Observer {
 		frmFolioTracker.getContentPane().add(lblPortfolioValTitle);
 
 		// Portfolio Value Content
-		lblPortfolioValue = new JLabel("$0.00");
+		lblPortfolioValue = new JLabel("0");
 		springLayout.putConstraint(SpringLayout.NORTH, lblPortfolioValue, 0,
 				SpringLayout.NORTH, lblPortfolioValTitle);
 		springLayout.putConstraint(SpringLayout.WEST, lblPortfolioValue, 6,
@@ -396,6 +396,6 @@ public class MainGUI implements Observer {
 
 		}
 
-		this.getLblPortfolioValue().setText("$" + test.getFolioValue());
+		this.getLblPortfolioValue().setText("$" + new DecimalFormat("0.00").format(test.getFolioValue()));
 	}
 }
