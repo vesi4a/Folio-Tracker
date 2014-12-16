@@ -8,12 +8,16 @@ import com.team11.Tracker.Model.Portfolio;
 import com.team11.Tracker.Model.PortfolioHolder;
 import com.team11.Tracker.Model.Share;
 
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.EventQueue;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
 
 import java.awt.Dimension;
+import java.awt.font.TextAttribute;
 import java.io.File;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -335,7 +339,17 @@ public class MainGUI implements Observer {
 
 			public boolean isCellEditable(int row, int column) {
 				return false;
+			
 			};
+			
+			/////////////////////////////////////////////////////////////////////
+			public void colorRenderer(TableCellRenderer renderer, Color Colour ) {
+				Component cell = cell.setForeground(Colour);
+		};
+		
+		///////////////////////////////////////////////////////////////////////////
+		
+		
 		};
 		table.setFillsViewportHeight(false);
 
@@ -384,20 +398,22 @@ public class MainGUI implements Observer {
 		// Add entries for all the shares in the portfolio
 		for (Share s : test.getShares()) {
 			tickerTest = s.getTicker();
-			if (s.getPreviousPrice() < s.getCurrentSharePrice()) {
-				tickerTest = s.getTicker() + " > ";
-			} else if (s.getPreviousPrice() > s.getCurrentSharePrice()) {
-				tickerTest = s.getTicker() + " < ";
-			}
+			String currValue = new DecimalFormat("0.00").format(test.getShare(
+					s.getTicker()).getCurrentSharePrice()
+					* s.getAmountOwned());
 			tblModel.addRow(new Object[] {
 					tickerTest,
+					//Number of shares field
 					s.getAmountOwned(),
+					//price field
 					new DecimalFormat("0.00").format(s.getCurrentSharePrice()),
 					// DecimalFormat helps make the value presentable and not
 					// have several decimal places
-					new DecimalFormat("0.00").format(test.getShare(
-							s.getTicker()).getCurrentSharePrice()
-							* s.getAmountOwned()) });
+					// Value field
+					if (s.getPreviousPrice() < s.getCurrentSharePrice()) {
+						cell.setForeground(Color.green);
+					}
+					});
 
 		}
 		NumberFormat formatter = NumberFormat.getCurrencyInstance(Locale.US);
