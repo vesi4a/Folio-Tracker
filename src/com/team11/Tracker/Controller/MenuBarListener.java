@@ -73,10 +73,6 @@ public class MenuBarListener implements ActionListener {
 			} else {
 				view.showNoOpenFolioAlert();
 			}
-		} else if (e.getActionCommand().equals("ViewHistory")) {
-
-			System.out.println("View History menu item pressed");
-
 		} else if (e.getActionCommand().equals("CloseFolio")) {
 
 			if (!holder.getPortfolios().isEmpty()) {
