@@ -11,16 +11,16 @@ public class Main {
 
         PortfolioHolder model = new PortfolioHolder();
 
-        Portfolio folio = new Portfolio("Portfolio1");
+       // Portfolio folio = new Portfolio("Portfolio1");
 
 
-        model.addPortfolio(folio);
+       // model.addPortfolio(folio);
 
         //View view = new View(model);
         MainGUI view = new MainGUI(model);
 
 
-        folio.addObserver(view);
+        //folio.addObserver(view);
 
 
 

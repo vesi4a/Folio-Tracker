@@ -25,11 +25,19 @@ public class TabChangeListener implements ChangeListener {
     @Override
     public void stateChanged(ChangeEvent e) {
         if (e.getSource() instanceof JTabbedPane) {
-            JTabbedPane pane = (JTabbedPane) e.getSource();
-            view.getLblPortfolioValue().setText("$" + holder.getPortfolios().get(view.getTpPortfolioView().getSelectedIndex()).getFolioValue());
-            System.out.println("Selected paneNo : " + pane.getSelectedIndex());
-            paneNo = pane.getSelectedIndex();
-            
+            if (!holder.getPortfolios().isEmpty()) {
+                JTabbedPane pane = (JTabbedPane) e.getSource();
+                view.getLblPortfolioValue().setText("$" + holder.getPortfolios().get(view.getTpPortfolioView().getSelectedIndex()).getFolioValue());
+                System.out.println("Selected paneNo : " + pane.getSelectedIndex());
+                paneNo = pane.getSelectedIndex();
+            }
+            else {
+                // We have no tabs
+
+                //Might not need this
+                //view.showNoOpenFolioAlert();
+            }
+
         }
     }
 }

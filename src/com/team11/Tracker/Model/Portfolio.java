@@ -97,8 +97,7 @@ public class Portfolio extends Observable {
 	}
 
     public void sellShare(String ticker, int amount) {
-        // TODO: Implement
-		if (ownShare(ticker)) {
+        if (ownShare(ticker)) {
 			Share shareObject = getShare(ticker);
 			int currentlyOwned = shareObject.getAmountOwned();
 			if (amount < shareObject.getAmountOwned()) {

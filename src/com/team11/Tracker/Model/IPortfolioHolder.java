@@ -12,4 +12,5 @@ public interface IPortfolioHolder {
     void saveFolio(Portfolio portfolio, String folioName);
     void addPortfolio(Portfolio folio);
     ArrayList<Portfolio> getPortfolios();
+    void removeFolio(Portfolio portfolio);
 }

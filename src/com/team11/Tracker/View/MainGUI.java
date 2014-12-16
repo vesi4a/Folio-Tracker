@@ -321,6 +321,10 @@ public class MainGUI implements Observer {
 		}
 	}
 
+	public void showNoOpenFolioAlert() {
+		System.out.println("OPEN A FOLIO FIRST!");
+	}
+
 	public void createTab(String PortfolioName) {
 		DefaultTableModel model = new DefaultTableModel();
 		model.addColumn("Ticker Symbol");
@@ -375,33 +379,35 @@ public class MainGUI implements Observer {
 
 		Portfolio test = (Portfolio) o;
 		// Update the UI?
-		DefaultTableModel tblModel = (DefaultTableModel) this.tables.get(
-				this.getTpPortfolioView().getSelectedIndex()).getModel();
-		// Clear the table
-		tblModel.setRowCount(0);
+		if (this.tables.size() > 0) {
+			DefaultTableModel tblModel = (DefaultTableModel) this.tables.get(
+					this.getTpPortfolioView().getSelectedIndex()).getModel();
+			// Clear the table
+			tblModel.setRowCount(0);
 
-		String tickerTest;
-		// Add entries for all the shares in the portfolio
-		for (Share s : test.getShares()) {
-			tickerTest = s.getTicker();
-			if (s.getPreviousPrice() < s.getCurrentSharePrice()) {
-				tickerTest = s.getTicker() + " > ";
-			} else if (s.getPreviousPrice() > s.getCurrentSharePrice()) {
-				tickerTest = s.getTicker() + " < ";
+			String tickerTest;
+			// Add entries for all the shares in the portfolio
+			for (Share s : test.getShares()) {
+				tickerTest = s.getTicker();
+				if (s.getPreviousPrice() < s.getCurrentSharePrice()) {
+					tickerTest = s.getTicker() + " > ";
+				} else if (s.getPreviousPrice() > s.getCurrentSharePrice()) {
+					tickerTest = s.getTicker() + " < ";
+				}
+				tblModel.addRow(new Object[]{
+						tickerTest,
+						s.getAmountOwned(),
+						new DecimalFormat("0.00").format(s.getCurrentSharePrice()),
+						// DecimalFormat helps make the value presentable and not
+						// have several decimal places
+						new DecimalFormat("0.00").format(test.getShare(
+								s.getTicker()).getCurrentSharePrice()
+								* s.getAmountOwned())});
+
 			}
-			tblModel.addRow(new Object[] {
-					tickerTest,
-					s.getAmountOwned(),
-					new DecimalFormat("0.00").format(s.getCurrentSharePrice()),
-					// DecimalFormat helps make the value presentable and not
-					// have several decimal places
-					new DecimalFormat("0.00").format(test.getShare(
-							s.getTicker()).getCurrentSharePrice()
-							* s.getAmountOwned()) });
-
+			NumberFormat formatter = NumberFormat.getCurrencyInstance(Locale.US);
+			this.getLblPortfolioValue().setText(
+					formatter.format(test.getFolioValue()));
 		}
-		NumberFormat formatter = NumberFormat.getCurrencyInstance(Locale.US);
-		this.getLblPortfolioValue().setText(
-				formatter.format(test.getFolioValue()));
 	}
 }

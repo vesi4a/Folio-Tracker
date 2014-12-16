@@ -3,6 +3,7 @@ package com.team11.Tracker.Model;
 
 import com.team11.Tracker.View.MainGUI;
 
+import javax.sound.sampled.Port;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -25,6 +26,10 @@ public class PortfolioHolder implements IPortfolioHolder {
 
     public void addPortfolio(Portfolio folio) {
         portfolios.add(folio);
+    }
+
+    public void removeFolio(Portfolio portfolio) {
+        portfolios.remove(portfolio);
     }
 
 
