@@ -19,8 +19,11 @@ public class Portfolio extends Observable {
 	//
     private String portfolioName;
 
-
-
+	/*
+	 * @Requires name != null, name != ""
+	 * @Effects creates a new Portfolio object with the portfolioName = name and an initial empty ArrayList of shares
+	 * @Modifies this
+	 */
 	public Portfolio(String name) {
         // Creates an empty arraylist
 		shares = new ArrayList<Share>();
@@ -28,15 +31,24 @@ public class Portfolio extends Observable {
 	}
 
 
+	/*
+ * @Effects returns the ArrayList containing the shares the portfolio holds
+ */
 	public ArrayList<Share> getShares() {
 		return shares;
 	}
 
+	/*
+ * @Effects returns the total value of the portfolio (the sum of all shares at the current price multiplied by the number of shares owned)
+ */
 	public String getPortfolioName() {
 		return portfolioName;
 	}
 
-	// Refreshes the data on all the shares within the portfolio
+	/*
+	 * @Effects updates all shares held in the portfolio with their latest value
+	 * @Modifies this
+	 */
 	public void updateAllShares() {
 		for (Share s: shares) {
 			s.updateShare();
@@ -46,6 +58,9 @@ public class Portfolio extends Observable {
 		setChangedAndNotify();
 	}
 
+	/*
+ * @Effects returns the total value of the portfolio (the sum of all shares at the current price multiplied by the number of shares owned)
+ */
 	public void setChangedAndNotify() {
 		setChanged();
 		notifyObservers();
@@ -80,9 +95,21 @@ public class Portfolio extends Observable {
 
 
 
-	// Adds shareObject to the shares array assuming we don't already own the share
-	// If the portfolio aldreay owns it, It will update the amount owned
+
+	/*
+	 * @Requires tickerSymbol != null, numberOfShares != null
+	 * @Effects If the specific share is already present in the shares ArrayList in the Portfolio it increases the
+	 * AmountOwned of this share by the numberOfShares. It then notifies the observers to inform GUI of changes.
+	 * Else (if the share is not already owned) it adds a new Share object to the shares ArrayList. The observers are now notified
+	 * so the GUI is updated.
+	 * If tickerSymbol is invalid, throw NoSuchTickerException
+	 * @Modifies this
+	 */
+
 	public void addShare(String tickerSymbol, Integer numberOfShares) {
+
+		// Adds shareObject to the shares array assuming we don't already own the share
+		// If the portfolio already owns it, It will update the amount owned
 
 		if (ownShare(tickerSymbol)) {
 			int currentNumberOfShares = getShare(tickerSymbol).getAmountOwned();
@@ -114,7 +141,13 @@ public class Portfolio extends Observable {
 		}
 	}
 
-	// Sells a share
+	/*
+ * @Requires ticker != null
+ * @Effects if share is owned && amount selling < current amount owned, current amount owned -= amount selling
+ * if share is owned && amount selling == current amount owned, current amount owned = 0
+ * if share is owned && amount selling > current amount owned, current amount owned = 0
+ * @Modifies this
+ */
     public void sellShare(String ticker, int amount) {
         if (ownShare(ticker)) {
 			Share shareObject = getShare(ticker);
@@ -136,7 +169,10 @@ public class Portfolio extends Observable {
 	}
 
 
-	// Returns true if the share is currently owned by this portfolio
+	/*
+ * @Requires ticker != null
+ * @Effects returns true if ArrayList contains the share having ticker, else returns false
+ */
 	public boolean ownShare(String ticker) {
 		boolean owned = false;
 		for (Share s : shares) {
@@ -147,7 +183,11 @@ public class Portfolio extends Observable {
 		return owned;
 	}
 
-	// Returns the share object whos sticker matches the paramater
+	/*
+ * @Requires ticker != null
+ * @Effects return the Share whose ticker matches the parameter,
+ * else, return null if there if there is no Share whose ticker matches the parameter
+ */
     public Share getShare(String ticker) {
 		// Check that we own a share that matches the paramater
 		if (ownShare(ticker)) {

@@ -16,23 +16,45 @@ public class PortfolioHolder implements IPortfolioHolder {
     private ArrayList<Portfolio> portfolios;
 
 
+    /*
+  * @Effects Creates a new PortfolioHolder object with an initially empty ArrayList of Portfolios
+  * @Modifies this
+  */
     public PortfolioHolder() {
         portfolios = new ArrayList<Portfolio>();
     }
 
+    /*
+   * @Effects returns an ArrayList containing all the portfolios
+   */
     public ArrayList<Portfolio> getPortfolios() {
         return portfolios;
     }
 
+    /*
+ * @Requires folio != null
+ * @Effects appends folio to the ArrayList of Portfolios
+ * @Modifies this
+ */
     public void addPortfolio(Portfolio folio) {
         portfolios.add(folio);
     }
 
+    /*
+ * @Requires portfolio != null, portfolios.contains(portfolio) == true
+ * @Effects removes the portfolio from the ArrayList containing all the portfolios
+ * @Modifies this
+ */
     public void removeFolio(Portfolio portfolio) {
         portfolios.remove(portfolio);
     }
 
 
+    /*
+ * @Requires file must be valid, file != null, view != null, file.getextension == .txt
+ * @Effects returns a new Portfolio object with data read from a txt file
+ * @Modifies this
+ */
     public Portfolio loadFolio(File file, MainGUI view) throws FileNotFoundException {
         Scanner scanner = new Scanner(file);
         Portfolio pf = null;
@@ -65,6 +87,10 @@ public class PortfolioHolder implements IPortfolioHolder {
         return pf;
     }
 
+    /*
+  * @Requires portfolio != null, folioName != null
+  * @Effects creates a new txt file, titled by folioName, that contains the name of the folio and data on all its shares held
+  */
     public void saveFolio(Portfolio portfolio, String folioName) {
         try
         {
