@@ -23,8 +23,20 @@ public class StockSellListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
-
         Portfolio portfolio = holder.getPortfolios().get(view.getTpPortfolioView().getSelectedIndex());
 
+        try {
+            String ticker = view.getFtxtTickerSymbol().getText();
+            if (ticker.length() == 0) {
+                throw new Exception();
+            }
+            int amount = Integer.parseInt(view.getFtxtQuantity().getText());
+            // Add a stock to the portfolio
+            portfolio.sellShare(ticker, amount);
+
+        }
+        catch (Exception exc) {
+            System.out.println("Invalid entry");
+        }
     }
 }

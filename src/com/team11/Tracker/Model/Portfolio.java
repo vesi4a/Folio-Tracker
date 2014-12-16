@@ -86,7 +86,11 @@ public class Portfolio extends Observable {
 				setChanged();
 				notifyObservers();
 
-			} catch (Exception e) {
+			}
+			catch (NoSuchTickerException nste) {
+				System.out.println("No such ticker");
+			}
+			catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
@@ -97,13 +101,22 @@ public class Portfolio extends Observable {
 		if (ownShare(ticker)) {
 			Share shareObject = getShare(ticker);
 			int currentlyOwned = shareObject.getAmountOwned();
-			if (amount >= shareObject.getAmountOwned()) {
+			if (amount < shareObject.getAmountOwned()) {
 				shareObject.setAmountOwned(currentlyOwned - amount);
 			}
-			else {
-				// Can't sell that many. See what we have
-				  shares.remove(shareObject);
+			else if (amount == shareObject.getAmountOwned()) {
+				// Delete the share
+				System.out.println("amount = amount owned");
+				shares.remove(shareObject);
 			}
+			else {
+				// Can't sell that many. Sell what we own
+				System.out.println("Selling what we have");
+				shares.remove(shareObject);
+			}
+
+			setChanged();
+			notifyObservers();
 		}
 		else {
 			// Can't sell share that you don't own

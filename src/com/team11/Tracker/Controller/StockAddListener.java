@@ -26,11 +26,20 @@ public class StockAddListener implements ActionListener {
 
         Portfolio portfolio = holder.getPortfolios().get(view.getTpPortfolioView().getSelectedIndex());
 
-        String ticker = view.getFtxtTickerSymbol().getText();
-        int amount = Integer.parseInt(view.getFtxtQuantity().getText());
+		try {
+			String ticker = view.getFtxtTickerSymbol().getText();
+			if (ticker.length() == 0) {
+				throw new Exception();
+			}
+			int amount = Integer.parseInt(view.getFtxtQuantity().getText());
+			// Add a stock to the portfolio
+			portfolio.addShare(ticker, amount);
 
-		// Add a stock to the portfolio
-		portfolio.addShare(ticker, amount);
+		}
+		catch (Exception exc) {
+			System.out.println("Invalid entry");
+		}
+
 
     }
     private boolean getTickerValidity(String tickerSymbol) {

@@ -53,7 +53,7 @@ public class MenuBarListener implements ActionListener {
 				pf.updateAllShares();
 
 			} catch (FileNotFoundException e1) {
-				// TODO Auto-generated catch block
+				// Error loading the folio
 				e1.printStackTrace();
 			}
 		}
@@ -71,16 +71,7 @@ public class MenuBarListener implements ActionListener {
 		System.out.println("View History menu item pressed");
 		} else if (e.getActionCommand().equals("SellSelected")) {
 			System.out.println("Sell Selected menu item pressed");
-//			EventQueue.invokeLater(new Runnable() {
-//				public void run() {
-//					try {
-//						SellStockGUI sellShare = new SellStockGUI();
-//
-//					} catch (Exception e) {
-//						e.printStackTrace();
-//					}
-//				}
-//			});
+
 	}		else if (e.getActionCommand().equals("CloseFolio")) {
 			System.out.println("Close folio menu item pressed");
 			int currentPaneNumber = TabChangeListener.paneNo;

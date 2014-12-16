@@ -2,6 +2,7 @@ package com.team11.Tracker.View;
 
 import com.team11.Tracker.Controller.MenuBarListener;
 import com.team11.Tracker.Controller.StockAddListener;
+import com.team11.Tracker.Controller.StockSellListener;
 import com.team11.Tracker.Controller.TabChangeListener;
 import com.team11.Tracker.Model.Portfolio;
 import com.team11.Tracker.Model.PortfolioHolder;
@@ -171,6 +172,12 @@ public class MainGUI implements Observer {
 		btnAddStock.addActionListener(new StockAddListener(this,
 				portfolioHolder));
 
+		// Sell Share Confirmation button
+		JButton btnSellStock = new JButton("Sell Stock");
+		springLayout.putConstraint(SpringLayout.NORTH, tpPortfolioView, 0,
+				SpringLayout.SOUTH, btnSellStock);
+		btnSellStock.addActionListener(new StockSellListener(this, portfolioHolder));
+
 		// Buy/Sell Share indicator label
 		JLabel lblAddStock = new JLabel("Buy/Sell:");
 		springLayout.putConstraint(SpringLayout.WEST, lblTickerSymbol, 11,
@@ -225,12 +232,7 @@ public class MainGUI implements Observer {
 				SpringLayout.EAST, lblPortfolioValTitle);
 		frmFolioTracker.getContentPane().add(lblPortfolioValue);
 
-		// Sell Share Confirmation button
-		JButton btnSellStock = new JButton("Sell Stock");
-		springLayout.putConstraint(SpringLayout.NORTH, tpPortfolioView, 0,
-				SpringLayout.SOUTH, btnSellStock);
-		// btnSellStock.addActionListener(new StockAddListener(this,
-		// portfolioHolder));
+
 
 		JLabel lblSelectExisting = new JLabel(
 				"Select an existing portfolio or create new porfolio from file menu");
