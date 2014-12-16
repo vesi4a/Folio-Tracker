@@ -54,10 +54,15 @@ public class MenuBarListener implements ActionListener {
             }
 
         } else if (e.getActionCommand().equals("SaveFolio")) {
+            if(!holder.getPortfolios().isEmpty()) {
 
-            System.out.println("Save folio menu item pressed");
-            Portfolio currentPortfolio = holder.getPortfolios().get(view.getTpPortfolioView().getSelectedIndex());
-            holder.saveFolio(currentPortfolio, currentPortfolio.getPortfolioName());
+                System.out.println("Save folio menu item pressed");
+                Portfolio currentPortfolio = holder.getPortfolios().get(view.getTpPortfolioView().getSelectedIndex());
+                holder.saveFolio(currentPortfolio, currentPortfolio.getPortfolioName());
+            }
+            else {
+                view.showNoOpenFolioAlert();
+            }
 
         } else if (e.getActionCommand().equals("RefreshFolio")) {
             System.out.println("Refresh item pressed");
