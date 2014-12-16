@@ -1,7 +1,5 @@
 package com.team11.Tracker.Model;
 
-import java.awt.Color;
-import java.awt.Component;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -10,11 +8,8 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Scanner;
 
-import javax.swing.table.TableCellRenderer;
-
 public class Portfolio extends Observable {
-	
-	
+
 
     // All the shares held within this portfolio
     private ArrayList<Share> shares;
@@ -159,7 +154,6 @@ public class Portfolio extends Observable {
 		}
         return null;
     }
-    
 
 	public ArrayList<Share> getShares() {
 		return shares;
