@@ -404,20 +404,11 @@ public class MainGUI implements Observer {
 			// Clear the table
 			tblModel.setRowCount(0);
 
-			String tickerTest;
 			// Add entries for all the shares in the portfolio
 			for (Share s : folio.getShares()) {
-				// Test of functionality of showing if a shares price has
-				// increased/decreased/stayed the same
-				tickerTest = s.getTicker();
-				if (s.getPreviousPrice() < s.getCurrentSharePrice()) {
-					tickerTest = s.getTicker() + " > ";
-				} else if (s.getPreviousPrice() > s.getCurrentSharePrice()) {
-					tickerTest = s.getTicker() + " < ";
-				}
 				// Add a row to the table
 				tblModel.addRow(new Object[] {
-						tickerTest,
+						s.getTicker(),
 						s.getAmountOwned(),
 						new DecimalFormat("0.00").format(s
 								.getCurrentSharePrice()),
