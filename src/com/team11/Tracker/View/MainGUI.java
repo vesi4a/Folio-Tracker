@@ -382,10 +382,18 @@ public class MainGUI implements Observer {
 		// Clear the table
 		tblModel.setRowCount(0);
 
+		String tickerTest;
 		// Add entries for all the shares in the portfolio
-		for (Share s : test.getShares()) {
+		for (Share s: test.getShares()) {
+			tickerTest = s.getTicker();
+			if (s.getPreviousPrice() < s.getCurrentSharePrice()) {
+				tickerTest = s.getTicker() + " > ";
+			}
+			else if (s.getPreviousPrice() > s.getCurrentSharePrice()) {
+				tickerTest = s.getTicker() + " < ";
+			}
 			tblModel.addRow(new Object[] {
-					s.getTicker(),
+					tickerTest,
 					s.getAmountOwned(),
 					new DecimalFormat("0.00").format(s.getCurrentSharePrice()),
 					// DecimalFormat helps make the value presentable and not

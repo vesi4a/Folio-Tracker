@@ -19,6 +19,7 @@ public class Share implements IShare {
     	this.ticker = ticker;
     	shareName = " "; /* Placeholder, user can specify name later*/
         this.currentSharePrice = currentSharePrice;
+        previousPrice = currentSharePrice;
         this.amountOwned = amountOwned;
     }
 

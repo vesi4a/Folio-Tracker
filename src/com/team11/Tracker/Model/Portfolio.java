@@ -94,10 +94,21 @@ public class Portfolio extends Observable {
 
     public void sellShare(String ticker, int amount) {
         // TODO: Implement
-		if (!ownShare(ticker)) {
-			// Can't sell shares you don't own.
+		if (ownShare(ticker)) {
+			Share shareObject = getShare(ticker);
+			int currentlyOwned = shareObject.getAmountOwned();
+			if (amount >= shareObject.getAmountOwned()) {
+				shareObject.setAmountOwned(currentlyOwned - amount);
+			}
+			else {
+				// Can't sell that many. See what we have
+				  shares.remove(shareObject);
+			}
 		}
-    }
+		else {
+			// Can't sell share that you don't own
+		}
+	}
 
 
 	// Returns true if the share is currently owned by this portfolio
