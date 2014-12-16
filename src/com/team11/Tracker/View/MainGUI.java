@@ -242,7 +242,7 @@ public class MainGUI implements Observer {
 		frmFolioTracker.getContentPane().add(btnSellStock);
 
 		// Create an initial Tab
-		createTab("Portfolio1");
+//		createTab("Portfolio1");
 
 		// Make the whole thing Visible!
 		frmFolioTracker.setVisible(true);
