@@ -4,7 +4,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 
-import java.awt.Window.Type;
+
 import java.util.Observable;
 import java.util.Observer;
 //import com.jgoodies.forms.layout.FormLayout;
@@ -40,7 +40,7 @@ public class SellStockGUI implements Observer {
 	 */
 	private void initialize() {
 		frmSellStock = new JFrame();
-		frmSellStock.setType(Type.UTILITY);
+		//frmSellStock.setType(Type.UTILITY);
 		frmSellStock.setTitle("Sell Stock");
 		frmSellStock.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frmSellStock.getContentPane().setLayout(new GridLayout(4, 2, 5, 5));

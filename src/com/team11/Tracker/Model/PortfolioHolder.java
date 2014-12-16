@@ -1,6 +1,8 @@
 package com.team11.Tracker.Model;
 
 
+import com.team11.Tracker.View.MainGUI;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -27,12 +29,13 @@ public class PortfolioHolder implements IPortfolioHolder {
 
 
     // Untested
-    public Portfolio loadFolio(File file) throws FileNotFoundException {
+    public Portfolio loadFolio(File file, MainGUI view) throws FileNotFoundException {
         Scanner scanner = new Scanner(file);
         Portfolio pf = null;
         if (scanner.hasNextLine()){
             String portfolioName = scanner.nextLine();
             pf = new Portfolio(portfolioName);
+            pf.addObserver(view);
             while(scanner.hasNextLine()){
                 String line = scanner.nextLine();
                 String[] stringSplit = line.split("\\s+");
@@ -50,20 +53,22 @@ public class PortfolioHolder implements IPortfolioHolder {
                 sh.setShareName(shareName);
                 pf.getShares().add(sh);
             }
-            
+
         }
         return pf;
     }
 
     // Untested
-    public void saveFolio(Portfolio portfolio) {
+    public void saveFolio(Portfolio portfolio, String folioName) {
         try
         {
-            String filename= "portfolios.txt";
+            String filename= folioName + ".txt";
             FileWriter fw = new FileWriter(filename,true); // append to text file
             fw.write(portfolio.getPortfolioName()+ System.getProperty("line.separator"));
             for (Share s: portfolio.getShares()){
-                fw.write(s.toString() + System.getProperty("line.separator"));
+                fw.write(s.getTicker() + " " + s.getAmountOwned() + " " + s.getCurrentSharePrice() + System.getProperty("line.separator"));
+                //fw.write(s.getTicker() + " " + s.getAmountOwned() + " " + s.getCurrentSharePrice());
+
             }
             //fw.write("/*end" + System.getProperty("line.separator"));
             fw.close();
