@@ -50,14 +50,14 @@ public class PortfolioHolder implements IPortfolioHolder {
                 Double sharePrice = Double.parseDouble(stringSplit[2]);
                 //Share sh = new Share(ticker, sharePrice, amountOwned);
                 Share sh = new Share(ticker, sharePrice, sharePrice, amountOwned);
-                String shareName = "";
-                for(int i =3; i < stringSplit.length; i++){
-                    shareName+=stringSplit[i];
-                    if(stringSplit.length!=i+1){
-                        shareName+= " ";
-                    }
-                }
-                sh.setShareName(shareName);
+//                String shareName = "";
+//                for(int i =3; i < stringSplit.length; i++){
+//                    shareName+=stringSplit[i];
+//                    if(stringSplit.length!=i+1){
+//                        shareName+= " ";
+//                    }
+//                }
+//                sh.setShareName(shareName);
                 //pf.getShares().add(sh);
                 pf.addShare(sh);
             }
