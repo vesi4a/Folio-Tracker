@@ -176,7 +176,8 @@ public class MainGUI implements Observer {
 		JButton btnSellStock = new JButton("Sell Stock");
 		springLayout.putConstraint(SpringLayout.NORTH, tpPortfolioView, 0,
 				SpringLayout.SOUTH, btnSellStock);
-		btnSellStock.addActionListener(new StockSellListener(this, portfolioHolder));
+		btnSellStock.addActionListener(new StockSellListener(this,
+				portfolioHolder));
 
 		// Buy/Sell Share indicator label
 		JLabel lblAddStock = new JLabel("Buy/Sell:");
@@ -232,8 +233,6 @@ public class MainGUI implements Observer {
 				SpringLayout.EAST, lblPortfolioValTitle);
 		frmFolioTracker.getContentPane().add(lblPortfolioValue);
 
-
-
 		JLabel lblSelectExisting = new JLabel(
 				"Select an existing portfolio or create new porfolio from file menu");
 		lblSelectExisting.setHorizontalAlignment(SwingConstants.CENTER);
@@ -246,7 +245,6 @@ public class MainGUI implements Observer {
 				SpringLayout.EAST, btnAddStock);
 		btnSellStock.setPreferredSize(new Dimension(108, 29));
 		frmFolioTracker.getContentPane().add(btnSellStock);
-
 
 		// Make the whole thing Visible!
 		frmFolioTracker.setVisible(true);
@@ -318,8 +316,18 @@ public class MainGUI implements Observer {
 		}
 	}
 
+	public void showOnlyPortfolioAlert() {
+		JOptionPane
+				.showMessageDialog(
+						frmFolioTracker,
+						"You cannot close the last portfolio. Please terminate the application instead.",
+						"Cannot close All tabs", JOptionPane.ERROR_MESSAGE);
+	}
+
 	public void showNoOpenFolioAlert() {
-		System.out.println("OPEN A FOLIO FIRST!");
+		JOptionPane.showMessageDialog(frmFolioTracker,
+				"Please Open or Create a Portfolio first!",
+				"No Portfolio Open", JOptionPane.WARNING_MESSAGE);
 	}
 
 	// Creates
@@ -334,6 +342,7 @@ public class MainGUI implements Observer {
 		// cells
 		JTable table = new JTable(model) {
 			private static final long serialVersionUID = 1L;
+
 			// Stops the cells from being edited individually
 			public boolean isCellEditable(int row, int column) {
 				return false;
@@ -390,7 +399,8 @@ public class MainGUI implements Observer {
 			String tickerTest;
 			// Add entries for all the shares in the portfolio
 			for (Share s : folio.getShares()) {
-				// Test of functionality of showing if a shares price has increased/decreased/stayed the same
+				// Test of functionality of showing if a shares price has
+				// increased/decreased/stayed the same
 				tickerTest = s.getTicker();
 				if (s.getPreviousPrice() < s.getCurrentSharePrice()) {
 					tickerTest = s.getTicker() + " > ";
@@ -398,19 +408,22 @@ public class MainGUI implements Observer {
 					tickerTest = s.getTicker() + " < ";
 				}
 				// Add a row to the table
-				tblModel.addRow(new Object[]{
+				tblModel.addRow(new Object[] {
 						tickerTest,
 						s.getAmountOwned(),
-						new DecimalFormat("0.00").format(s.getCurrentSharePrice()),
-						// DecimalFormat helps make the value presentable and not
+						new DecimalFormat("0.00").format(s
+								.getCurrentSharePrice()),
+						// DecimalFormat helps make the value presentable and
+						// not
 						// have several decimal places
 						new DecimalFormat("0.00").format(folio.getShare(
 								s.getTicker()).getCurrentSharePrice()
-								* s.getAmountOwned())});
+								* s.getAmountOwned()) });
 
 			}
 			// Update the total value of the folio
-			NumberFormat formatter = NumberFormat.getCurrencyInstance(Locale.US);
+			NumberFormat formatter = NumberFormat
+					.getCurrencyInstance(Locale.US);
 			this.getLblPortfolioValue().setText(
 					formatter.format(folio.getFolioValue()));
 		}
