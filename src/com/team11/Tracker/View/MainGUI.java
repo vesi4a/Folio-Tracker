@@ -113,11 +113,25 @@ public class MainGUI implements Observer {
 		mnFile.add(mntmSavePortfolio);
 
 		mnFile.addSeparator();
+		JMenuItem mntmViewHistory = new JMenuItem("View History");
+		mntmViewHistory.setActionCommand("ViewHistory");
+		mntmViewHistory.addActionListener(new MenuBarListener(this,
+				portfolioHolder));
 
-		JMenuItem mntmSeeHistory = new JMenuItem("See History");
-		mntmSeeHistory.setActionCommand("SeeHistory");
-		mntmSeeHistory.addActionListener(new MenuBarListener(this, portfolioHolder));
-		mnFile.add(mntmSeeHistory);
+		JMenuItem mntmSellFromSelected = new JMenuItem(
+				"Sell From Selected Shares");
+		mntmSellFromSelected.setActionCommand("SellSelected");
+		mntmSellFromSelected.addActionListener(new MenuBarListener(this,
+				portfolioHolder));
+
+		JMenuItem mntmRefresh = new JMenuItem("Refresh Portfolio");
+		mntmRefresh.setActionCommand("RefreshFolio");
+		mntmRefresh
+				.addActionListener(new MenuBarListener(this, portfolioHolder));
+		mnFile.add(mntmRefresh);
+		mnFile.add(mntmSellFromSelected);
+		mnFile.add(mntmViewHistory);
+
 
 		JMenuItem mntmCloseCurrentPortfolio = new JMenuItem(
 				"Close Current Portfolio");
@@ -332,6 +346,7 @@ public class MainGUI implements Observer {
 	// Updates the table
 	@Override
 	public void update(Observable o, Object arg) {
+
 		Portfolio test = (Portfolio)o;
 		// Update the UI?
 		DefaultTableModel tblModel = (DefaultTableModel) this.tables.get(this.getTpPortfolioView().getSelectedIndex()).getModel();
