@@ -71,7 +71,7 @@ public class PortfolioHolder implements IPortfolioHolder {
         try
         {
             String filename= folioName + ".txt";
-            FileWriter fw = new FileWriter(filename,true); // append to text file
+            FileWriter fw = new FileWriter(filename,false); // append to text file
             fw.write(portfolio.getPortfolioName()+ System.getProperty("line.separator"));
             for (Share s: portfolio.getShares()){
                 fw.write(s.getTicker() + " " + s.getAmountOwned() + " " + s.getCurrentSharePrice() + System.getProperty("line.separator"));
